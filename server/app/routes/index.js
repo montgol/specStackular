@@ -47,6 +47,11 @@ router.get('/item/:id', function (req, res, next) { //requested by angular when 
     Item.find({id: item})
 })
 
+router.get('/cart', function(req, res, next){
+	var user = req.user.session;
+	res.send(user);
+})
+
 router.post('/item/addtocart/:productId', function (req, res, err) {
     // Quantity, userid, itemid
     // req.params.productId
