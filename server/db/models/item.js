@@ -6,6 +6,20 @@ var schema = new mongoose.Schema({
         required: true
     },
     price: {
-        type: Number
-    }
+        type: Number,
+        required: true
+    },
+    availability: boolean,
+    imgUrl: String,
+    categories: [String],
+
 })
+
+
+var option = new mongoose.Schema({
+	type: {type: String, required: true }
+	imgUrl: String,
+	priceModifier: {type: Number, required: true}
+})
+
+mongoose.model = ('Item', schema);

@@ -14,7 +14,7 @@ var schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    orders: {},
+    orders: [],
     email: {
         type: String
     },
