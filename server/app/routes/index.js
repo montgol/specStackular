@@ -24,6 +24,16 @@ router.get('/user', function(req, res, err){
 	})
 })
 
+router.post('/user/edit', isAuthenticated, function(req, res, next){ //username sent as a query
+
+})
+
+router.get('/logout', function (req, res) {
+	// passport attaches this function to req for us
+	req.logout();
+	res.redirect('/');
+});
+
 router.get('/itemlist', function(req, res, err){  //should be requested by angular when page loads
 	Item.find({}).exec(function(err, users){
 		if(err) return next(err);
