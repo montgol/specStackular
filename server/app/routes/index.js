@@ -1,14 +1,8 @@
 'use strict';
 var router = require('express').Router();
 var User = require('../../db/models/user.js');
-var Item = require('../../db/models/item.js');
+var Item = require('../../db/models/item.js').Item;
 var Cart = require('../../db/models/cart.js');
-//var path = require('path');
-module.exports = router;
-
-// router.get('/', function(req, res, next){
-// 	res.sendFile(path.join(rootPath, './server/app/views/index.html'));
-// })
 
 router.use('/tutorial', require('./tutorial'));
 
@@ -21,13 +15,23 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-
 router.get('/user', function (req, res, next) {
     var email = req.data.email;  //should be structured to include username: username
     User.findOne({email: email}).exec(function (err, user) {
         if (err) return next(err);
         res.send(user);
     })
+})
+
+router.post('/item', function(req, res, next){
+    console.log('into the router');
+    var info = req.body;
+    console.log(info);
+    Item.create(info, function(err, result){
+        console.log(err, 'err', result, 'result');
+        if (err) return next(err);
+        else res.send(result);
+    });
 })
 
 router.post('/user/edit', isAuthenticated, function (req, res, next) { //username sent as a query
@@ -51,6 +55,8 @@ router.get('/item/:id', function (req, res, next) { //requested by angular when 
     var itemId = req.params.id;
     Item.find({id: itemId})
 })
+
+
 
 router.get('/cart', function(req, res, next){
 	var user = req.user.session;
@@ -84,3 +90,6 @@ router.post('/item/addtocart/:productId', function (req, res, err) {
     // })
 
 })
+
+
+module.exports = router;

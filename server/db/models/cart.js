@@ -5,27 +5,27 @@ var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
 	orderNumber: Number,
-	userName: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}],
+	userName: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
 	items: [{type: mongoose.Schema.Types.ObjectId, ref: 'item'}],
 	shippingStatus: {type: String, default: 'Processing Order'},
 })
 
-schema.methods.getItems = function(){
+schema.methods.getItems = function(cb){
 	return this.populate('items').exec(function(err, items){
 		if (err) return err;
 		else {
-			return items;
+			return cb(items);
 		}
 	})
 }
 
-schema.methods.getUser = function(){
+schema.methods.getUser = function(cb){
 	return this.populate('userName').exec(function(err, items){
 		if (err) return err;
 		else {
-			return items;
+			return cb(items);
 		}
 	})
 }
 
-module.exports = mongoose.model('Card', schema);
+module.exports = mongoose.model('Cart', schema);

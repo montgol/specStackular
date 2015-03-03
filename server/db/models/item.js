@@ -19,14 +19,12 @@ var item = new mongoose.Schema({
     features: [{type: mongoose.Schema.Types.ObjectId, ref: 'Feature'}]
 })
 
-item.static.getReviews = function(){  //need to make sure syntax is correct
-	this.reviews.populate('Review', function(err, reviews){
+item.methods.getReviews = function(cb){  //need to make sure syntax is correct
+	this.reviews.populate('Review', function(err, item){
 		if (err) return err;
-		console.log(reviews) // for testing purposes only
-		return reviews;
+		console.log(item) // for testing purposes only
+		return cb(item);
 	})
-
-
 }
 
 var review = new mongoose.Schema({

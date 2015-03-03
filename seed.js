@@ -19,13 +19,17 @@ console.log('welcome to the Seed...');
 function addToDb (){
 	for(var a=0, len = dataItem.length; a<len; a++){
     		console.log(dataItem[a]);
-    		Item.create(dataItem[a]);
+    		Item.create(dataItem[a], function(err, data){
+    			if (err) throw err;
+    		});
     	}
     	console.log('Finished adding Items');
 
     	for(var a=0, len = dataUser.length; a<len; a++){
     		console.log(dataUser[a]);
-    		User.create(dataUser[a]);
+    		User.create(dataUser[a], function(err, data){
+    			if(err) throw err;
+    		});
     	}
     	console.log('Finished adding Users');
     };
