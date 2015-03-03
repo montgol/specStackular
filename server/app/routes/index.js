@@ -2,8 +2,13 @@
 var router = require('express').Router();
 var User = require('../../db/models/user.js');
 var Item = require('../../db/models/item.js');
-var Cart = require('../../db/models/cart.js')
+var Cart = require('../../db/models/cart.js');
+//var path = require('path');
 module.exports = router;
+
+// router.get('/', function(req, res, next){
+// 	res.sendFile(path.join(rootPath, './server/app/views/index.html'));
+// })
 
 router.use('/tutorial', require('./tutorial'));
 
