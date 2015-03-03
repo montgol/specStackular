@@ -30,7 +30,20 @@ router.get('/user', function (req, res, next) {
     })
 })
 
+//two scenarios - authenticated user and not.  
+//if authenticated, get and populate user info from database.
+//if not authenticated, create blank form.  
+
+//this assumes that the user is authenticated to get to the edit page.
+router.get('/user/edit', function (req, res, next) {
+    // if (req.user) 
+
+    //then get user info and send back
+        //if not, then send nothing...
+})
+
 router.post('/user/edit', isAuthenticated, function (req, res, next) { //username sent as a query
+    isAuthenticated(req, res, next); //checks if req.user exists and goes to next life if yes.
     var userinfo = req.body;
 })
 
