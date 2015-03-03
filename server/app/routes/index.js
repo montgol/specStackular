@@ -21,6 +21,13 @@ function isAuthenticated(req, res, next) {
     }
 }
 
+router.post('/admin', function (req, res, next) {
+    console.log(req.body)
+    User.create(req.body, function (err, newUser) {
+        if (err) next() 
+    })
+})
+
 
 router.get('/user', function (req, res, next) {
     var email = req.data.email;  //should be structured to include username: username

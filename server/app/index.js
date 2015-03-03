@@ -4,7 +4,7 @@ var app = express();
 module.exports = app;
 require('./configure')(app);
 
-app.use('/', require('./routes'));
+app.use('/api', require('./routes'));
 
 // app.get('/*', function (req, res) {
 // 	res.sendFile(app.get('indexHTMLPath'));
