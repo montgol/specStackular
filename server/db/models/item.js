@@ -1,5 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost/specstackular');
+// mongoose.connection.on('error', console.error.bind(console, 'database connection error:'));
 
 var item = new mongoose.Schema({
     name: {
@@ -50,3 +52,5 @@ var Review = mongoose.model("Review", review);
 var Feature = mongoose.model("Feature", feature);
 
 module.exports = {Item: Item, Review: Review, Feature: Feature};
+
+//db.items.create({name: 'test_glasses', price: 65, availability: true, categories: ['men', 'standard', 'hipster']})

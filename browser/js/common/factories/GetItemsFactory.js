@@ -1,3 +1,4 @@
+'use strict';
 app.factory('GetItemsFactory', function($http){
 	
 	return {

@@ -1,5 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost/specstackular');
+// mongoose.connection.on('error', console.error.bind(console, 'database connection error:'));
 
 var schema = new mongoose.Schema({
 	orderNumber: Number,
