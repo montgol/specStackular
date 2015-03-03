@@ -7,7 +7,7 @@ var item = new mongoose.Schema({
         required: true
     },
     price: {
-        type: Number,
+        type: Number, // This will produce a floating point issue --needs to be fixed
         required: true
     },
     availability: Boolean,
@@ -17,11 +17,13 @@ var item = new mongoose.Schema({
     features: [{type: mongoose.Schema.Types.ObjectId, ref: 'Feature'}]
 })
 
+// Make this a static method
 item.static.getReviews = function(){  //need to make sure syntax is correct
+    // Callback s/b called "item"
 	this.reviews.populate('Review', function(err, reviews){
 		if (err) return err;
 		console.log(reviews) // for testing purposes only
-		return reviews;
+		return reviews; // Omri suggested we may have an async issue -- return a callback?
 	})
 
 

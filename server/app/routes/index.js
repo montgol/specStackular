@@ -3,6 +3,7 @@ var router = require('express').Router();
 var User = require('../../db/models/user.js');
 var Item = require('../../db/models/item.js');
 var Cart = require('../../db/models/cart.js');
+var passport = require('passport');
 //var path = require('path');
 module.exports = router;
 
@@ -10,6 +11,8 @@ module.exports = router;
 // 	res.sendFile(path.join(rootPath, './server/app/views/index.html'));
 // })
 
+router.use(passport.initialize());
+router.use(passport.session());
 router.use('/tutorial', require('./tutorial'));
 
 function isAuthenticated(req, res, next) {

@@ -2,8 +2,8 @@
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-	orderNumber: Number,
-	userName: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}],
+	orderNumber: Number, // Not needed, necessarily -- can be tracked by __ID
+	userName: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}], // Doesn't need to be an array
 	items: [{type: mongoose.Schema.Types.ObjectId, ref: 'item'}],
 	shippingStatus: {type: String, default: 'Processing Order'},
 })
@@ -26,4 +26,4 @@ schema.methods.getUser = function(){
 	})
 }
 
-module.exports = mongoose.model('Card', schema);
+module.exports = mongoose.model('Cart', schema);
