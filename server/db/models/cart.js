@@ -1,9 +1,10 @@
+'use strict';
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
 	orderNumber: Number,
-	userName: [{type: Schema.Types.ObjectId, ref: 'user'}]
-	items: [{type: Schema.Types.ObjectId, ref: 'item'}],
+	userName: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}],
+	items: [{type: mongoose.Schema.Types.ObjectId, ref: 'item'}],
 	shippingStatus: {type: String, default: 'Processing Order'},
 })
 

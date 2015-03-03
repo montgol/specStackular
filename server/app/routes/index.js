@@ -19,7 +19,7 @@ function isAuthenticated(req, res, next) {
 
 router.get('/user', function (req, res, next) {
     var email = req.data.email;  //should be structured to include username: username
-    User.findOne({username}).exec(function (err, user) {
+    User.findOne({email: email}).exec(function (err, user) {
         if (err) return next(err);
         res.send(user);
     })
@@ -44,7 +44,7 @@ router.get('/itemlist', function (req, res, next) {  //should be requested by an
 
 router.get('/item/:id', function (req, res, next) { //requested by angular when item is selected
     var itemId = req.params.id;
-    Item.find({id: item})
+    Item.find({id: itemId})
 })
 
 router.get('/cart', function(req, res, next){
@@ -62,19 +62,20 @@ router.post('/item/addtocart/:productId', function (req, res, err) {
     // If not, add productid & quantity to cart
     var productId = req.params.productId;
     var quantity = req.params.quantity
-    User.findOne({username}).exec(function (err, user) {
-        if (err) return next(err);
-        var cart = this.cart;
-        if (cart.length !== 0) {
-            for (var item in cart) {
-                if (cart[item].id == productId) {
-                    cart[item].quantity += quantity;
-                }
-            }
-        }
-        else {
-            cart.addToCart(productId, quantity);
-        }
-    })
+    res.send(200);
+    // User.findOne({email: email}).exec(function (err, user) {
+    //     if (err) return next(err);
+    //     var cart = this.cart;
+    //     if (cart.length !== 0) {
+    //         for (var item in cart) {
+    //             if (cart[item].id == productId) {
+    //                 cart[item].quantity += quantity;
+    //             }
+    //         }
+    //     }
+    //     else {
+    //         cart.addToCart(productId, quantity);
+    //     }
+    // })
 
 })
