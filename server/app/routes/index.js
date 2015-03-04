@@ -52,9 +52,9 @@ router.get('/itemlist', function (req, res, next) {  //should be requested by an
 })
 
 router.get('/item/:name', function (req, res, next) { //requested by angular when item is selected
-    var itemname = req.params.name;
-    console.log(itemname);
-    Item.find({name: itemname}).exec(function(err, data){
+    var itemName = req.params.name;
+    console.log(itemName);
+    Item.find({name: itemName}).exec(function(err, data){
         if(err) return next(err);
         res.send(data);
     })
