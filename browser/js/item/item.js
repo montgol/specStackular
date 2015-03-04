@@ -3,7 +3,7 @@ app.config(function ($stateProvider) {
 
     // Register our *about* state.
     $stateProvider.state('item', {
-        url: '/item/:item',
+        url: '/item/:name',
         controller: 'itemController',
         templateUrl: 'js/item/item.html'
     });
@@ -17,11 +17,10 @@ app.controller('itemController', function ($scope, GetItemFactory, $state, $stat
 	//if not found, redirect to search page
 	//if found send tempalateUrl
 
-
-	GetItemFactory.getItem($stateParams.item).then(function(item, err){
+	GetItemFactory.getItem($stateParams.name).then(function(item, err){
 		if(err) $state.go('home');
 		else{
-			$scope.item = item;
+			$scope.item = item[0];
 			}
 		
 	});
