@@ -9,7 +9,7 @@ var item = new mongoose.Schema({
         required: true
     },
     price: {
-        type: Number,
+        type: Number, // This will produce a floating point issue --needs to be fixed
         required: true
     },
     availability: Boolean,
@@ -18,6 +18,7 @@ var item = new mongoose.Schema({
     reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review'}],
     features: [{type: mongoose.Schema.Types.ObjectId, ref: 'Feature'}]
 })
+
 
 item.methods.getReviews = function(cb){  //need to make sure syntax is correct
 	this.reviews.populate('Review', function(err, item){
