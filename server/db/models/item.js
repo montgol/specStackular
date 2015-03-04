@@ -1,5 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost/specstackular');
+// mongoose.connection.on('error', console.error.bind(console, 'database connection error:'));
 
 var item = new mongoose.Schema({
     name: {
@@ -17,16 +19,13 @@ var item = new mongoose.Schema({
     features: [{type: mongoose.Schema.Types.ObjectId, ref: 'Feature'}]
 })
 
-// Make this a static method
-item.static.getReviews = function(){  //need to make sure syntax is correct
-    // Callback s/b called "item"
-	this.reviews.populate('Review', function(err, reviews){
+
+item.methods.getReviews = function(cb){  //need to make sure syntax is correct
+	this.reviews.populate('Review', function(err, item){
 		if (err) return err;
-		console.log(reviews) // for testing purposes only
-		return reviews; // Omri suggested we may have an async issue -- return a callback?
+		console.log(item) // for testing purposes only
+		return cb(item);
 	})
-
-
 }
 
 var review = new mongoose.Schema({
@@ -52,3 +51,5 @@ var Review = mongoose.model("Review", review);
 var Feature = mongoose.model("Feature", feature);
 
 module.exports = {Item: Item, Review: Review, Feature: Feature};
+
+//db.items.create({name: 'test_glasses', price: 65, availability: true, categories: ['men', 'standard', 'hipster']})

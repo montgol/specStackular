@@ -1,14 +1,11 @@
 'use strict';
 var express = require('express');
 var app = express();
-module.exports = app;
+
 require('./configure')(app);
 
-app.use('/', require('./routes'));
+app.use('/api', require('./routes'));
 
-// app.get('/*', function (req, res) {
-// 	res.sendFile(app.get('indexHTMLPath'));
-// })
 
 app.get('/*', function (req, res) {
 
@@ -24,3 +21,5 @@ app.get('/*', function (req, res) {
 app.use(function (err, req, res, next) {
     res.status(err.status).send({ error: err.message });
 });
+
+module.exports = app;
