@@ -4,8 +4,7 @@ var User = require('../../db/models/user.js');
 var Item = require('../../db/models/item.js').Item;
 var Cart = require('../../db/models/cart.js');
 
-router.use(passport.initialize());
-router.use(passport.session());
+
 router.use('/tutorial', require('./tutorial'));
 
 function isAuthenticated(req, res, next) {
@@ -34,7 +33,17 @@ router.post('/item', function(req, res, next){
         if (err) return next(err);
         else res.send(result);
     });
+})
 
+router.post('/changePW', function(req, res, next){
+    console.log('into the router');
+    var info = req.body;
+    console.log(info);
+    // User.findOneAndUpdate(info.email, info.password, function(err, result){
+    //     console.log(err, 'err', result, 'result');
+    //     if (err) return next(err);
+    //     else res.send('Password Updated');
+    // });
 })
 
 router.post('/user/edit', isAuthenticated, function (req, res, next) { //username sent as a query

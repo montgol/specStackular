@@ -5,22 +5,23 @@ app.config(function ($stateProvider) {
     $stateProvider.state('userModify', {
         url: '/modify/user',
         controller: 'userModifyController',
-        templateUrl: 'js/itemCreate/itemCreate.html'
+        templateUrl: 'js/admin/admin.html'
     });
 
 });
 
-app.controller('userModifyController', function ($scope, CreateItemFactory, $state, $stateParams) {
+app.controller('userModifyController', function ($scope, changePWFactory, $state, $stateParams) {
 
-    $scope.item = {
-        categories: [] };
+    
+    $scope.submit = {
+        password: '',
+        email: ''
+    }
     $scope.success;
 
-    $scope.submitItem = function() {
-        //$scope.item.categories = $scope.item.categories.split(' ');
-        console.log('process started');
-        console.log($scope.item);
-        CreateItemFactory.postItem($scope.item).then(function(item, err){
+
+    $scope.changePW = function() {
+        changePWFactory.postPW($scope.submit).then(function(item, err){
             if(err) $scope.success= false;
             else{
                 console.log(item);
@@ -28,4 +29,5 @@ app.controller('userModifyController', function ($scope, CreateItemFactory, $sta
             }
         });
     }
+    //submit function for radio button that gives admin priveliges.  
 });

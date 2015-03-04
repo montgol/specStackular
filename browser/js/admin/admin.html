@@ -1,16 +1,10 @@
-
-<!-- Add User Data -->
+<!-- Look up user and Submit new password -->
 
 <div class='user-modify col-md-offset-5 col-md-3'>
-  <form name ='itemForm' ng-submit='itemForm.$valid && submitItem()'>
-  Item Name: <input required type='text' ng-model='item.name'/></br>
-  Price: <input required type='Number' ng-model='item.price'/></br>
-  Currently Available: <input type='radio' ng-model='item.available' value='True'> True  <input type='radio' ng-model='item.available' value='False'> False </br>
-  Image Link: <input type='text' ng-model='item.imgUrl'/></br>
-  Categories: <input type= 'text' ng-model='item.categories' /> </br>
-  Features : <input type= 'text'/><!-- implement later --> </br>
+  <form name ='userModForm' ng-submit='userModForm.$valid && changePW()'>
+  Email: <input required type='text' ng-model='submit.email'/></br>
+  New Password: <input required type='password' ng-model='submit.password'/></br>{{ submit.password }}
   <button type='submit'>Submit</button>
   </form>
 </div>
 
-<!-- Add Item -->
