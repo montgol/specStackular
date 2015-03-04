@@ -12,7 +12,7 @@ var item = new mongoose.Schema({
         type: Number, // This will produce a floating point issue --needs to be fixed
         required: true
     },
-    availability: Boolean,
+    availability: {type: Boolean, default: true},
     imgUrl: String,
     categories: [String],
     reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review'}],
@@ -29,7 +29,7 @@ item.methods.getReviews = function(cb){  //need to make sure syntax is correct
 }
 
 var review = new mongoose.Schema({
-	userId: {type: Number, required: true, ref: 'item'},
+	userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	rating: {type: Number, min: 1, max: 5, required: true},
 	text: String,
 	verified: Boolean
