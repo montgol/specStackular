@@ -28,6 +28,7 @@ describe('Models', function(){
 			});
 		});
 
+
 		describe('validations', function(){
 
 			var item;
@@ -36,6 +37,12 @@ describe('Models', function(){
 				console.log('first before each statement');
 				item = new Item();
 			});
+
+			afterEach(function(done){
+				mongoose.model('Item').remove({}, function(){
+				done();
+				});
+			})
 
 			it('should fail without a name', function(done){
 				item.validate(function(err){
@@ -64,18 +71,33 @@ describe('Models', function(){
 			})
 		});
 
-		describe('Functions', function(){
-
-		});
 	});
 
-	describe('Review Model', function(){
+	describe('Review Model + Item model', function(){
 
-		// beforeEach(function(done){
-		// 	Review.remove({}, done);
-		// });
+		beforeEach(function(done){
+			mongoose.model('Review').remove({}, done);
+
+		});
 
 		describe('validations', function(){
+
+			var review;
+			beforeEach(function(){
+				var Review = mongoose.model('Review');
+				console.log('first before each statement');
+				review = new Review();
+			});
+
+			afterEach(function(done){
+				mongoose.model('Review').remove({}, function(){
+				done();
+				});
+			})
+
+			is('Should require a username', function(){
+				var review = new Review({userId: 34544, })
+			})
 
 		});
 
