@@ -7,4 +7,6 @@ app.config(function ($stateProvider) {
         templateUrl: 'js/joinnow/joinnow.html'
     });
 
+    $stateProvider
+
 });
