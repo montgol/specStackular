@@ -100,7 +100,7 @@ describe('Models', function(){
 				done();
 			});
 
-			it('Should require a username', function(){
+			it('Should require a username', function(done){
 				review = new Review({rating: 4});
 				review.validate(function(err){
 					expect(err.errors).to.have.property('name');
@@ -108,7 +108,7 @@ describe('Models', function(){
 				});
 			});
 
-			it('Should require a rating', function(){
+			it('Should require a rating', function(done){
 				user.save(function(err, person){
 					review = new Review({userId: person._id});
 					review.validate(function(err){
@@ -119,16 +119,36 @@ describe('Models', function(){
 				
 			});
 
-			it('Should save a review when username and rating are entered', function(){
+			it('Should fail when there is no associated user', function(done){
+				review = new Review({rating: 4});
+						review.validate(function(err){
+							expect(err.errors).to.have.property('userId');
+							done();
+						});
+			});
+
+			it('Should fail when there is no associated item', function(done){
+				review = new Review({rating: 4});
+						review.validate(function(err){
+							expect(err.errors).to.have.property('itemId');
+							done();
+						});
+			});
+
+			it('Should save a review when username, item and rating are entered', function(done){
 				user.save(function(err, person){
 					if(err) throw err;
-					review = new Review({userId: person._id, rating: 4});
-					review.save(function(err){
-						if (err) throw err;
-						Review.find({}, function(err, data){
-							expect(data.length).to.equal(1);
+					item.save(function(err, product){
+						review = new Review({userId: person._id, itemId: product._id, rating: 4});
+						review.save(function(err){
+							if (err) throw err;
+							Review.find({}, function(err, data){
+								expect(data.length).to.equal(1);
+								done();
+							});
 						});
-					});
+					})
+					
 				});
 			})
 
