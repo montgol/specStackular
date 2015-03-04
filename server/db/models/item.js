@@ -1,5 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost/specstackular');
+// mongoose.connection.on('error', console.error.bind(console, 'database connection error:'));
 
 var item = new mongoose.Schema({
     name: {
@@ -7,7 +9,7 @@ var item = new mongoose.Schema({
         required: true
     },
     price: {
-        type: Number,
+        type: Number, // This will produce a floating point issue --needs to be fixed
         required: true
     },
     availability: Boolean,
@@ -17,13 +19,13 @@ var item = new mongoose.Schema({
     features: [{type: mongoose.Schema.Types.ObjectId, ref: 'Feature'}]
 })
 
+
 item.methods.getReviews = function(){  //need to make sure syntax is correct
 	this.populate('reviews', function(err, reviews){
 		if (err) return err;
-		console.log(reviews) // for testing purposes only
-		return reviews;
+		console.log(item) // for testing purposes only
+		return cb(item);
 	})
-
 }
 
 var review = new mongoose.Schema({
@@ -49,3 +51,5 @@ var Review = mongoose.model("Review", review);
 var Feature = mongoose.model("Feature", feature);
 
 module.exports = {Item: Item, Review: Review, Feature: Feature};
+
+//db.items.create({name: 'test_glasses', price: 65, availability: true, categories: ['men', 'standard', 'hipster']})

@@ -1,6 +1,8 @@
 'use strict';
 var crypto = require('crypto');
 var mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost/specstackular');
+// mongoose.connection.on('error', console.error.bind(console, 'database connection error:'));
 
 var schema = new mongoose.Schema({
     first_name: {

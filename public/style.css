@@ -91,3 +91,6 @@ tutorial-section-menu {
       tutorial-section-menu ul li:hover {
         background: #f3f3f3; }
 
+.ng-scope .item-creation {
+  font-size: 24px;
+  margin-top: 30px; }

@@ -1,15 +1,11 @@
 'use strict';
 var router = require('express').Router();
 var User = require('../../db/models/user.js');
-var Item = require('../../db/models/item.js');
+var Item = require('../../db/models/item.js').Item;
 var Cart = require('../../db/models/cart.js');
-//var path = require('path');
-module.exports = router;
 
-// router.get('/', function(req, res, next){
-// 	res.sendFile(path.join(rootPath, './server/app/views/index.html'));
-// })
-
+router.use(passport.initialize());
+router.use(passport.session());
 router.use('/tutorial', require('./tutorial'));
 
 function isAuthenticated(req, res, next) {
@@ -21,14 +17,6 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-router.post('/admin', function (req, res, next) {
-    console.log(req.body)
-    User.create(req.body, function (err, newUser) {
-        if (err) next() 
-    })
-})
-
-
 router.get('/user', function (req, res, next) {
     var email = req.data.email;  //should be structured to include username: username
     User.findOne({email: email}).exec(function (err, user) {
@@ -37,16 +25,16 @@ router.get('/user', function (req, res, next) {
     })
 })
 
-//two scenarios - authenticated user and not.  
-//if authenticated, get and populate user info from database.
-//if not authenticated, create blank form.  
+router.post('/item', function(req, res, next){
+    console.log('into the router');
+    var info = req.body;
+    console.log(info);
+    Item.create(info, function(err, result){
+        console.log(err, 'err', result, 'result');
+        if (err) return next(err);
+        else res.send(result);
+    });
 
-//this assumes that the user is authenticated to get to the edit page.
-router.get('/user/edit', function (req, res, next) {
-    // if (req.user) 
-
-    //then get user info and send back
-        //if not, then send nothing...
 })
 
 router.post('/user/edit', isAuthenticated, function (req, res, next) { //username sent as a query
@@ -67,10 +55,16 @@ router.get('/itemlist', function (req, res, next) {  //should be requested by an
     })
 })
 
-router.get('/item/:id', function (req, res, next) { //requested by angular when item is selected
-    var itemId = req.params.id;
-    Item.find({id: itemId})
+router.get('/item/:name', function (req, res, next) { //requested by angular when item is selected
+    var itemname = req.params.name;
+    console.log(itemname);
+    Item.find({name: itemname}).exec(function(err, data){
+        if(err) return next(err);
+        res.send(data);
+    })
 })
+
+
 
 router.get('/cart', function(req, res, next){
 	var user = req.user.session;
@@ -104,3 +98,7 @@ router.post('/item/addtocart/:productId', function (req, res, err) {
     // })
 
 })
+
+
+
+module.exports = router;
