@@ -5,6 +5,7 @@
   "main": "server/start.js",
   "scripts": {
     "start": "nodemon server/start.js",
+    "test": "mocha",
     "postinstall": "./node_modules/bower/bin/bower install && gulp build"
   },
   "dependencies": {
@@ -43,6 +44,8 @@
   "author": "Joe Alves <databentpx@gmail.com> (http://www.github.com/joedotjs)",
   "devDependencies": {
     "chai": "^2.1.0",
+    "chai-spies": "^0.5.1",
+    "chai-things": "^0.2.0",
     "mocha": "^2.1.0"
   }
 }

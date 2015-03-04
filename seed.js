@@ -1,7 +1,6 @@
-// async = require('async'),
+
 var mongoose = require('mongoose');
-var Item = require('./server/db/models/item.js').Item;
-var User = require('./server/db/models/user.js');
+var dbConnection = require('./server/db');
 
 var dataItem = [
 	{	name: 'test_glasses', price: 15, availability: true, imgUrl: 'http://regardingsales.com/wp-content/uploads/2013/06/20.jpg', categories: ['mens', 'cheap'] },
@@ -14,24 +13,27 @@ var dataUser = [
 
 console.log('welcome to the Seed...');
 
-
-
 function addToDb (){
+
+    var Item =  mongoose.model('Item');
 	for(var a=0, len = dataItem.length; a<len; a++){
     		console.log(dataItem[a]);
     		Item.create(dataItem[a], function(err, data){
     			if (err) throw err;
     		});
-    	}
-    	console.log('Finished adding Items');
+    }
+    console.log('Finished adding Items');
 
-    	for(var a=0, len = dataUser.length; a<len; a++){
-    		console.log(dataUser[a]);
-    		User.create(dataUser[a], function(err, data){
-    			if(err) throw err;
-    		});
-    	}
-    	console.log('Finished adding Users');
-    };
+    var User = mongoose.model('User');
+	for(var a=0, len = dataUser.length; a<len; a++){
+		console.log(dataUser[a]);
+		User.create(dataUser[a], function(err, data){
+			if(err) throw err;
+		});
+	}
+
+    console.log('Finished adding Users');
+    return;
+};
 
     addToDb();
