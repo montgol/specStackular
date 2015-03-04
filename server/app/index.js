@@ -6,9 +6,6 @@ require('./configure')(app);
 
 app.use('/api', require('./routes'));
 
-// app.get('/*', function (req, res) {
-// 	res.sendFile(app.get('indexHTMLPath'));
-// })
 
 app.get('/*', function (req, res) {
 
