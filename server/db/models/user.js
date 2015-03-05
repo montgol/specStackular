@@ -17,7 +17,6 @@ var schema = new mongoose.Schema({
         required: true
     },
     orders: [{type: mongoose.Schema.Types.ObjectId, ref: 'Order'}],
-    reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review'}],
     email: {
         type: String
     },

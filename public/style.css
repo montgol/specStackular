@@ -94,3 +94,11 @@ tutorial-section-menu {
 .ng-scope .item-creation {
   font-size: 24px;
   margin-top: 30px; }
+
+.icon-gray {
+  color: #5e5e5e;
+  font-size: x-large; }
+
+.icon-gold {
+  color: #d58512;
+  font-size: x-large; }
