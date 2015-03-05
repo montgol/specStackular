@@ -4,7 +4,7 @@ var User = require('../../db/models/user.js');
 var Item = require('../../db/models/item.js').Item;
 var Review = require('../../db/models/item.js').Review;
 // var Cart = require('../../db/models/cart.js');
-var Order = require('../../db/models/order.js');
+var Order = require('../../db/models/orders.js');
 
 router.use('/tutorial', require('./tutorial'));
 
@@ -17,12 +17,31 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-router.get('/user', function (req, res, next) {
-    var email = req.data.email;  //should be structured to include username: username
-    User.findOne({email: email}).exec(function (err, user) {
-        if (err) return next(err);
-        res.send(user);
+// router.get('/user', function (req, res, next) {
+//     User.find({}).exec(function (err, users) {
+//         if (err) return next(err);
+//         res.send(users);
+//     })
+// })
+
+router.get('/user/:email', function (req, res, next) { //requested by angular when item is selected
+    var info = req.params.email;
+    console.log('into the user email router with: ', info);
+    User.find({email: info}).exec(function(err, data){
+        if(err) return next(err);
+        res.send(data);
     })
+})
+
+router.post('/user', function (req, res, next) {
+    console.log('into the join router');
+    var info = req.body;
+    console.log(info);
+    User.create(info, function(err, result){
+        console.log(err, 'err', result, 'result');
+        if (err) return next(err);
+        else res.send(result);
+    });
 })
 
 router.post('/item', function(req, res, next){
@@ -62,7 +81,7 @@ router.get('/item/:name', function (req, res, next) { //requested by angular whe
     })
 })
 
-router.post('/reviews' function(req, res, next){
+router.post('/reviews', function(req, res, next){
     var review = req.body.review;
     var userId = req.body.userId;
     var itemId = req.body.itemId;
