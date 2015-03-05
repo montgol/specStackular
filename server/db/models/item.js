@@ -1,5 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
+var User = require('./user.js');
 // mongoose.connect('mongodb://localhost/specstackular');
 // mongoose.connection.on('error', console.error.bind(console, 'database connection error:'));
 
@@ -21,19 +22,33 @@ var item = new mongoose.Schema({
 
 
 item.methods.getReviews = function(cb){  //need to make sure syntax is correct
-	this.reviews.populate('Review', function(err, item){
+    console.log('got to the get');
+	this.populate('reviews', function(err, item){
 		if (err) return err;
-		console.log(item) // for testing purposes only
-		return cb(item);
+		//console.log(item.reviews) // for testing purposes only
+		return cb(item.reviews);
 	})
 }
 
 var review = new mongoose.Schema({
-	userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    itemId: {type: mongoose.Schema.Types.ObjectId, ref: "Item", required: true},
 	rating: {type: Number, min: 1, max: 5, required: true},
 	text: String,
 	verified: Boolean
 })
+
+review.methods.setReview = function(userId, itemId, cb){
+    //expects to be sent a review from the server, userId and itemId (can change for any identifier)
+    console.log('got to set Review');
+    Item.findById(itemId).update({$push: {reviews: this._id}}, function(err, itemdata){
+        if(err) throw err;
+        User.findById(userId).update({$push: {reviews: this._id}}, function(err, userdata){
+            if(err) throw err;
+            return cb('success');
+        });
+    });
+};
 
 review.virtual.verifyReview = function(){ 
 

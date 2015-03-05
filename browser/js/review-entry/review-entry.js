@@ -10,5 +10,5 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('reviewEntryController', function($scope, $state, $stateParams) {
-    console.log($stateParams.item.name);
+    console.log("params name:" + $stateParams.item.name);
 });

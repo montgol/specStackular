@@ -39,7 +39,8 @@ var schema = new mongoose.Schema({
     },
     google: {
         id: String
-    }
+    },
+    reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review'}]
 });
 
 
