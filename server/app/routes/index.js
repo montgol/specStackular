@@ -23,7 +23,8 @@ function isAuthenticated(req, res, next) {
 //     })
 // })
 
-router.get('/user/:email', function (req, res, next) { //requested by angular when item is selected
+
+router.get('/login/:email', function (req, res, next) { //requested by angular when item is selected
     var info = req.params.email;
     console.log('into the user email router with: ', info);
     User.find({email: info}).exec(function(err, data){
@@ -32,7 +33,7 @@ router.get('/user/:email', function (req, res, next) { //requested by angular wh
     })
 })
 
-router.post('/user', function (req, res, next) {
+router.post('/join', function (req, res, next) {
     console.log('into the join router');
     var info = req.body;
     console.log(info);
@@ -54,7 +55,7 @@ router.post('/item', function(req, res, next){
     });
 })
 
-router.post('/changePW', function(req, res, next){
+router.post('/admin/userModify', function(req, res, next){
     console.log('into the router');
     var info = req.body;
     console.log(info);

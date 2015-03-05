@@ -2,8 +2,8 @@
 app.config(function ($stateProvider) {
 
     // Register our *about* state.
-    $stateProvider.state('itemCreate', {
-        url: '/create/item',
+    $stateProvider.state('admin.itemCreate', {
+        url: '/itemCreate',
         controller: 'itemCreateController',
         templateUrl: 'js/itemCreate/itemCreate.html'
     });

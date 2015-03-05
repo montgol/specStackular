@@ -1,12 +1,2 @@
-<!-- Look up user and Submit new password -->
-
-<div class='user-modify col-md-offset-5 col-md-3'>
-  <ui-view></ui-view>
-  <form name ='userModForm' ng-submit='userModForm.$valid && changePW()'>
-  Email: <input required type='text' ng-model='submit.email'/></br>
-  New Password: <input type='password' ng-model='submit.password'/></br>
-  Make admin: <input type='checkbox' ng-model='submit.makeAdmin'/></br>
-  <button type='submit'>Submit</button>
-  </form>
-</div>
-
+<h3>Welcome Admin!</h3>
+<ui-view></ui-view>
