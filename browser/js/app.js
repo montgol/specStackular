@@ -11,6 +11,7 @@ app.controller('MainController', function ($scope) {
         { label: 'Log In', state: 'login'},
         { label: 'Create a product', state: 'itemCreate' },
         { label: 'About', state: 'about' },
+        { label: 'My Orders', state: 'orders'}
     ];
 
 });

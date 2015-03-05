@@ -17,12 +17,12 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-// router.get('/user', function (req, res, next) {
-//     User.find({}).exec(function (err, users) {
-//         if (err) return next(err);
-//         res.send(users);
-//     })
-// })
+router.get('/user', function (req, res, next) {
+    User.find({}).exec(function (err, users) {
+        if (err) return next(err);
+        res.send(users);
+    })
+})
 
 router.get('/user/:email', function (req, res, next) { //requested by angular when item is selected
     var info = req.params.email;
@@ -81,7 +81,7 @@ router.get('/item/:name', function (req, res, next) { //requested by angular whe
     })
 })
 
-router.post('/reviews', function(req, res, next){
+router.post('/reviews', function (req, res, next){
     var review = req.body.review;
     var userId = req.body.userId;
     var itemId = req.body.itemId;
@@ -93,28 +93,58 @@ router.post('/reviews', function(req, res, next){
             res.send(resp);
         })
     })
-
 })
 
-router.get('/order', function(req, res, next){
-	var user = req.user.session;
-	res.send(user);
+router.get('/order', function (req, res, next){
+	var user = req.user.session; //might need ._id
+    console.log(user);
+
+    if(!isAuthenticated){ //set info on the session
+
+    }
+    else{
+        Order.find({userId: user}, function(err, data){
+            if (err) throw next(err);
+            data.getLineItems(function(err, items){
+                var obj = {info: data, lineitems: items};
+                res.send(obj);
+            });
+        });
+    }
 })
 
-router.post('/item/addToOrder', function (req, res, err) {
-    // Quantity, userid, itemid
-    // req.params.productId
-    // Check to see if there is a cart for user with userid
-    // If not, create one
-    // Then check to see if this productid is already in user cart
-    // If so, increment quantity
-    // If not, add productid & quantity to cart
-    var productId = req.body.productId;
-    var quantity = req.body.quantity;
-    res.send(200);
+router.post('/order', function (req,res,next){
+    var userId = req.user.session._id;
+    var item = req.body.itemId;
+    var qty = req.body.qty;
+
+    Order.create({userId: userId}, function(err, page){
+        if(err) throw next(err);
+        page.setLineItem(item, qty, function(err, update){
+            if(err) throw next(err);
+            res.send(update);
+        })
+    })
+})
+
+
+router.post('/order/lineitem', function (req, res, err) {
     
-})
+    var orderId = req.body.orderId;
+    var itemId = req.body.itemId;
+    var quantity = req.body.quantity;
+    Order.findById(orderId).exec(function(err, myOrder){
+        if(err) throw next(err);
+        myOrder.setLineItem(itemId, quantity, function(err, updatedInfo){
+            if (err) throw next(err);
+            res.send(updatedInfo);
+        });
+    
+    });
+});
 
-
+router.use(function (err, req, res, next) {
+    res.status(err.status).send({ error: err.message });
+});
 
 module.exports = router;

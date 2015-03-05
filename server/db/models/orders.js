@@ -5,8 +5,7 @@ var mongoose = require('mongoose');
 // mongoose.connection.on('error', console.error.bind(console, 'database connection error:'));
 
 var schema = new mongoose.Schema({
-	orderNumber: Number,
-	userName: { type: mongoose.Schema.Types.ObjectId, ref: 'user'},
+	userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true},
 	lineItem: [{ item: {type: mongoose.Schema.Types.ObjectId, ref: 'item'},
 		quantity: Number
 	}],
@@ -14,9 +13,27 @@ var schema = new mongoose.Schema({
 })
 
 schema.methods.setLineItem = function(item, qty, cb){
-	this.update({$set: {lineItem: {item: item._id, quantity: qty} }}, function(err,data){
-		return cb(err, data);
-	})
+	if(qty > 0){
+		//if item doesn't exist
+		var loc = this.doesItemExist(item, cb) //location in array or falsy -1
+		if(loc){
+			this.update({'$push': {lineItem: {item: item._id, quantity: qty} }}, function(err,data){
+				return cb(err, data);
+			})
+		}
+		else{
+			this.update({'lineItem.item': item._id}, {'$set': {'lineItem.$.quantity': qty}}, function(err, data){
+				return cb(err, data);
+			})
+		}
+	}
+	//qty of zero equates to a delete request
+	else{
+		this.update({ '$splice': { lineItem: lineItemNumber-1 }}, function(err, thing){
+			console.log(err, 'err', thing, 'thing');
+			return cb(err, thing);
+		});
+	}
 }
 
 schema.methods.getLineItems = function(cb){
@@ -25,21 +42,17 @@ schema.methods.getLineItems = function(cb){
 	})
 }
 
-// schema.methods.changeLineItem = function(lineItemNumber, updatedQty, cb){
-// 	//check if qty is zero and splice out item
-// 	//if qty is non-zero, update qty
-// 	if(updatedQty === 0){
-// 		this.update({ $splice: { lineItem: lineItemNumber-1 }}, function(err, thing){
-// 			console.log(err, 'err', thing, 'thing');
-// 			return cb(err, thing);
-// 		});
-// 	}
-// 	else{
-// 		this.update({ $set: { lineItem[lineItemNumber-1].quantity: updatedQty }}, function(err, newObj){
-// 			return cb(err, newObj);
-// 		})
-// 	}
-// }
+schema.methods.doesItemExist = function(item, cb){
+	this.populate('lineItem').exec(function(err,items){
+		var location = -1;
+		items.forEach(function(thing, increment){
+			if(thing._id === item._id){
+				location = increment;
+			}
+		})
+		return cb(location);
+	})
+}
 
 schema.methods.changeLineItemPosition = function(cb){
 	//takes new state from session, writes over all 
