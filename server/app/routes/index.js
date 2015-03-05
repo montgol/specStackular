@@ -4,7 +4,7 @@ var User = require('../../db/models/user.js');
 var Item = require('../../db/models/item.js').Item;
 var Review = require('../../db/models/item.js').Review;
 // var Cart = require('../../db/models/cart.js');
-var Order = require('../../db/models/order.js');
+var Order = require('../../db/models/orders.js');
 
 router.use('/tutorial', require('./tutorial'));
 
@@ -62,7 +62,7 @@ router.get('/item/:name', function (req, res, next) { //requested by angular whe
     })
 })
 
-router.post('/reviews' function(req, res, next){
+router.post('/reviews', function(req, res, next){
     var review = req.body.review;
     var userId = req.body.userId;
     var itemId = req.body.itemId;
