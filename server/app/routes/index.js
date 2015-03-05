@@ -4,8 +4,6 @@ var User = require('../../db/models/user.js');
 var Item = require('../../db/models/item.js').Item;
 var Cart = require('../../db/models/cart.js');
 
-//router.use(passport.initialize());
-// router.use(passport.session());
 router.use('/tutorial', require('./tutorial'));
 
 function isAuthenticated(req, res, next) {
