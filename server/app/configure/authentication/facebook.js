@@ -16,10 +16,7 @@ module.exports = function (app) {
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
-<<<<<<< HEAD
-        console.log('got to verifyCallback')
-=======
->>>>>>> 22-lynda-glenn
+
         UserModel.findOne({ 'facebook.id': profile.id }, function (err, user) {
             if (err) return done(err);
 
