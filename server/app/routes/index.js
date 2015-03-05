@@ -2,7 +2,9 @@
 var router = require('express').Router();
 var User = require('../../db/models/user.js');
 var Item = require('../../db/models/item.js').Item;
-var Cart = require('../../db/models/cart.js');
+var Review = require('../../db/models/item.js').Review;
+// var Cart = require('../../db/models/cart.js');
+var Order = require('../../db/models/order.js');
 
 router.use('/tutorial', require('./tutorial'));
 
@@ -60,14 +62,27 @@ router.get('/item/:name', function (req, res, next) { //requested by angular whe
     })
 })
 
+router.post('/reviews' function(req, res, next){
+    var review = req.body.review;
+    var userId = req.body.userId;
+    var itemId = req.body.itemId;
 
+    Review.create(review, function(err, submittedReview){
+        if (err) throw next(err);
+        submittedReview.setReview(userId, itemId, function(err, resp){
+            if(err) throw next(err);
+            res.send(resp);
+        })
+    })
 
-router.get('/cart', function(req, res, next){
+})
+
+router.get('/order', function(req, res, next){
 	var user = req.user.session;
 	res.send(user);
 })
 
-router.post('/item/addtocart/:productId', function (req, res, err) {
+router.post('/item/addtoorder/:productId', function (req, res, err) {
     // Quantity, userid, itemid
     // req.params.productId
     // Check to see if there is a cart for user with userid
@@ -76,23 +91,9 @@ router.post('/item/addtocart/:productId', function (req, res, err) {
     // If so, increment quantity
     // If not, add productid & quantity to cart
     var productId = req.params.productId;
-    var quantity = req.params.quantity
+    var quantity = req.body.quantity
     res.send(200);
-    // User.findOne({email: email}).exec(function (err, user) {
-    //     if (err) return next(err);
-    //     var cart = this.cart;
-    //     if (cart.length !== 0) {
-    //         for (var item in cart) {
-    //             if (cart[item].id == productId) {
-    //                 cart[item].quantity += quantity;
-    //             }
-    //         }
-    //     }
-    //     else {
-    //         cart.addToCart(productId, quantity);
-    //     }
-    // })
-
+    
 })
 
 
