@@ -39,11 +39,24 @@ router.post('/changePW', function(req, res, next){
     console.log('into the router');
     var info = req.body;
     console.log(info);
-    // User.findOneAndUpdate(info.email, info.password, function(err, result){
-    //     console.log(err, 'err', result, 'result');
-    //     if (err) return next(err);
-    //     else res.send('Password Updated');
-    // });
+    User.findOne({email: info.email}, function(err, result){
+        console.log(err, 'err', result, 'result');
+        if (result) {
+            if (info.password) {
+                result.password = info.password;
+            }
+            if (info.makeAdmin) {
+                result.admin = info.makeAdmin
+            }
+            if (result) {
+                result.save(function(err, saved) {
+                    console.log(saved)
+                    if (err) return next(err);
+                    else res.send(saved);
+                })
+            }
+        }      
+    });
 })
 
 router.post('/user/edit', isAuthenticated, function (req, res, next) { //username sent as a query

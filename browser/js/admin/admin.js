@@ -8,6 +8,18 @@ app.config(function ($stateProvider) {
         templateUrl: 'js/admin/admin.html'
     });
 
+    $stateProvider.state('userModify.success', {
+        url: '/modify/user/success',
+        controller: 'userModifyController',
+        templateUrl: 'js/admin/adminSuccess.html'
+    });
+
+    $stateProvider.state('userModify.failure', {
+        url: '/modify/user/failure',
+        controller: 'userModifyController',
+        templateUrl: 'js/admin/adminFail.html'
+    });
+
 });
 
 app.controller('userModifyController', function ($scope, changePWFactory, $state, $stateParams) {
@@ -15,19 +27,25 @@ app.controller('userModifyController', function ($scope, changePWFactory, $state
     
     $scope.submit = {
         password: '',
-        email: ''
+        email: '',
+        makeAdmin: false
     }
     $scope.success;
 
 
     $scope.changePW = function() {
-        changePWFactory.postPW($scope.submit).then(function(item, err){
-            if(err) $scope.success= false;
+        changePWFactory.postPW($scope.submit).then(function(user, err){
+            $scope.submit = {}
+            if(err) {
+                $scope.success= false;
+                console.log('changing state')
+                $state.go('userModify.failure');
+            }
             else{
-                console.log(item);
+                console.log($scope.submit);
                 $scope.success = true;
+                $state.go('tutorial', {});
             }
         });
-    }
-    //submit function for radio button that gives admin priveliges.  
+    }  
 });
