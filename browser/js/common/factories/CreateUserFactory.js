@@ -3,7 +3,7 @@ app.factory('CreateUserFactory', function($http){
 	
 	return {
 		postUser: function(data){
-			//var options = {email: email};
+			console.log('into user factory', data);
 			return $http.post('/api/user', data).then(function(response){
 				return response.data;
 			})
