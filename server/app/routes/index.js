@@ -15,13 +15,6 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-// router.get('/user', function (req, res, next) {
-//     User.find({}).exec(function (err, users) {
-//         if (err) return next(err);
-//         res.send(users);
-//     })
-// })
-
 router.get('/user/:email', function (req, res, next) { //requested by angular when item is selected
     var info = req.params.email;
     console.log('into the user email router with: ', info);
@@ -111,7 +104,12 @@ router.post('/item/addtocart/:productId', function (req, res, err) {
     // })
 
 })
+// make error handler
 
+router.use(function(err, req, res, next){
+    res.send(500, "Can't see what you want, you must need glasses");
+    next();
+})
 
 
 module.exports = router;

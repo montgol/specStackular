@@ -43,9 +43,13 @@
   },
   "author": "Joe Alves <databentpx@gmail.com> (http://www.github.com/joedotjs)",
   "devDependencies": {
-    "chai": "^2.1.0",
+    "app": "^0.1.0",
+    "chai": "^2.1.1",
+    "chai-http": "^1.0.0",
     "chai-spies": "^0.5.1",
     "chai-things": "^0.2.0",
-    "mocha": "^2.1.0"
+    "istanbul": "^0.3.7",
+    "mocha": "^2.1.0",
+    "supertest": "^0.15.0"
   }
 }
