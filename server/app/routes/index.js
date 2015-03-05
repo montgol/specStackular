@@ -82,7 +82,7 @@ router.get('/order', function(req, res, next){
 	res.send(user);
 })
 
-router.post('/item/addtoorder/:productId', function (req, res, err) {
+router.post('/item/addToOrder', function (req, res, err) {
     // Quantity, userid, itemid
     // req.params.productId
     // Check to see if there is a cart for user with userid
@@ -90,8 +90,8 @@ router.post('/item/addtoorder/:productId', function (req, res, err) {
     // Then check to see if this productid is already in user cart
     // If so, increment quantity
     // If not, add productid & quantity to cart
-    var productId = req.params.productId;
-    var quantity = req.body.quantity
+    var productId = req.body.productId;
+    var quantity = req.body.quantity;
     res.send(200);
     
 })
