@@ -70,7 +70,7 @@ describe('Models', function(){
 
 	});
 
-	describe('Review Model + Item model', function(){
+	describe('Review Model + Item model + User model', function(){
 
 		beforeEach(function(done){
 			mongoose.model('Review').remove({}, done);	
@@ -94,17 +94,12 @@ describe('Models', function(){
 			});
 
 			afterEach(function(done){
-				mongoose.model('Review').remove({});
-				mongoose.model('User').remove({});
-				mongoose.model('Item').remove({});
-				done();
-			});
-
-			it('Should require a username', function(done){
-				review = new Review({rating: 4});
-				review.validate(function(err){
-					expect(err.errors).to.have.property('name');
-					done();
+				mongoose.model('Review').remove({}, function(){
+					mongoose.model('User').remove({}, function(){
+						mongoose.model('Item').remove({}, function(){
+							done();
+						})
+					})	
 				});
 			});
 
@@ -155,6 +150,59 @@ describe('Models', function(){
 		});
 
 		describe('Functions', function(){
+
+			var Item, User, Review;
+			var item, user, review;
+
+			beforeEach(function(done){
+
+				Item = mongoose.model('Item');
+				User = mongoose.model('User');
+				Review = mongoose.model('Review');	
+					item = new Item({name: 'Thing', price:10});
+					item.save(function(err, product){
+						user = new User({first_name: 'billy', last_name: 'bob'});
+						user.save(function(err, person){
+							review = new Review({itemId: product._id, userId: person._id, rating: 5});
+							review.save(function(err, note){
+								if (err) throw err;
+								note.setReview(person._id, product._id, function(){
+									done();
+								})								
+							})
+						});
+					});
+			})
+
+			afterEach(function(done){
+				mongoose.model('Review').remove({}, function(){
+					mongoose.model('User').remove({}, function(){
+						mongoose.model('Item').remove({}, function(){
+							done();
+						})
+					})	
+				});
+			});
+
+			it('Should be able to set reviews with setReview method', function(done){
+				Item.findOne
+				({name: 'Thing'}, function(err, product){
+					expect(product.reviews.length).to.equal(1);
+					done();
+				});
+			});
+
+			it('Should be able to find reviews by getReviews method', function(done){
+				Item.findOne({name: 'Thing'}, function(err, product){
+					if(err) throw err;
+					console.log('product', product);
+					product.getReviews(function(reviews){
+						expect(reviews.length).to.equal(1);
+						done();
+					})
+				})
+
+			})
 
 		});
 	});
