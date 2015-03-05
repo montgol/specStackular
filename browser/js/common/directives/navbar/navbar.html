@@ -8,5 +8,8 @@
                 <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
             </li>
         </ul>
+        <a ui-sref='admin'>
+            <button class="btn"  ng-show="currentUserAdmin">Admin</button>
+        </a>
     </div>
 </nav>

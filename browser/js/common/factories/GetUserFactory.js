@@ -10,5 +10,4 @@ app.factory('GetUserFactory', function($http){
 			})
 		}
 	}
-
 })

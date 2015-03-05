@@ -25,6 +25,7 @@ app.controller('itemCreateController', function ($scope, CreateItemFactory, $sta
 			else{
 				console.log(item);
 				$scope.success = true;
+				
 			}
 		});
 	}

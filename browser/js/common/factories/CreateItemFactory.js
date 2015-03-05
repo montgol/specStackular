@@ -6,7 +6,7 @@ app.factory('CreateItemFactory', function($http){
 			console.log('into the factory', data);
 			// return $http.post('/api/item', data);
 
-			return $http.post('/api/item', data).then(function(response){
+			return $http.post('/api/admin/itemCreate', data).then(function(response){
 				return response.data;
 			})
 		}

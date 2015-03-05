@@ -7,7 +7,7 @@ app.config(function ($stateProvider) {
     });
 })
 
-app.controller('userModifyController', function ($scope, userModifyFactory, $state, $stateParams) {
+app.controller('userModifyController', function ($scope, userModifyFactory, $state, $stateParams, AuthService) {
 
     
     $scope.submit = {

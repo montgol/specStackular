@@ -44,7 +44,7 @@ router.post('/join', function (req, res, next) {
     });
 })
 
-router.post('/item', function(req, res, next){
+router.post('/admin/itemCreate', function(req, res, next){
     console.log('into the router');
     var info = req.body;
     console.log(info);
