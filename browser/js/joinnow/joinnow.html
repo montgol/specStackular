@@ -25,7 +25,7 @@
         <div class="control-group">
             <label class="control-label" for="Facebook"></label>
             <div class="controls">
-                <a href="localhost:1337/auth/facebook" id="Facebook" name="Facebook" class="btn btn-primary">Sign up with Facebook</a>
+                <button ng-click="loginoauth('facebook')" id="Facebook" name="Facebook" class="btn btn-primary">Sign up with Facebook</button>
             </div>
         </div>
 
@@ -33,9 +33,11 @@
         <div class="control-group">
             <label class="control-label" for="Google"></label>
             <div class="controls">
-                <button id="Google" name="Google" class="btn btn-info">Sign up with Google</button>
+                <button ng-click="loginoauth('google')" id="Google" name="Google" class="btn btn-info">Sign up with Google</button>
             </div>
         </div>
 
     </fieldset>
 </form>
+<p></p>
+<p><a href="#">I'm already a member. Log me in!</a></p>
