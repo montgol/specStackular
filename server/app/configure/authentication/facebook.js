@@ -16,9 +16,7 @@ module.exports = function (app) {
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
-
         UserModel.findOne({ 'facebook.id': profile.id }, function (err, user) {
-
             if (err) return done(err);
 
             if (user) {
@@ -27,24 +25,27 @@ module.exports = function (app) {
                 UserModel.create({
                     facebook: {
                         id: profile.id
-                    }
-                }).then(function (user) {
+                    },
+                    first_name: profile.name.givenName,
+                    last_name: profile.name.familyName
+                }).then(function (err, user) {
                     done(null, user);
                 });
             }
 
         });
 
+            
     };
 
     passport.use(new FacebookStrategy(facebookCredentials, verifyCallback));
 
     app.get('/auth/facebook', passport.authenticate('facebook'));
-
+    console.log('looking app.get/auth');
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', { failureRedirect: '/login' }),
         function (req, res) {
-            res.redirect('/user');
+            res.redirect('/');
         });
 
 };
