@@ -3,8 +3,9 @@ app.factory('GetUserFactory', function($http){
 	
 	return {
 		getUser: function(email){
+			console.log('inside factor with: ',email);
 			//var options = {email: email};
-			return $http.get('/api/user', {data: email}).then(function(response){
+			return $http.get('/api/user/' + email).then(function(response){
 				return response.data;
 			})
 		}

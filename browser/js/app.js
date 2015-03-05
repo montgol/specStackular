@@ -8,6 +8,7 @@ app.controller('MainController', function ($scope) {
         { label: 'Home', state: 'home' },
         { label: 'Product list', state: 'products' },
         { label: 'Register', state: 'join' },
+        { label: 'Log In', state: 'login'},
         { label: 'Create a product', state: 'itemCreate' },
         { label: 'About', state: 'about' },
     ];
