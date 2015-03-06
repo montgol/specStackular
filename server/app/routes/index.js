@@ -6,6 +6,7 @@ var Review = require('../../db/models/item.js').Review;
 // var Cart = require('../../db/models/cart.js');
 var Order = require('../../db/models/orders.js');
 
+
 router.use('/tutorial', require('./tutorial'));
 
 function isAuthenticated(req, res, next) {
@@ -139,12 +140,12 @@ router.post('/order/lineitem', function (req, res, next) {
             if (err) throw next(err);
             res.send(updatedInfo);
         });
-    
     });
 });
 
+
 router.use(function (err, req, res, next) {
-    res.status(err.status).send({ error: err.message });
+    res.status(err.status).send({ error: "Can't see what you want, you must need glasses" });
 });
 
 module.exports = router;

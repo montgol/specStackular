@@ -233,9 +233,31 @@ describe('Models', function(){
 			});
 		});
 
+			it('should direct to direct to admin page if admin'), function() {
+
+			};
+
 		describe('Functions', function(){
 
 		});
-	})
+	});
 
+	describe('Cart Model', function(){
+		var Cart;
+		beforeEach(function(done){
+			Cart = mongoose.model('Cart');
+			Cart.remove({}, done);
+
+		});
+
+		describe('validations', function(){
+			it('should have a user name', function(done){
+				var cart = new Cart({orderNumber: 1});
+				user.validate(function(err){
+						expect(err.errors).to.have.property('first_name');
+						done();
+				});
+			});
+		});
+	})
 })
