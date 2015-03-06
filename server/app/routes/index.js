@@ -143,6 +143,7 @@ router.get('/item/:name', function (req, res, next) { //requested by angular whe
     })
 })
 
+<<<<<<< HEAD
 router.post('/reviews', function (req, res, next){
     var review = req.body.review;
     var userId = req.body.userId;
@@ -155,6 +156,12 @@ router.post('/reviews', function (req, res, next){
             res.send(resp);
         })
     })
+=======
+
+router.get('/cart', function(req, res, next){
+	var user = req.user.session;
+	res.send(user);
+>>>>>>> master
 })
 
 router.get('/order', function (req, res, next){
