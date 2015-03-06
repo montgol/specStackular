@@ -19,28 +19,11 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 	$scope.activeorders=[];
 	$scope.pastorders=[];
 	$scope.prof;
+	$scope.sum = 0;
+	$scope.totalQty = 0; 
+	$scope.tempVal;
 
-	$scope.sum = function(){
-
-	};
-
-	$scope.totalQty = function(){
-
-	};
-
-
-	$scope.updateOrder = function(){
-		//takes in information about the user, 
-		OrderFactory.updateOrder();
-
-	}; 
-	//get user information and send Id
-
-	$scope.showCookie = function(){
-		console.log($cookieStore.get('Order'));
-		$scope.activeorders = $cookieStore.get('Order');
-	}
-
+	//check if user is authenticated, populate order from db, set order to cookie
 	// if(authenticated){
 	// 	OrderFactory.getOrders().then(function(items, err){
 	// 		if (err) console.log('Error: ', err);
@@ -61,10 +44,66 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 	// 		}
 	// 	});
 	// }
-
-	// else{
 		$scope.activeorders = $cookieStore.get('Order');
 		$scope.prof = 'User';
-	// }
+		sum();
+		totalQty();
+
+	function totalQty (){
+		var totalQ = 0;
+		console.log('got to sum');
+		$scope.activeorders.forEach(function(lineItem){
+			totalQ= totalQ + lineItem.qty;
+		})
+		$scope.totalQty = totalQ;
+	};
+
+	$scope.removeItem = function(item){
+		//remove item from db, remove item from cookie, remove item from scope
+		//if authenticated, remove item from order
+		var myOrderCookie = $cookieStore.get('Order');
+		var location
+		myOrderCookie.forEach(function(element, index){
+			if(element.item.name === item.name){
+				location = index;
+			}
+		});
+		var removedItem = myOrderCookie.splice(location, 1);
+		$cookieStore.put('Order', myOrderCookie);
+		$scope.activeorders = myOrderCookie;
+		sum();
+		totalQty();
+	}
+
+	$scope.updateOrder = function(){
+		//takes in information about the user, 
+		OrderFactory.updateOrder();
+
+	}; 
+	$scope.newNumber = function(item, val){
+		console.log('item', item, 'val', val);
+	}
+	//get user information and send Id
+
+	$scope.showCookie = function(){
+		console.log($cookieStore.get('Order'));
+		$scope.activeorders = $cookieStore.get('Order');
+	}
+
+	$scope.deleteCookie = function(){
+		$cookieStore.remove('Order');
+		console.log($cookieStore.get('Order'));
+		
+	}
+	
+
+	function sum (){
+		var total = 0;
+		console.log('got to sum');
+		$scope.activeorders.forEach(function(lineItem){
+			total= total + lineItem.item.price * lineItem.qty;
+		})
+		$scope.sum = total;
+	};
 	
 });
