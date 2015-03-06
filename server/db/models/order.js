@@ -7,7 +7,8 @@ var schema = new mongoose.Schema({
 	orderNumber: Number,
 	userName: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
 	items: [{type: mongoose.Schema.Types.ObjectId, ref: 'item'}],
-	shippingStatus: {type: String, default: 'Processing Order'},
+    quantity: Number,
+    status: {type: String, enum: ['open','placed','shipped','complete']}
 })
 
 schema.methods.getItems = function(cb){
