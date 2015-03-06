@@ -6,6 +6,7 @@ var Review = require('../../db/models/item.js').Review;
 // var Cart = require('../../db/models/cart.js');
 var Order = require('../../db/models/orders.js');
 
+
 router.use('/tutorial', require('./tutorial'));
 
 function isAuthenticated(req, res, next) {
@@ -16,13 +17,6 @@ function isAuthenticated(req, res, next) {
         next(err);
     }
 }
-
-// router.get('/user', function (req, res, next) {
-//     User.find({}).exec(function (err, users) {
-//         if (err) return next(err);
-//         res.send(users);
-//     })
-// })
 
 router.get('/user/:email', function (req, res, next) { //requested by angular when item is selected
     var info = req.params.email;
@@ -114,7 +108,12 @@ router.post('/item/addToOrder', function (req, res, err) {
     res.send(200);
     
 })
+// make error handler
 
+router.use(function(err, req, res, next){
+    res.send(500, "Can't see what you want, you must need glasses");
+    next();
+})
 
 
 module.exports = router;
