@@ -13,7 +13,7 @@ nav {
 navbar {
   display: block;
   background: #ffffff;
-  border-bottom: solid 1px; }
+  border-bottom: solid 0px; }
   navbar .specstackular-logo:hover {
     cursor: pointer; }
   navbar a {
@@ -36,13 +36,13 @@ navbar {
     margin-bottom: 0px !important; }
 
 .navbar-header {
-  padding-top: 4px;
-  padding-bottom: 3px;
-  border-right: solid 1px #000000; }
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-right: solid 0px #000000; }
 
 .nav-container {
   padding-left: 0px !important;
-  margin-left: 2px; }
+  margin-left: 0px; }
 
 .divider-bar {
   margin-left: 50px;
@@ -51,14 +51,24 @@ navbar {
 #spacerthing {
   margin-left: 30px; }
 
-#home specstackular-logo {
-  padding-top: 30px;
-  width: 150px;
-  margin: 0 auto;
-  text-align: right; }
-#home h1 {
+#home {
+  color: #777777; }
+
+h1 {
+  font-face: roman;
+  color: #000000;
   margin-top: 40px;
   text-align: center; }
+
+.breadcrumb {
+  position: absolute;
+  left: 24px;
+  margin-top: 24px;
+  font-size: x-small;
+  background: #ffffff; }
+
+#glassbox {
+  padding-top: 100px; }
 
 #about {
   padding-bottom: 50px; }
