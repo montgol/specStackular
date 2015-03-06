@@ -16,7 +16,7 @@ var schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    orders: [],
+    orders: [{type: mongoose.Schema.Types.ObjectId, ref: 'Order'}],
     email: {
         type: String
     },
@@ -29,12 +29,13 @@ var schema = new mongoose.Schema({
     salt: {
         type: String
     },
-    twitter: {
-        id: String,
-        username: String,
-        token: String,
-        tokenSecret: String
-    },
+    // Commented out because we are not using Twitter oauth --Glenn
+    //twitter: {
+    //    id: String,
+    //    username: String,
+    //    token: String,
+    //    tokenSecret: String
+    //},
     facebook: {
         id: String
     },
@@ -43,6 +44,8 @@ var schema = new mongoose.Schema({
     },
     reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review'}]
 });
+
+
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.
