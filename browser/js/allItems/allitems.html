@@ -1,7 +1,6 @@
 <div ng-repeat='item in items' class='item col-md-2 col-md-offset-1'>
     <div class='bounding box'>
-        <h2>{{item.name}}
-            <h2>
+        <h2>{{item.name}} <h2>
 		<span>{{item.price | currency }}<span>
 		<img ng-src='{{item.imgUrl}}'/>
 		<h3 ng-repeat='tag in item.categories'>{{tag}}</h3>
@@ -22,5 +21,4 @@
         </form>
     </div>
 
-</div>
 </div>
