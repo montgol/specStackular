@@ -36,7 +36,7 @@ var dataItem = [
     {   name: 'spy_glasses', price: 90, availability: true, imgUrl: 'http://p.vitalmtb.com/photos/products/3641/photos/2579/s780_spy_blok_sungls_whtcrzyprnt_gry_11.jpg?1322090299', categories:['mens']},
     {   name: 'star_wars_glasses', price: 45, availability: true, imgUrl: 'http://dqqzjdqmiszdy.cloudfront.net/sites/default/files/content_designer_images/StarWars_2.jpg', categories:['kids', 'mens']},
     {   name: 'star_trek_glasses', price: 90, availability: true, imgUrl: 'http://www.vanguardproductsgroup.com/images/wordpress/uploads/2012/03/Glasses-with-concept-2-Sensor.jpg', categories:['mens', 'sunglasses']},
-    {   name: 'electric_glasses', price: 130, availability: true, imgUrl: 'http://7fe5adea5c04a064d14a-aa57143e2ca30795bf94ff3884a3b19b.r99.cf1.rackcdn.com/public/images/designer_eyeglasses/Electric/EV02400600_BSG5_matrix%20black.jpg', categories:['mens']}''
+    {   name: 'electric_glasses', price: 130, availability: true, imgUrl: 'http://7fe5adea5c04a064d14a-aa57143e2ca30795bf94ff3884a3b19b.r99.cf1.rackcdn.com/public/images/designer_eyeglasses/Electric/EV02400600_BSG5_matrix%20black.jpg', categories:['mens']},
     {   name: 'glow_glasses', price: 60, availability: true, imgUrl: 'http://cdn.shopify.com/s/files/1/0109/4872/products/rainbowzGLOW_IN_DARK_GREENside_1024x1024.jpeg?v=1411002667', categories:['kids']},
     {   name: 'lazy_guy', price: 80, availability: true, imgUrl: 'http://widgetlove.com/media/catalog/product/cache/1/image/32c3d0b93e1123322b0ba6dc090e7386/s/k/sku_h702101_3_1.jpg', categories:['mens', 'fashion']},
     {   name: 'wise_glasses', price: 30, availability: true, imgUrl: 'https://nodogaboutit.files.wordpress.com/2012/09/j0407016.jpg', categories:['pet']},

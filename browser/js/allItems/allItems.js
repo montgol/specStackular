@@ -18,4 +18,30 @@ app.controller('allItemsController', function ($scope, GetItemsFactory, $state, 
 			$scope.items = items;
 		}
 	});
+
 });
+
+app.controller('categoryController', function ($scope, GetItemsFactory, $state, $stateParams) {
+	
+	$scope.categories = [
+			'Mens',
+			'Womens',
+			'Child',
+			'Pet'
+	];
+
+
+	$scope.getCategory = function (category){
+			GetItemsFactory.getCategoryItems().then(function(items, err){
+					if(err) throw err;
+						else{
+							$scope.items = items;
+					};
+			});
+	};
+});
+
+
+
+
+

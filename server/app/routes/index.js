@@ -108,8 +108,7 @@ router.post('/item/addtocart/:productId', function (req, res, err) {
 // make error handler
 
 router.use(function(err, req, res, next){
-    res.send(500, "Can't see what you want, you must need glasses");
-    next();
+    res.status(err.status).send({ error: err.message });
 })
 
 
