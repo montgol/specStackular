@@ -7,11 +7,18 @@ fullstack-logo {
     display: block;
     width: 100%; }
 
+nav {
+  height: 55px !important; }
+
 navbar {
   display: block;
-  background: #ffffff; }
+  background: #ffffff;
+  border-bottom: solid 1px; }
+  navbar .specstackular-logo:hover {
+    cursor: pointer; }
   navbar a {
-    color: #000000; }
+    color: #849bae;
+    font-family: 'Alegreya SC', serif; }
     navbar a:hover {
       color: #000000; }
   navbar .nav > li > a {
@@ -19,10 +26,22 @@ navbar {
     navbar .nav > li > a.active {
       color: #808080; }
     navbar .nav > li > a:hover {
-      transition: color 0.2s; }
+      transition: color 0.1s;
+      background: none !important; }
     navbar .nav > li > a:focus {
       color: #808080;
-      background: transparent; }
+      background: none !important; }
+  navbar .specstackular-navbar {
+    margin-bottom: 0px !important; }
+
+.navbar-header {
+  padding-top: 4px;
+  padding-bottom: 3px;
+  border-right: solid 1px #000000; }
+
+.nav-container {
+  padding-left: 0px !important;
+  margin-left: 2px; }
 
 #home specstackular-logo {
   padding-top: 30px;

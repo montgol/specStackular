@@ -1,3 +1,7 @@
+nav {
+  height: 55px !important;
+}
+
 navbar {
 
   display: block;
@@ -8,11 +12,20 @@ navbar {
 //    width: 30px;
 //  }
 
+  border-bottom: solid 1px;
+
+  .specstackular-logo {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   a {
-    color: #000000;
+    color: #849bae;
     &:hover {
       color: #000000;
     }
+    font-family: 'Alegreya SC', serif;
   }
 
   .nav > li > a {
@@ -21,12 +34,30 @@ navbar {
       color: #808080;
     }
     &:hover {
-      transition: color 0.2s;
+      transition: color 0.1s;
+      background: none !important;
     }
     &:focus {
       color: #808080;
-      background: transparent;
+      background: none !important;
     }
   }
 
+  .specstackular-navbar {
+    margin-bottom: 0px !important;
+
+  }
+
 }
+
+.navbar-header {
+  padding-top: 4px;
+  padding-bottom: 3px;
+  border-right: solid 1px #000000;
+}
+
+.nav-container {
+  padding-left: 0px !important;
+  margin-left: 2px;
+}
+
