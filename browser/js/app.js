@@ -1,8 +1,9 @@
 'use strict';
 // var app = angular.module('FullstackGeneratedApp', ['ui.router', 'fsaPreBuilt']);
+<<<<<<< HEAD
 var app = angular.module('specStackular', ['ui.router', 'fsaPreBuilt']);
 app.controller('MainController', function ($scope, $rootScope) {
-    //
+
     // Given to the <navbar> directive to show the menu.
     $scope.menuItems = [
         { label: 'Home', state: 'home' },
@@ -10,6 +11,7 @@ app.controller('MainController', function ($scope, $rootScope) {
         { label: 'Register', state: 'join' },
         { label: 'Log In', state: 'login'},   
         { label: 'About', state: 'about' },
+        { label: 'My Orders', state: 'orders'}
     ];
     $scope.adminItems= [
         { label: 'Create product', state: 'admin.itemCreate' },

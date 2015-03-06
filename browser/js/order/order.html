@@ -1,0 +1,17 @@
+<div id="order">
+	<div class='summary'>
+		<h1>{{req.session}}'s Active Orders</h1>
+		<div class='individualOrder' ng-repeat='line in $scope.profile.lineitem'>
+			<span class='name'>{{ line.item.name }}</span>
+			<span class='price'>{{line.item.price}}</span>
+			<span class='quantity'>{{line.quantity}}</span>
+			<button type='button-danger'>Remove Item</button>
+		</div>
+		<div class = 'reviews'>
+			<h2>Past Orders</h2>
+			<ul>
+				<h3>TBD</h3>
+			</ul>
+		</div>
+	</div>
+</div>
