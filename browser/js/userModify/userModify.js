@@ -24,12 +24,10 @@ app.controller('userModifyController', function ($scope, userModifyFactory, $sta
             if(err) {
                 $scope.success= false;
                 console.log('changing state')
-                $state.go('userModify.failure');
             }
             else{
                 console.log($scope.submit);
                 $scope.success = true;
-                $state.go('tutorial', {});
             }
         });
     }  
