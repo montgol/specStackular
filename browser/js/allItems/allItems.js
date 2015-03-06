@@ -17,7 +17,7 @@ app.config(function ($stateProvider) {
         url: '/products',
         controller: 'allItemsController',
         templateUrl: 'js/allitems/allitems.html'
-    });
+    })
 
 });
 

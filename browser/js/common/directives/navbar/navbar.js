@@ -3,7 +3,9 @@ app.directive('navbar', function () {
     return {
         restrict: 'E',
         scope: {
-          items: '='
+          items: '=',
+          currentUserAdmin: '=',
+          adminItems: '='
         },
         templateUrl: 'js/common/directives/navbar/navbar.html'
     };

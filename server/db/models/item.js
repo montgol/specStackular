@@ -24,6 +24,7 @@ var item = new mongoose.Schema({
 item.methods.getReviews = function(cb){  //need to make sure syntax is correct
     console.log('got to the get');
 	this.populate('reviews', function(err, item){
+
 		if (err) return err;
 		//console.log(item.reviews) // for testing purposes only
 		return cb(err, item.reviews);

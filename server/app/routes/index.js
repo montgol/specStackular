@@ -25,7 +25,7 @@ router.get('/user', function (req, res, next) {
     })
 })
 
-router.get('/user/:email', function (req, res, next) { //requested by angular when item is selected
+router.get('/login/:email', function (req, res, next) { //requested by angular when item is selected
     var info = req.params.email;
     console.log('into the user email router with: ', info);
     User.find({email: info}).exec(function(err, data){
@@ -34,7 +34,7 @@ router.get('/user/:email', function (req, res, next) { //requested by angular wh
     })
 })
 
-router.post('/user', function (req, res, next) {
+router.post('/join', function (req, res, next) {
     console.log('into the join router');
     var info = req.body;
     console.log(info);
@@ -45,7 +45,7 @@ router.post('/user', function (req, res, next) {
     });
 })
 
-router.post('/item', function(req, res, next){
+router.post('/admin/itemCreate', function(req, res, next){
     console.log('into the router');
     var info = req.body;
     console.log(info);
@@ -56,7 +56,67 @@ router.post('/item', function(req, res, next){
     });
 })
 
+router.post('/admin/userModify', function(req, res, next){
+    console.log('into the router');
+    var info = req.body;
+    console.log(info);
+    User.findOne({email: info.email}, function(err, result){
+        console.log(err, 'err', result, 'result');
+        if (result) {
+            if (info.password) {
+                result.password = info.password;
+            }
+            if (info.makeAdmin) {
+                result.admin = info.makeAdmin
+            }
+            if (result) {
+                result.save(function(err, saved) {
+                    console.log(saved)
+                    if (err) return next(err);
+                    else res.send(saved);
+                })
+            }
+        }      
+    });
+})
+
+//Admin orderModify Routes
+
+router.get('/admin/order', function (req, res, next) {
+    Order.find({}).exec(function (err, orders) {
+        if (err) return next(err);
+        res.send(orders);
+    })
+})
+
+router.put('/admin/order', function (req, res, next){
+    console.log('into the router');
+    var info = req.body;
+    console.log(info);
+    Order.findOne({email: info.email}, function(err, result){
+        console.log(err, 'err', result, 'result');
+        if (result) {
+            if (info.password) {
+                result.password = info.password;
+            }
+            if (info.makeAdmin) {
+                result.admin = info.makeAdmin
+            }
+            if (result) {
+                result.save(function(err, saved) {
+                    console.log(saved)
+                    if (err) return next(err);
+                    else res.send(saved);
+                })
+            }
+        }      
+    });
+})
+
+
+
 router.post('/user/edit', isAuthenticated, function (req, res, next) { //username sent as a query
+    isAuthenticated(req, res, next); //checks if req.user exists and goes to next life if yes.
     var userinfo = req.body;
 })
 
