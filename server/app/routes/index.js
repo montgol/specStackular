@@ -15,12 +15,24 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-router.get('/user', function (req, res, next) {
-    var email = req.data.email;  //should be structured to include username: username
-    User.findOne({email: email}).exec(function (err, user) {
-        if (err) return next(err);
-        res.send(user);
+router.get('/user/:email', function (req, res, next) { //requested by angular when item is selected
+    var info = req.params.email;
+    console.log('into the user email router with: ', info);
+    User.find({email: info}).exec(function(err, data){
+        if(err) return next(err);
+        res.send(data);
     })
+})
+
+router.post('/user', function (req, res, next) {
+    console.log('into the join router');
+    var info = req.body;
+    console.log(info);
+    User.create(info, function(err, result){
+        console.log(err, 'err', result, 'result');
+        if (err) return next(err);
+        else res.send(result);
+    });
 })
 
 router.post('/item', function(req, res, next){
@@ -60,8 +72,6 @@ router.get('/item/:name', function (req, res, next) { //requested by angular whe
     })
 })
 
-
-
 router.get('/cart', function(req, res, next){
 	var user = req.user.session;
 	res.send(user);
@@ -94,7 +104,12 @@ router.post('/item/addtocart/:productId', function (req, res, err) {
     // })
 
 })
+// make error handler
 
+router.use(function(err, req, res, next){
+    res.send(500, "Can't see what you want, you must need glasses");
+    next();
+})
 
 
 module.exports = router;
