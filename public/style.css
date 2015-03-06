@@ -9,23 +9,19 @@ fullstack-logo {
 
 navbar {
   display: block;
-  background: #a1a1a1; }
-  navbar fullstack-logo {
-    padding-top: 10px;
-    margin-right: 20px;
-    width: 30px; }
+  background: #ffffff; }
   navbar a {
-    color: white; }
+    color: #000000; }
     navbar a:hover {
-      color: white; }
+      color: #000000; }
   navbar .nav > li > a {
     cursor: pointer; }
     navbar .nav > li > a.active {
-      color: #f30046; }
+      color: #808080; }
     navbar .nav > li > a:hover {
       transition: color 0.2s; }
     navbar .nav > li > a:focus {
-      color: #f30046;
+      color: #808080;
       background: transparent; }
 
 #home specstackular-logo {
