@@ -23,7 +23,7 @@
 			<span class='name col-md-2 col-md-offset-1'>{{ line.item.name }}</span>
 			<span class='name col-md-2'>{{ line.item.price | currency }}</span>
 			<span class='quantity col-md-1'>{{line.qty}}</span>
-			<input type='text' name='newQty' class='quantity col-md-1' value='{{line.qty}}' ng-model='tempVal'/>
+			<input type='text' name='newQty' class='quantity col-md-1' ng-init="tempVal = line.qty" ng-model='tempVal'/>
 			<button type='button' ng-click='newNumber(line, tempVal)'>Update</button>
 			<button type='button-danger' ng-click='removeItem(line.item)'>Remove Item</button>
 		</div>
