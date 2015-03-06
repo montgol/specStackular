@@ -29,6 +29,7 @@ navbar {
   }
 
   .nav > li > a {
+    margin-right: 12px;
     cursor: pointer;
     &.active {
       color: #808080;
