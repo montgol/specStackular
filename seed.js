@@ -52,11 +52,11 @@ var dataUser = [
     ];
 
 var dataOrderInitial = [
-    { quantity: 1, status: 'open'},
-    { quantity: 2, status: 'placed'},
-    { quantity: 2, status: 'shipped'},
-    { quantity: 3, status: 'complete'}
+    { lineItem: [{ quantity: 1}], status: 'open'},
+    { lineItem: [{ quantity: 2}], status: 'placed'}
 ]
+
+var dataOrder = addIDsToOrders(dataOrderInitial)
 
 function createItemsAndReturnIDs () {
     var Item =  mongoose.model('Item');
@@ -65,6 +65,7 @@ function createItemsAndReturnIDs () {
     for(var a=dataItem.length-4, len = dataItem.length; a<len; a++){
         var item = new Item(dataItem[a]);
         itemIdArray.push(item._id)
+        item.save()
     }
     return itemIdArray
 }
@@ -73,31 +74,26 @@ function createUsersAndReturnIDs () {
     var User = mongoose.model('User');
     var userIdArray = [];
 
-    for(var a=dataUser.length-2, len = dataItem.length; a<len; a++){
-        var user = new User(dataItem[a]);
+    for(var a=dataUser.length-2, len = dataUser.length; a<len; a++){
+        var user = new User(dataUser[a]);
         userIdArray.push(user._id)
+        user.save()
     }
     return userIdArray
-}
+} 
 
-function addIdsToOrders (itemIdArray, userIdArray, orderInfo) {
+function addIDsToOrders (orderInfo) {
+    var dataOrder = [];
+    var itemIdArray = createItemsAndReturnIDs()
+    var userIdArray = createUsersAndReturnIDs()
 
-    return {
-        userId: orderUser._id,
-        lineItem: [{ 
-            item: orderItem._id,
-            quantity: orderInfo.quantity
-        }],
-        status: orderInfo.status
+    for(var a=0, len = orderInfo.length; a<len; a++){
+        orderInfo[a].userId = userIdArray[a];
+        orderInfo[a].lineItem[0].item = itemIdArray[a];
+        dataOrder.push(orderInfo[a])
     }
-}
-
-
-var dataOrder = [
-    { }
-]
-
-
+    return dataOrder
+} 
 
 console.log('welcome to the Seed...');
 
@@ -125,6 +121,7 @@ function addToDb (){
     console.log('Finished adding Users');
 
     var Order = mongoose.model('Order');
+
     for(var a=0, len = dataOrder.length; a<len; a++){
         console.log(dataOrder[a]);
         Order.create(dataOrder[a], function(err, data){
