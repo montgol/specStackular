@@ -12,7 +12,7 @@ var dataItem = [
     {   name: 'pixel_glasses', price: 60, availability: true, imgUrl: 'http://lostinasupermarket.com/wp-content/uploads/2010/05/sd2.jpg', categories:['kids']},
     {   name: 'guitar_glasses', price: 140, availability: true, imgUrl: 'http://media-cache-ak0.pinimg.com/736x/96/ab/52/96ab52d2aab667bfe17277b1848333bc.jpg', categories:['mens', 'kids']},
     {   name: 'jeweled_glasses', price: 120, availability: true, imgUrl: 'http://site.wholesalecelebshades.com/blog/wp-content/uploads/2012/08/fete-jeweled-cat-eye-glasses-539g.gif?w=300', categories:['womens', 'fashion']},
-    {   name: 'harvest_glasses', price: 140, availability: true, imgUrl: 'http://cdnb.lystit.com/photos/e7d4-2014/06/26/karen-walker-black-special-fit-harvest-sunglasses-crazy-tortsmoke-mono-product-1-21194792-3-442554778-normal_large_flex.jpeg', categories['mens', 'sunglasses']},
+    {   name: 'harvest_glasses', price: 140, availability: true, imgUrl: 'http://cdnb.lystit.com/photos/e7d4-2014/06/26/karen-walker-black-special-fit-harvest-sunglasses-crazy-tortsmoke-mono-product-1-21194792-3-442554778-normal_large_flex.jpeg', categories:['mens', 'sunglasses']},
     {   name: 'margarita_glasses', price: 120, availability: true, imgUrl: 'http://media-cache-ak0.pinimg.com/736x/67/0d/82/670d82445c65765add7a8262bb14530e.jpg', categories:['womens', 'fashion']},
     {   name: 'leopard_glasses', price: 220, availability: true, imgUrl: 'http://www.polyvore.com/cgi/img-thing?.out=jpg&size=l&tid=65658529', categories:['womens', 'fashion', 'sunglasses']},
     {   name: 'louis_vuitton', price: 595, availability: true, imgUrl: 'https://aesthetenews.files.wordpress.com/2012/10/z0506u_pm2_front-view.png', categories:['mens', 'expensive', 'fashion']},
@@ -36,7 +36,7 @@ var dataItem = [
     {   name: 'spy_glasses', price: 90, availability: true, imgUrl: 'http://p.vitalmtb.com/photos/products/3641/photos/2579/s780_spy_blok_sungls_whtcrzyprnt_gry_11.jpg?1322090299', categories:['mens']},
     {   name: 'star_wars_glasses', price: 45, availability: true, imgUrl: 'http://dqqzjdqmiszdy.cloudfront.net/sites/default/files/content_designer_images/StarWars_2.jpg', categories:['kids', 'mens']},
     {   name: 'star_trek_glasses', price: 90, availability: true, imgUrl: 'http://www.vanguardproductsgroup.com/images/wordpress/uploads/2012/03/Glasses-with-concept-2-Sensor.jpg', categories:['mens', 'sunglasses']},
-    {   name: 'electric_glasses', price: 130, availability: true, imgUrl: 'http://7fe5adea5c04a064d14a-aa57143e2ca30795bf94ff3884a3b19b.r99.cf1.rackcdn.com/public/images/designer_eyeglasses/Electric/EV02400600_BSG5_matrix%20black.jpg', categories:['mens']}
+    {   name: 'electric_glasses', price: 130, availability: true, imgUrl: 'http://7fe5adea5c04a064d14a-aa57143e2ca30795bf94ff3884a3b19b.r99.cf1.rackcdn.com/public/images/designer_eyeglasses/Electric/EV02400600_BSG5_matrix%20black.jpg', categories:['mens']}''
     {   name: 'glow_glasses', price: 60, availability: true, imgUrl: 'http://cdn.shopify.com/s/files/1/0109/4872/products/rainbowzGLOW_IN_DARK_GREENside_1024x1024.jpeg?v=1411002667', categories:['kids']},
     {   name: 'lazy_guy', price: 80, availability: true, imgUrl: 'http://widgetlove.com/media/catalog/product/cache/1/image/32c3d0b93e1123322b0ba6dc090e7386/s/k/sku_h702101_3_1.jpg', categories:['mens', 'fashion']},
     {   name: 'wise_glasses', price: 30, availability: true, imgUrl: 'https://nodogaboutit.files.wordpress.com/2012/09/j0407016.jpg', categories:['pet']},

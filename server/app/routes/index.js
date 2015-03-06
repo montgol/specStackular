@@ -2,7 +2,7 @@
 var router = require('express').Router();
 var User = require('../../db/models/user.js');
 var Item = require('../../db/models/item.js').Item;
-var Cart = require('../../db/models/cart.js');
+var Cart = require('../../db/models/order.js');
 
 router.use('/tutorial', require('./tutorial'));
 
@@ -71,6 +71,7 @@ router.get('/item/:name', function (req, res, next) { //requested by angular whe
         res.send(data);
     })
 })
+
 
 router.get('/cart', function(req, res, next){
 	var user = req.user.session;
