@@ -20,6 +20,9 @@ var schema = new mongoose.Schema({
     email: {
         type: String
     },
+    admin: {
+        type: Boolean
+    },
     password: {
         type: String
     },
