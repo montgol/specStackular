@@ -36,7 +36,7 @@ var dataItem = [
     {   name: 'spy_glasses', price: 90, availability: true, imgUrl: 'http://p.vitalmtb.com/photos/products/3641/photos/2579/s780_spy_blok_sungls_whtcrzyprnt_gry_11.jpg?1322090299', categories:['mens']},
     {   name: 'star_wars_glasses', price: 45, availability: true, imgUrl: 'http://dqqzjdqmiszdy.cloudfront.net/sites/default/files/content_designer_images/StarWars_2.jpg', categories:['kids', 'mens']},
     {   name: 'star_trek_glasses', price: 90, availability: true, imgUrl: 'http://www.vanguardproductsgroup.com/images/wordpress/uploads/2012/03/Glasses-with-concept-2-Sensor.jpg', categories:['mens', 'sunglasses']},
-    {   name: 'electric_glasses', price: 130, availability: true, imgUrl: 'http://7fe5adea5c04a064d14a-aa57143e2ca30795bf94ff3884a3b19b.r99.cf1.rackcdn.com/public/images/designer_eyeglasses/Electric/EV02400600_BSG5_matrix%20black.jpg', categories:['mens']}''
+    {   name: 'electric_glasses', price: 130, availability: true, imgUrl: 'http://7fe5adea5c04a064d14a-aa57143e2ca30795bf94ff3884a3b19b.r99.cf1.rackcdn.com/public/images/designer_eyeglasses/Electric/EV02400600_BSG5_matrix%20black.jpg', categories:['mens']},
     {   name: 'glow_glasses', price: 60, availability: true, imgUrl: 'http://cdn.shopify.com/s/files/1/0109/4872/products/rainbowzGLOW_IN_DARK_GREENside_1024x1024.jpeg?v=1411002667', categories:['kids']},
     {   name: 'lazy_guy', price: 80, availability: true, imgUrl: 'http://widgetlove.com/media/catalog/product/cache/1/image/32c3d0b93e1123322b0ba6dc090e7386/s/k/sku_h702101_3_1.jpg', categories:['mens', 'fashion']},
     {   name: 'wise_glasses', price: 30, availability: true, imgUrl: 'https://nodogaboutit.files.wordpress.com/2012/09/j0407016.jpg', categories:['pet']},
@@ -51,13 +51,61 @@ var dataUser = [
     { first_name: 'Wizard', middle_name: 'of', last_name: 'Oz', email: 'oz@emeralcity.com', admin: true}
     ];
 
+var dataOrderInitial = [
+    { quantity: 1, status: 'open'},
+    { quantity: 2, status: 'placed'},
+    { quantity: 2, status: 'shipped'},
+    { quantity: 3, status: 'complete'}
+]
+
+function createItemsAndReturnIDs () {
+    var Item =  mongoose.model('Item');
+    var itemIdArray = [];
+
+    for(var a=dataItem.length-4, len = dataItem.length; a<len; a++){
+        var item = new Item(dataItem[a]);
+        itemIdArray.push(item._id)
+    }
+    return itemIdArray
+}
+
+function createUsersAndReturnIDs () {
+    var User = mongoose.model('User');
+    var userIdArray = [];
+
+    for(var a=dataUser.length-2, len = dataItem.length; a<len; a++){
+        var user = new User(dataItem[a]);
+        userIdArray.push(user._id)
+    }
+    return userIdArray
+}
+
+function addIdsToOrders (itemIdArray, userIdArray, orderInfo) {
+
+    return {
+        userId: orderUser._id,
+        lineItem: [{ 
+            item: orderItem._id,
+            quantity: orderInfo.quantity
+        }],
+        status: orderInfo.status
+    }
+}
+
+
+var dataOrder = [
+    { }
+]
+
+
+
 console.log('welcome to the Seed...');
 
 function addToDb (){
 
     var Item =  mongoose.model('Item');
 
-    for(var a=0, len = dataItem.length; a<len; a++){
+    for(var a=0, len = dataItem.length-4; a<len; a++){
             console.log(dataItem[a]);
             Item.create(dataItem[a], function(err, data){
                 if (err) throw err;
@@ -66,7 +114,7 @@ function addToDb (){
     console.log('Finished adding Items');
 
     var User = mongoose.model('User');
-    for(var a=0, len = dataUser.length; a<len; a++){
+    for(var a=0, len = dataUser.length-2; a<len; a++){
         console.log(dataUser[a]);
         User.create(dataUser[a], function(err, data){
             if(err) throw err;
@@ -75,6 +123,17 @@ function addToDb (){
 
 
     console.log('Finished adding Users');
+
+    var Order = mongoose.model('Order');
+    for(var a=0, len = dataOrder.length; a<len; a++){
+        console.log(dataOrder[a]);
+        Order.create(dataOrder[a], function(err, data){
+            if(err) throw err;
+        });
+    }
+
+    console.log('Finished adding Orders');
+
     return;
 };
 

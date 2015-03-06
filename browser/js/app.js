@@ -1,6 +1,5 @@
 'use strict';
 // var app = angular.module('FullstackGeneratedApp', ['ui.router', 'fsaPreBuilt']);
-<<<<<<< HEAD
 var app = angular.module('specStackular', ['ui.router', 'fsaPreBuilt']);
 app.controller('MainController', function ($scope, $rootScope) {
 

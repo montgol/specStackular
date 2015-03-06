@@ -81,7 +81,16 @@ router.post('/admin/userModify', function(req, res, next){
     });
 })
 
-router.put('/admin/orderModify', function(req, res, next){
+//Admin orderModify Routes
+
+router.get('/admin/order', function (req, res, next) {
+    Order.find({}).exec(function (err, orders) {
+        if (err) return next(err);
+        res.send(orders);
+    })
+})
+
+router.put('/admin/order', function (req, res, next){
     console.log('into the router');
     var info = req.body;
     console.log(info);
