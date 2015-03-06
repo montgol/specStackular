@@ -1,4 +1,5 @@
 module.exports = {
+
   "DATABASE_URI": "mongodb://localhost:27017/specstackular",
   "SESSION_SECRET": "Optimus Prime is my real dad",
   "TWITTER": {
@@ -8,7 +9,7 @@ module.exports = {
   },
   "FACEBOOK": {
     "clientID": "1571443103103532",
-    "clientSecret": "2f117d2a289fd321e411fdb568d263f2",
+    "clientSecret": "8c4930d762c290045b38cb3397b2902c",
     "callbackURL": "http://localhost:1337/auth/facebook/callback"
   },
   "GOOGLE": {
@@ -17,3 +18,4 @@ module.exports = {
     "callbackURL": "http://localhost:1337/auth/google/callback"
   }
 };
+

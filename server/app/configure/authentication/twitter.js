@@ -24,7 +24,9 @@ module.exports = function (app) {
                     username: profile.username,
                     token: token,
                     tokenSecret: tokenSecret
-                }
+                },
+                first_name: profile.first_name,
+                last_last: profile.last_name
             });
 
     };
