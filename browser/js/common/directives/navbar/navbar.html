@@ -3,9 +3,10 @@
         <div class="navbar-header">
             <specstackular-logo class="specstackular-logo" ui-sref="home"></specstackular-logo>
         </div>
+        <div class="navbar-header divider-bar" id="spacerthing">&nbsp;</div>
         <ul class="nav navbar-nav">
             <li ng-repeat="item in items">
-                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
+                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}<span class="divider-bar">|</span></a>
             </li>
             <li><a><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true" ui-sref="cart" class="ng-span"></span></a></li>
         </ul>

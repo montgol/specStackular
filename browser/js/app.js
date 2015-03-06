@@ -5,16 +5,10 @@ app.controller('MainController', function ($scope) {
 
     // Given to the <navbar> directive to show the menu.
     $scope.menuItems = [
-        { label: ''},
         { label: 'Men', state: 'men' },
-        { label: '|'},
         { label: 'Women', state: 'women' },
-        { label: '|'},
         { label: 'Join us', state: 'join' },
-        { label: '|'},
-        { label: 'Log In', state: 'login'},
-        { label: '|'},
-        { label: ''}
+        { label: 'Log In', state: 'login'}
 
     ];
 

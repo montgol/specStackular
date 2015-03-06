@@ -44,6 +44,13 @@ navbar {
   padding-left: 0px !important;
   margin-left: 2px; }
 
+.divider-bar {
+  margin-left: 50px;
+  border: none !important; }
+
+#spacerthing {
+  margin-left: 30px; }
+
 #home specstackular-logo {
   padding-top: 30px;
   width: 150px;
