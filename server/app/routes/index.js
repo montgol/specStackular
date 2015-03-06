@@ -79,6 +79,32 @@ router.post('/admin/userModify', function(req, res, next){
     });
 })
 
+router.put('/admin/orderModify', function(req, res, next){
+    console.log('into the router');
+    var info = req.body;
+    console.log(info);
+    Order.findOne({email: info.email}, function(err, result){
+        console.log(err, 'err', result, 'result');
+        if (result) {
+            if (info.password) {
+                result.password = info.password;
+            }
+            if (info.makeAdmin) {
+                result.admin = info.makeAdmin
+            }
+            if (result) {
+                result.save(function(err, saved) {
+                    console.log(saved)
+                    if (err) return next(err);
+                    else res.send(saved);
+                })
+            }
+        }      
+    });
+})
+
+
+
 router.post('/user/edit', isAuthenticated, function (req, res, next) { //username sent as a query
     isAuthenticated(req, res, next); //checks if req.user exists and goes to next life if yes.
     var userinfo = req.body;
