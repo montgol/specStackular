@@ -8,10 +8,15 @@ app.controller('MainController', function ($scope, $rootScope) {
         { label: 'Home', state: 'home' },
         { label: 'Product list', state: 'products' },
         { label: 'Register', state: 'join' },
-        { label: 'Log In', state: 'login'},
-        { label: 'Create a product', state: 'admin.itemCreate' },
+        { label: 'Log In', state: 'login'},   
         { label: 'About', state: 'about' },
     ];
+    $scope.adminItems= [
+        { label: 'Create product', state: 'admin.itemCreate' },
+        { label: 'Modify User', state: 'admin.userModify'},
+        { label: 'Modify Order', state: 'admin.orderModify'},
+        { label: 'Create Product Cat Pg', state: 'admin.productCatCreate'}
+    ]
 
 
 

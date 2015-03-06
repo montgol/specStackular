@@ -7,9 +7,9 @@
             <li ng-repeat="item in items">
                 <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
             </li>
+            <li ng-show="currentUserAdmin" ng-repeat="adminItem in adminItems">
+                <a ui-sref-active="active" ui-sref="{{ adminItem.state }}">{{ adminItem.label }}</a>
+            </li>
         </ul>
-        <a ui-sref='admin'>
-            <button class="btn"  ng-show="currentUserAdmin">Admin</button>
-        </a>
     </div>
 </nav>
