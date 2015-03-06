@@ -1,9 +1,9 @@
-<div ng-repeat='item in items' class='item col-md-2 col-md-offset-1'>
+<div ng-repeat='item in items' class='item col-md-3 col-md-offset-1'>
 	<div class= 'bounding box'>
 		<h2>{{item.name}}<h2>
-		<span>{{item.price | currency }}<span>
+		<span>{{item.price | currency }}<span> <button ng-click='addToOrder(item)'>Add</button>
 		<img ng-src='{{item.imgUrl}}' />
-		<h3 ng-repeat='tag in item.categories'>{{tag}}</h3>
+		<span ng-repeat='tag in item.categories'> {{tag}} </span>
 	</div>
 	</div>
 </div>

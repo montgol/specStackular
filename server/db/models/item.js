@@ -41,7 +41,7 @@ var review = new mongoose.Schema({
 review.methods.setReview = function(userId, itemId, cb){
     //expects to be sent a review from the server, userId and itemId (can change for any identifier)
     console.log('got to set Review');
-    Item.findById(itemId).update({$push: {reviews: this._id}}, function(err, itemdata){
+    item.findById(itemId).update({$push: {reviews: this._id}}, function(err, itemdata){
         if(err) throw err;
         User.findById(userId).update({$push: {reviews: this._id}}, function(err, userdata){
             return cb(err, 'success');

@@ -10,7 +10,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('orderController', function ($scope, OrderFactory, $state, $stateParams) {
+app.controller('orderController', function ($scope, OrderFactory, $state, $stateParams, $cookieStore) {
 
 	//provides general functionality with an order
 	//views current user order
@@ -18,34 +18,53 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 		//has ability to edit order, or proceed to checkout
 	$scope.activeorders=[];
 	$scope.pastorders=[];
-	$scope.summary;
+	$scope.prof;
+
 	$scope.sum = function(){
 
-	}
+	};
+
+	$scope.totalQty = function(){
+
+	};
+
 
 	$scope.updateOrder = function(){
 		//takes in information about the user, 
-		OrderFactory.updateOrder()
+		OrderFactory.updateOrder();
 
-	} 
+	}; 
 	//get user information and send Id
-	OrderFactory.getOrders().then(function(items, err){
-		if (err) console.log('Error: ', err);
 
-		else if(!items) {
-			console.log('No current order'); //not sure what else needs to be declared.
-		}
-		else {
-			$scope.summary = items.info;
-			item.lineItems.forEach(function(thing){
-				if(thing.info.status == 'open'){
-					$scope.activeorders.push(thing);
-				}
-				else {
-					$scope.pastorders.push(thing);
-				}
-			});	
-		}
-	})
+	$scope.showCookie = function(){
+		console.log($cookieStore.get('Order'));
+		$scope.activeorders = $cookieStore.get('Order');
+	}
+
+	// if(authenticated){
+	// 	OrderFactory.getOrders().then(function(items, err){
+	// 		if (err) console.log('Error: ', err);
+
+	// 		else if(!items) {
+	// 			console.log('No current order'); //not sure what else needs to be declared.
+	// 		}
+	// 		else {
+	// 			$scope.prof = items.info;
+	// 			items.lineItems.forEach(function(thing){
+	// 				if(thing.info.status === 'open'){
+	// 					$scope.activeorders.push(thing);
+	// 				}
+	// 				else {
+	// 					$scope.pastorders.push(thing);
+	// 				}
+	// 			});	
+	// 		}
+	// 	});
+	// }
+
+	// else{
+		$scope.activeorders = $cookieStore.get('Order');
+		$scope.prof = 'User';
+	// }
 	
 });

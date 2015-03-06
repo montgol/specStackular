@@ -29,7 +29,7 @@ schema.methods.setLineItem = function(item, qty, cb){
 	}
 	//qty of zero equates to a delete request
 	else{
-		this.update({ '$splice': { lineItem: lineItemNumber-1 }}, function(err, thing){
+		this.update({ '$splice': { lineItem: loc-1 }}, function(err, thing){
 			console.log(err, 'err', thing, 'thing');
 			return cb(err, thing);
 		});
