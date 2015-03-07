@@ -38,21 +38,22 @@
     </div>
     <!-- Row -->
     <div class="row">
-        <div class="col-md-7 col-sm-7 col-xs-7" id="reviewsbox">
-            <div class="reviewshead"><h4 class="reviewstitle">Customer Reviews</h4></div>
+        <div>
+            <div  class="col-md-3 col-sm-3 col-xs-3 reviewshead"><h4 class="reviewstitle">Customer Reviews</h4></div>
+            <div  class="col-md-4 col-sm-4 col-xs-4 writereview"><h4 class="reviewstitle" id="writelink" ui-sref="review-entry">Write a review</h4></div>
         </div>
     </div>
     <!-- Row -->
-    <div class="row" ng-controller="productreviewscontroller">
+    <div class="row" ng-controller="productreviewscontroller" id="reviewsbox">
         <div class="col-md-7 col-sm-7 col-xs-7" id="reviewsbox">
             <div class="reviewbody">
                 <ul class="reviewslist">
-                    <li ng-repeat="review in list">
+                    <li ng-repeat="review in reviewslist">
                         <!--For the number of stars a given review has,-->
                         <!--I need an ng-repeat for the stars. -->
                         <!--If the $index of the star is <= the review score,-->
                         <!--it gets the stargold class. If not, it gets the stardefault.-->
-                        <reviewstar ng-repeat="star in stars" starclass($index)></reviewstar>
+                        <!--<reviewstar ng-repeat="star in stars" starclass($index)></reviewstar>-->
                         <p class="reviewtext">{{ review.text }}</p>
 
                     </li>

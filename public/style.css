@@ -72,7 +72,7 @@ h1 {
 
 .breadcrumb {
   position: absolute;
-  left: 24px;
+  left: 20px;
   margin-top: 24px;
   font-size: x-small;
   background: #ffffff; }
@@ -101,14 +101,33 @@ h1 {
   .productnavdiscs em {
     color: #641400; }
 
-.reviewshead {
-  border-bottom: solid 1px #777777; }
+.reviewsbox {
+  border-top: solid 1px #777777; }
 
 .reviewstitle {
-  font-family: sans-serif;
   font-size: small;
   margin-top: 30px;
   margin-bottom: 0px; }
+
+#writelink {
+  color: #849bae;
+  cursor: pointer; }
+  #writelink:hover {
+    color: black; }
+
+.writereview {
+  text-align: right;
+  display: inline; }
+
+.reviewslist {
+  margin-top: 10px;
+  padding: 0px;
+  list-style-type: none;
+  font-size: .8em;
+  font-family: 'Fanwood Text', 400italic; }
+
+.productbenefitsblurb {
+  font-size: 1.5 em; }
 
 #about {
   padding-bottom: 50px; }
