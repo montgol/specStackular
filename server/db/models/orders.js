@@ -60,10 +60,7 @@ schema.methods.changeLineItemPosition = function(cb){
 
 schema.methods.getUser = function(cb){
 	return this.populate('userName').exec(function(err, items){
-		if (err) return err;
-		else {
-			return cb(items);
-		}
+			return cb(err, items);
 	})
 }
 

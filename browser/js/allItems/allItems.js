@@ -12,7 +12,7 @@ app.run(function ($cookies, $cookieStore) {
 
 app.config(function ($stateProvider) {
 
-    // Register our *about* state.
+    // Register our *products* state.
     $stateProvider.state('products', {
         url: '/products',
         controller: 'allItemsController',

@@ -1,6 +1,6 @@
 app.config(function ($stateProvider) {
 
-    // Register our *Join Now* state.
+    // Register our *Login* state.
     $stateProvider.state('login', {
         url: '/login',
         controller: 'loginController',

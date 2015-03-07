@@ -148,31 +148,26 @@ router.post('/reviews', function (req, res, next){
     var itemId = req.body.itemId;
 
     Review.create(review, function(err, submittedReview){
-        if (err) throw next(err);
+        if (err) return next(err);
         submittedReview.setReview(userId, itemId, function(err, resp){
-            if(err) throw next(err);
+            if(err) return next(err);
             res.send(resp);
         })
     })
 })
 
-router.get('/order', function (req, res, next){
-	var user = req.user.session; //might need ._id
+router.get('/order/:userId', function (req, res, next){
+	var user = req.params.userId; //might need ._id
     console.log(user);
-
-    if(!isAuthenticated){ //set info on the session
-
-    }
-    else{
-        Order.find({userId: user}, function(err, data){
-            if (err) throw next(err);
-            data.getLineItems(function(err, items){
-                var obj = {info: data, lineitems: items};
-                res.send(obj);
-            });
+    Order.find({userId: user}, function(err, data){
+        if (err) return next(err);
+        data.getLineItems(function(err, items){
+            if(err) return next(err);
+            var obj = {lineitems: items, orderId: data._id};
+            res.send(obj);
         });
-    }
-})
+    });
+});
 
 router.post('/order', function (req,res,next){
     var userId = req.user.session._id;
@@ -180,9 +175,9 @@ router.post('/order', function (req,res,next){
     var qty = req.body.qty;
 
     Order.create({userId: userId}, function(err, page){
-        if(err) throw next(err);
+        if(err) return next(err);
         page.setLineItem(item, qty, function(err, update){
-            if(err) throw next(err);
+            if(err) return next(err);
             res.send(update);
         })
     })
@@ -195,9 +190,9 @@ router.post('/order/lineitem', function (req, res, next) {
     var itemId = req.body.itemId;
     var quantity = req.body.quantity;
     Order.findById(orderId).exec(function(err, myOrder){
-        if(err) throw next(err);
+        if(err) return next(err);
         myOrder.setLineItem(itemId, quantity, function(err, updatedInfo){
-            if (err) throw next(err);
+            if (err) return next(err);
             res.send(updatedInfo);
         });
     });

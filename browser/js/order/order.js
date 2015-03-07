@@ -1,7 +1,7 @@
 'use strict';
 app.config(function ($stateProvider) {
 
-    // Register our *about* state.
+    // Register our *orders* state.
     $stateProvider.state('orders', {
         url: '/order/:name',
         controller: 'orderController',
@@ -10,7 +10,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('orderController', function ($scope, OrderFactory, $state, $stateParams, $cookieStore) {
+app.controller('orderController', function ($scope, OrderFactory, $state, $stateParams, $cookieStore, AuthService) {
 
 	//provides general functionality with an order
 	//views current user order
@@ -22,32 +22,50 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 	$scope.sum = 0;
 	$scope.totalQty = 0; 
 	$scope.tempVal;
-
+	$scope.orderId;
+	$scope.userId;
+	
+	function firstUpdate (){
 	//check if user is authenticated, populate order from db, set order to cookie
-	// if(authenticated){
-	// 	OrderFactory.getOrders().then(function(items, err){
-	// 		if (err) console.log('Error: ', err);
+		if(AuthService.isAuthenticated()){
+			AuthService.getLoggedInUser().then(function(user){
+			$scope.user.Id = user._id;
+			$scope.user.name = user.first_name;
+				OrderFactory.getOrders(user._id).then(function(items, err){
+					if (err) console.log('Error: ', err);
+					else if(!items) {
+						console.log('No current order in DB'); //not sure what else needs to be declared.
+						$scope.activeorders = $cookieStore.get('Order');
+						$scope.prof = 'User';
+					}
+					else {
+						$scope.activeorders = items.lineitems;
+						$scope.orderId = items.orderId;
 
-	// 		else if(!items) {
-	// 			console.log('No current order'); //not sure what else needs to be declared.
-	// 		}
-	// 		else {
-	// 			$scope.prof = items.info;
-	// 			items.lineItems.forEach(function(thing){
-	// 				if(thing.info.status === 'open'){
-	// 					$scope.activeorders.push(thing);
-	// 				}
-	// 				else {
-	// 					$scope.pastorders.push(thing);
-	// 				}
-	// 			});	
-	// 		}
-	// 	});
-	// }
-		$scope.activeorders = $cookieStore.get('Order');
-		$scope.prof = 'User';
-		sum();
-		totalQty();
+						var cookie = $cookieStore.get('Order');
+						if(cookie){
+							cookie.forEach(function(newItem){
+								$scope.activeorders.push(newItem);
+							});
+						}
+					}
+				});
+			});
+		}
+		else{
+			$scope.activeorders = $cookieStore.get('Order');
+			$scope.prof = 'User';
+			sum();
+			totalQty();
+		}
+	}
+
+	firstUpdate();
+
+	
+	function serverUpdate(){
+
+	}
 
 	function totalQty (){
 		var totalQ = 0;
@@ -73,6 +91,13 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 		$scope.activeorders = myOrderCookie;
 		sum();
 		totalQty();
+
+		if(AuthService.isAuthenticated()){
+			OrderFactory.updateOrder({orderId: $scope.orderId, quantity: 0, itemId: Item._id}).then(function(err, data){
+				if(err) console.log(err);
+
+			})
+		}
 	}
 
 	$scope.updateOrder = function(){
