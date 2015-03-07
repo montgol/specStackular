@@ -157,6 +157,7 @@ router.post('/reviews', function (req, res, next){
 })
 
 router.get('/order/:userId', function (req, res, next){
+    //gets an order by userId
 	var user = req.params.userId; //might need ._id
     console.log(user);
     Order.find({userId: user}, function(err, data){
@@ -170,22 +171,26 @@ router.get('/order/:userId', function (req, res, next){
 });
 
 router.post('/order', function (req,res,next){
-    var userId = req.user.session._id;
-    var item = req.body.itemId;
-    var qty = req.body.qty;
+    //used to create an order if none exists
+    //should take in userId, and an array of items
+    var userId = req.body.userId;
+    var lineItems = req.body.items;
 
-    Order.create({userId: userId}, function(err, page){
+    Order.create({userId: userId}, function(err, page){ //could be flawed w/ regard to async, may need to force the foreach into a promise
         if(err) return next(err);
-        page.setLineItem(item, qty, function(err, update){
-            if(err) return next(err);
-            res.send(update);
-        })
-    })
-})
+        lineItems.forEach(function(item){
+            page.setLineItem(item.item, item.qty, function(err, update){
+                if(err) return next(err);
+            })
+        });
+        res.send(update);
+    });
+});
 
 
 router.post('/order/lineitem', function (req, res, next) {
-    
+    //used to add/update/remove items from the order db
+    //backend can handle all cases
     var orderId = req.body.orderId;
     var itemId = req.body.itemId;
     var quantity = req.body.quantity;

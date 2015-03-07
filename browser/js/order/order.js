@@ -18,19 +18,22 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 		//has ability to edit order, or proceed to checkout
 	$scope.activeorders=[];
 	$scope.pastorders=[];
-	$scope.prof;
+	$scope.user;
 	$scope.sum = 0;
 	$scope.totalQty = 0; 
 	$scope.tempVal;
 	$scope.orderId;
 	$scope.userId;
-	
+	$scope.auth;
+
 	function firstUpdate (){
 	//check if user is authenticated, populate order from db, set order to cookie
+	//
 		if(AuthService.isAuthenticated()){
 			AuthService.getLoggedInUser().then(function(user){
-			$scope.user.Id = user._id;
-			$scope.user.name = user.first_name;
+			$scope.userId = user._id;
+			$scope.user = user.first_name;
+			$scope.auth = true;
 				OrderFactory.getOrders(user._id).then(function(items, err){
 					if (err) console.log('Error: ', err);
 					else if(!items) {
@@ -54,7 +57,8 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 		}
 		else{
 			$scope.activeorders = $cookieStore.get('Order');
-			$scope.prof = 'User';
+			$scope.user = 'User';
+			$scope.auth = false;
 			sum();
 			totalQty();
 		}
@@ -62,7 +66,7 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 
 	firstUpdate();
 
-	
+
 	function serverUpdate(){
 
 	}
@@ -96,7 +100,8 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 			OrderFactory.updateOrder({orderId: $scope.orderId, quantity: 0, itemId: Item._id}).then(function(err, data){
 				if(err) console.log(err);
 
-			})
+			});
+			$scope.auth = true;
 		}
 	}
 
@@ -118,7 +123,6 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 	$scope.deleteCookie = function(){
 		$cookieStore.remove('Order');
 		console.log($cookieStore.get('Order'));
-		
 	}
 	
 

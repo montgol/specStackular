@@ -12,6 +12,10 @@ var schema = new mongoose.Schema({
     status: {type: String, enum: ['open','placed','shipped','complete']}
 })
 
+schema.static.getUserOrders = function(userId){
+	
+}
+
 schema.methods.setLineItem = function(item, qty, cb){
 	if(qty > 0){
 		//if item doesn't exist

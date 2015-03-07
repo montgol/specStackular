@@ -21,7 +21,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('itemController', ['$cookies', function ($scope, GetItemFactory, $state, $stateParams, $cookies) {
+app.controller('itemController', function ($scope, GetItemFactory, $state, $stateParams, $cookieStore, AuthService, OrderFactory ) {
 
 	//get input from user about item (id from url )
 	//check id vs database
@@ -36,8 +36,10 @@ app.controller('itemController', ['$cookies', function ($scope, GetItemFactory, 
 	});
 
 	$scope.addToOrder = function(){
-		var order = $cookies.get('Order');
-		var line = {item: $scope.item, qty: 1};
+		
+		AuthService.isAuthenticated().then(function(answer){
+			var order = $cookies.get('Order');
+			var line = {item: $scope.item, qty: 1};
 			if(!order){
 				$cookies.put('Order', line);
 			}
@@ -45,5 +47,10 @@ app.controller('itemController', ['$cookies', function ($scope, GetItemFactory, 
 				order.push(line);
 				$cookies.put('Order', order);
 			}
+
+			if(answer){
+				OrderFactory.addItem()
+			}
+		})
 	}
-}]);
+});

@@ -2,11 +2,8 @@
 app.factory('OrderFactory', function($http){
 	
 	return {
-		addItem: function(data){
-			console.log('into the factory', data);
-			// data should be in form {item: itemId, quantity: quantity, }
-
-			return $http.post('/api/item/addToOrder', data).then(function(response){
+		createOrder: function(data){// data should be in form {userId: user._id, items: [item: item._id, qty: qty]}
+			return $http.post('/api/order', data).then(function(response){
 				return response.data;
 			})
 		},
