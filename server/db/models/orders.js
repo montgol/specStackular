@@ -12,6 +12,14 @@ var schema = new mongoose.Schema({
     status: {type: String, enum: ['open','placed','shipped','complete']}
 })
 
+schema.virtual('itemIDArray').get(function () {
+	var array = [];
+	for (var a=0, len=this.lineItem.length; a<len; a++) {
+		array.push(this.lineItem[a].item)
+	}
+  return array
+});
+
 schema.methods.setLineItem = function(item, qty, cb){
 	if(qty > 0){
 		//if item doesn't exist

@@ -84,11 +84,36 @@ router.post('/admin/userModify', function(req, res, next){
 //Admin orderModify Routes
 
 router.get('/admin/order', function (req, res, next) {
-    Order.find({}).exec(function (err, orders) {
-        if (err) return next(err);
-        res.send(orders);
-    })
+    Order
+        .find({})
+        .exec(function (err, orders) {
+            res.send(orders);
+        })
+                
 })
+
+router.post('/admin/order', function (req, res, next) {
+    console.log(req.body)
+    User
+        .find({
+            '_id': { $in: req.body.data }
+        })
+        .exec(function (err, users) {
+            res.send(users);
+        })               
+})
+
+router.get('/admin/order/:itemIds', function (req, res, next) {
+    console.log(req.params)
+
+    // Item
+    //     .findById({req.params})
+    //     .exec(function (err, orders) {
+    //         res.send(orders);
+    //     })               
+})
+
+
 
 router.put('/admin/order', function (req, res, next){
     console.log('into the router');
