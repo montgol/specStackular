@@ -1,3 +1,7 @@
+body {
+  max-width: 880px;
+}
+
 #home {
   color: #777777;
 //  specstackular-logo {
@@ -7,11 +11,12 @@
 //    text-align: right;
   }
   h1 {
-    font-face: roman;
+    font-size: x-large;
     color: #000000;
     margin-top: 40px;
-    text-align: center;
   }
+
+
 
 .breadcrumb {
   position: absolute;
@@ -21,7 +26,34 @@
   background: #ffffff;
 }
 
-#glassbox {
-  padding-top: 100px;
+#glassesbox {
+  text-align: center;
+  padding-top: 40px;
+}
+
+.productimagehome {
+  width: 90%;
+  max-width: 400px;
+}
+
+.productcaption {
+  color: #641400;
+  font-family: 'Fanwood Text', serif;
+  margin-bottom: 0px;
+  em {
+    font-weight: 400italic;
+  }
+}
+
+.productdescription {
+  max-width: 350px;
+}
+
+.productnavdiscs {
+  font-style: italic;
+  font-size: large;
+  em {
+    color: #641400;
+  }
 }
 

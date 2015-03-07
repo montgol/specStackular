@@ -5,6 +5,7 @@
         </div>
         <div class="navbar-header divider-bar" id="spacerthing">&nbsp;</div>
         <ul class="nav navbar-nav">
+            <!-- Note: The navbar items are stored in browser/js/app.js -->
             <li ng-repeat="item in items">
                 <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}<span class="divider-bar">|</span></a>
             </li>
