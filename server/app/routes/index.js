@@ -3,7 +3,6 @@ var router = require('express').Router();
 var User = require('../../db/models/user.js');
 var Item = require('../../db/models/item.js').Item;
 var Review = require('../../db/models/item.js').Review;
-// var Cart = require('../../db/models/cart.js');
 var Order = require('../../db/models/orders.js');
 
 

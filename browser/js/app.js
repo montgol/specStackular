@@ -2,16 +2,15 @@
 // var app = angular.module('FullstackGeneratedApp', ['ui.router', 'fsaPreBuilt']);
 
 var app = angular.module('specStackular', ['ui.router', 'fsaPreBuilt', 'ngCookies']);
-app.controller('MainController',  function ($scope) {
-// app.controller('MainController',  function ($scope,  $rootScope) {
+app.controller('MainController', function ($scope, $rootScope) {
 
     // Given to the <navbar> directive to show the menu.
     $scope.menuItems = [
-        { label: 'Home', state: 'home' },
+        { label: 'Men', state: 'men' },
+        { label: 'Women', state: 'women' },
+        { label: 'Join us', state: 'join' },
+        { label: 'Log In', state: 'login'},
         { label: 'Product list', state: 'products' },
-        { label: 'Register', state: 'join' },
-        { label: 'Log In', state: 'login'},   
-        { label: 'About', state: 'about' },
         { label: 'My Orders', state: 'orders'}
     ];
     $scope.adminItems= [
