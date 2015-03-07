@@ -35,6 +35,14 @@ navbar {
   navbar .specstackular-navbar {
     margin-bottom: 0px !important; }
 
+@media (min-width: 600px) {
+  .navbar {
+    border-radius: 4px; } }
+
+@media (min-width: 600px) {
+  .specstackular-navbar {
+    border-radius: 0px; } }
+
 .navbar-header {
   padding-top: 0px;
   padding-bottom: 0px;
@@ -92,6 +100,15 @@ h1 {
   font-size: large; }
   .productnavdiscs em {
     color: #641400; }
+
+.reviewshead {
+  border-bottom: solid 1px #777777; }
+
+.reviewstitle {
+  font-family: sans-serif;
+  font-size: small;
+  margin-top: 30px;
+  margin-bottom: 0px; }
 
 #about {
   padding-bottom: 50px; }

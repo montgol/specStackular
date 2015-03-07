@@ -2,13 +2,17 @@
 
     <div class="breadcrumb"><a ui-sref="home">Home / </a> <a ui-sref="men">Men / </a>Radiant Orbs Mocha Isis</div>
     <div>&nbsp;</div>
+    <!-- Row -->
     <div class="row">
-        <div class="col-md-7 col-sm-7" id="glassesbox"><h2 class="productcaption">Radiant Orbs —
+        <!-- Column -->
+        <div class="col-md-7 col-sm-7 col-xs-7" id="glassesbox"><h2 class="productcaption">Radiant Orbs —
             <em class="productcolor">Mocha Isis</em></h2>
             <img src="https://s3.amazonaws.com/gdcreative-general/1000x500.jpeg" class="productimagehome">
+
             <p class="productnavdiscs"><em>&bull;</em>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&bull;</p>
         </div>
-        <div class="col-md-5 col-sm-5 productdescription">
+        <!-- Column -->
+        <div class="col-md-5 col-sm-5 col-xs-5 productdescription">
             <h1 class="productheadline">This headline will make you drool with consumer lust.</h1>
 
             <p class="productbenefitsblurb">As I write this, the h1 tag is centered,
@@ -30,5 +34,32 @@
                 </fieldset>
             </form>
         </div>
+        <!-- Column -->
     </div>
+    <!-- Row -->
+    <div class="row">
+        <div class="col-md-7 col-sm-7 col-xs-7" id="reviewsbox">
+            <div class="reviewshead"><h4 class="reviewstitle">Customer Reviews</h4></div>
+        </div>
+    </div>
+    <!-- Row -->
+    <div class="row" ng-controller="productreviewscontroller">
+        <div class="col-md-7 col-sm-7 col-xs-7" id="reviewsbox">
+            <div class="reviewbody">
+                <ul class="reviewslist">
+                    <li ng-repeat="review in list">
+                        <!--For the number of stars a given review has,-->
+                        <!--I need an ng-repeat for the stars. -->
+                        <!--If the $index of the star is <= the review score,-->
+                        <!--it gets the stargold class. If not, it gets the stardefault.-->
+                        <reviewstar ng-repeat="star in stars" starclass($index)></reviewstar>
+                        <p class="reviewtext">{{ review.text }}</p>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Row -->
+
 </section>
