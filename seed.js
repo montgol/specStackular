@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var dbConnection = require('./server/db');
 
 var dataItem = [
+
     {   name: 'Sullivan', price: 95, availability: true, imgUrl: 'https://i.warbyparker.com/-/f/men-sullivan-eyeglasses-saltwater-matte-front-1798-a613bd26/1000x500', categories: ['men', 'Saltwater']},
     {   name: 'Sullivan', price: 145, availability: true, imgUrl: 'https://i.warbyparker.com/-/f/men-sullivan-eyeglasses-woodgrain-tortoise-front-1805-d5bbc7a8/1000x500', categories: ['men', 'Woodgrain']},
     {   name: 'Winston', price: 120, availability: true, imgUrl: 'https://i.warbyparker.com/-/f/men-winston-eyeglasses-cognac-tortoise-citron-front-2066-a7fa3e61/1000x500', categories: ['men', 'Cognac Tortoise']},

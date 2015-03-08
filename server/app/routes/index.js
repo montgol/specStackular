@@ -177,6 +177,7 @@ router.get('/order', function (req, res, next){
 })
 // make error handler
 
+
 router.post('/order', function (req,res,next){
     var userId = req.user.session._id;
     var item = req.body.itemId;
@@ -189,6 +190,11 @@ router.post('/order', function (req,res,next){
             res.send(update);
         })
     })
+})
+
+router.use(function(err, req, res, next){
+    res.status(err.status).send({ error: err.message });
+
 })
 
 
