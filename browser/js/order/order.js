@@ -29,19 +29,25 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 	function firstUpdate (){
 	//check if user is authenticated, populate order from db, set order to cookie
 	//
-		if(AuthService.isAuthenticated()){
-			AuthService.getLoggedInUser().then(function(user){
-			$scope.userId = user._id;
-			$scope.user = user.first_name;
+		// if(AuthService.isAuthenticated()){
+		if( 5 ){ //force user is authenticated
+			//AuthService.getLoggedInUser().then(function(user){
+			//$scope.userId = user._id;
+			$scope.userId = '54fb722d95c428c04612b1a5';
+			// $scope.user = user.first_name;
+			$scope.user = 'Evan'
 			$scope.auth = true;
-				OrderFactory.getOrders(user._id).then(function(items, err){
+				OrderFactory.getOrders($scope.userId).then(function(items, err){
 					if (err) console.log('Error: ', err);
-					else if(!items) {
+					else if(!items) { //no items in dB, get cookies, set order
 						console.log('No current order in DB'); //not sure what else needs to be declared.
 						$scope.activeorders = $cookieStore.get('Order');
-						$scope.prof = 'User';
+						OrderFactory.createOrder({userId: $scope.userId, items: $scope.activeorders}, function(response){
+							console.log(response);
+							return;
+						});
 					}
-					else {
+					else { //items in db, make sure cookies are added to db
 						$scope.activeorders = items.lineitems;
 						$scope.orderId = items.orderId;
 
@@ -52,9 +58,9 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 							});
 						}
 					}
-				});
-			});
-		}
+				}
+				);
+			}
 		else{
 			$scope.activeorders = $cookieStore.get('Order');
 			$scope.user = 'User';
@@ -62,7 +68,7 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 			sum();
 			totalQty();
 		}
-	}
+	};
 
 	firstUpdate();
 
@@ -96,7 +102,8 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 		sum();
 		totalQty();
 
-		if(AuthService.isAuthenticated()){
+		// if(AuthService.isAuthenticated()){
+		if(5 > 2){ //user is authenticated
 			OrderFactory.updateOrder({orderId: $scope.orderId, quantity: 0, itemId: Item._id}).then(function(err, data){
 				if(err) console.log(err);
 
@@ -124,7 +131,12 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 		$cookieStore.remove('Order');
 		console.log($cookieStore.get('Order'));
 	}
-	
+	$scope.showOrderFromDb = function(){
+		//console.log(AuthService.isAuthenticated());
+		OrderFactory.getOrders($scope.userId).then(function(result){
+			console.log(result);
+		})
+	}
 
 	function sum (){
 		var total = 0;

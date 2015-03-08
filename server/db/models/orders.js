@@ -12,8 +12,8 @@ var schema = new mongoose.Schema({
     status: {type: String, enum: ['open','placed','shipped','complete']}
 })
 
-schema.static.getUserOrders = function(userId){
-	
+schema.statics.getUserOrders = function(userId, cb){
+	this.find({userId: userId}, cb);
 }
 
 schema.methods.setLineItem = function(item, qty, cb){

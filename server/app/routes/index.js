@@ -158,32 +158,49 @@ router.post('/reviews', function (req, res, next){
 router.get('/order/:userId', function (req, res, next){
     //gets an order by userId
 	var user = req.params.userId; //might need ._id
-    console.log(user);
+    console.log('user', user);
     Order.find({userId: user}, function(err, data){
+        console.log('in order-middleware, data: ', data);
         if (err) return next(err);
-        data.getLineItems(function(err, items){
-            if(err) return next(err);
-            var obj = {lineitems: items, orderId: data._id};
-            res.send(obj);
-        });
+        else if( data && data.length > 0){ //if an order already exists
+            data.getLineItems(function(err, items){
+                if(err) return next(err);
+                var obj = {lineitems: items, orderId: data._id};
+                res.send(obj);
+            });
+        }
+        else { //no order exists
+            createOrder(user, function(resp){
+                res.send(resp);
+            })
+        }
     });
 });
+
+function createOrder (userId, lineItems, cb){
+    Order.create({userId: userId}, function(err, page){ //could be flawed w/ regard to async, may need to force the foreach into a promise
+        if(err) return next(err);
+        console.log(lineItems);
+        if(lineItems){
+            lineItems.forEach(function(item){
+                    page.setLineItem(item.item, item.qty, function(err, update){
+                        if(err) return next(err);
+                    })
+            });
+        }
+        cb('created');
+    });
+}
 
 router.post('/order', function (req,res,next){
     //used to create an order if none exists
     //should take in userId, and an array of items
     var userId = req.body.userId;
     var lineItems = req.body.items;
-
-    Order.create({userId: userId}, function(err, page){ //could be flawed w/ regard to async, may need to force the foreach into a promise
-        if(err) return next(err);
-        lineItems.forEach(function(item){
-            page.setLineItem(item.item, item.qty, function(err, update){
-                if(err) return next(err);
-            })
-        });
-        res.send(update);
-    });
+    createOrder(userId, lineItems, function(resp){
+        res.send(resp);
+    })
+    
 });
 
 
