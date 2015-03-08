@@ -10,7 +10,7 @@ app.config(function ($stateProvider) {
 });
 
 
-app.controller('loginController', function($scope, $window, GetUserFactory) {
+app.controller('loginController', function ($scope, $window, GetUserFactory, $state, AuthService, Session, $rootScope) {
     $scope.loginoauth = function (provider) {
         var location = 'auth/' + provider;
         $window.location.href = location;
@@ -22,8 +22,13 @@ app.controller('loginController', function($scope, $window, GetUserFactory) {
 	    GetUserFactory.getUser(info).then(function(user, err){
 	    	if (err) $scope.success = false;
 	    	else{
-	    		console.log(user);
-	    		$scope.user.email = user[0].email;
+                $rootScope.currentUser = user[0];
+                console.log($rootScope.currentUser)
+	    		if (user[0].admin) {
+                    $state.go('admin')
+                } else {
+                    $state.go('home')
+                }
 	    	}
 	    });
 	}

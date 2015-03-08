@@ -10,7 +10,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('itemController', function ($scope, GetItemFactory, $state, $stateParams) {
+app.controller('itemController', function ($scope, GetItemFactory, $state, $stateParams, $cookiestore) {
 
 	//get input from user about item (id from url )
 	//check id vs database
@@ -22,6 +22,17 @@ app.controller('itemController', function ($scope, GetItemFactory, $state, $stat
 		else{
 			$scope.item = item[0];
 			}
-		
 	});
+
+	$scope.addToOrder = function(){
+		var order = $cookiestore.get('Order');
+		var line = {item: $scope.item, qty: 1};
+			if(!order){
+				$cookiestore.put('Order', line);
+			}
+			else{
+				order.push(line);
+				$cookiestore.put('Order', order);
+			}
+	}
 });
