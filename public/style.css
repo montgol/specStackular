@@ -1,12 +1,6 @@
 * {
   box-sizing: border-box; }
 
-fullstack-logo {
-  display: block; }
-  fullstack-logo img {
-    display: block;
-    width: 100%; }
-
 nav {
   height: 55px !important; }
 
@@ -61,6 +55,9 @@ navbar {
 
 body {
   max-width: 880px; }
+
+.pagecontainer {
+  margin-left: 5px; }
 
 #home {
   color: #777777; }

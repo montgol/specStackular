@@ -12,7 +12,7 @@ app
                 value: '=',
             },
             template: '<div id="showme" ng-mouseleave="reset()"><i id="showme" ng-repeat="number in range" ng-mouseenter="enter(number)" ng-click="assign(number)" ng-class="{\'glyphicon glyphicon-star icon-gold\': number <= val, \'glyphicon glyphicon-star icon-gray\': number > val}"></i></div>',
-            link: function(scope, element, attrs) {
+            link: function(scope, element, attrs, ) {
                 var maxRange = angular.isDefined(attrs.max) ? scope.$eval(attrs.max) : ratingConfig.max;
 
                 scope.range = [];
@@ -20,22 +20,7 @@ app
                     scope.range.push(i);
                 }
 
-                scope.$watch('value', function(value) {
-                    scope.val = value;
-                });
-
-                scope.assign = function(value) {
-                    scope.value = value;
-                }
-
-                scope.enter = function(value) {
-                    scope.val = value;
-                }
-
-                scope.reset = function() {
-                    scope.val = angular.copy(scope.value);
-                }
-                scope.reset();
+                scope.val =
 
             }
         };
