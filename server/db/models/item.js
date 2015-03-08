@@ -24,9 +24,10 @@ var item = new mongoose.Schema({
 item.methods.getReviews = function(cb){  //need to make sure syntax is correct
     console.log('got to the get');
 	this.populate('reviews', function(err, item){
+
 		if (err) return err;
 		//console.log(item.reviews) // for testing purposes only
-		return cb(item.reviews);
+		return cb(err, item.reviews);
 	})
 }
 
@@ -44,8 +45,7 @@ review.methods.setReview = function(userId, itemId, cb){
     Item.findById(itemId).update({$push: {reviews: this._id}}, function(err, itemdata){
         if(err) throw err;
         User.findById(userId).update({$push: {reviews: this._id}}, function(err, userdata){
-            if(err) throw err;
-            return cb('success');
+            return cb(err, 'success');
         });
     });
 };

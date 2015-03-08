@@ -17,6 +17,7 @@ var schema = new mongoose.Schema({
         required: true
     },
     orders: [{type: mongoose.Schema.Types.ObjectId, ref: 'Order'}],
+
     email: {
         type: String
     },

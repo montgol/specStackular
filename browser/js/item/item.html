@@ -5,6 +5,7 @@
 		<img ng-src='{{item.imgUrl}}' />
 		<h2>{{item.price | currency }}<h2>
 		<h3 ng-repeat='tag in item.categories'>{{tag}}</h3>
+		<button ng-click='addToOrder()'>Add<button>
 	</div>
 	<div class = 'reviews' ng-repeat='review in item.reviews'>
 		<ul>

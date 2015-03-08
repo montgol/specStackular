@@ -14,7 +14,7 @@ app.get('/*', function (req, res) {
     }
 
     res.sendFile(app.get('indexHTMLPath'));
-
+    // res.json({youRhere: 'test'});
 });
 
 // Error catching endware.
