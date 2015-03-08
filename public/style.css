@@ -129,6 +129,9 @@ h1 {
 .productbenefitsblurb {
   font-size: 1.5 em; }
 
+#showme {
+  height: 1.5em !important; }
+
 #about {
   padding-bottom: 50px; }
   #about p {
@@ -189,12 +192,13 @@ tutorial-section-menu {
   margin-top: 30px; }
 
 .icon-gray {
-  color: #5e5e5e;
-  font-size: x-large; }
+  color: #5e5e5e; }
 
 .icon-gold {
-  color: #d58512;
-  font-size: x-large; }
+  color: #d58512; }
+
+.smallstar {
+  font-size: medium; }
 
 #reviewtext {
   width: 574px;
