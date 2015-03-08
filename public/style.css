@@ -13,7 +13,7 @@ nav {
 navbar {
   display: block;
   background: #ffffff;
-  border-bottom: solid 1px; }
+  border-bottom: solid 0px; }
   navbar .specstackular-logo:hover {
     cursor: pointer; }
   navbar a {
@@ -35,14 +35,22 @@ navbar {
   navbar .specstackular-navbar {
     margin-bottom: 0px !important; }
 
+@media (min-width: 600px) {
+  .navbar {
+    border-radius: 4px; } }
+
+@media (min-width: 600px) {
+  .specstackular-navbar {
+    border-radius: 0px; } }
+
 .navbar-header {
-  padding-top: 4px;
-  padding-bottom: 3px;
-  border-right: solid 1px #000000; }
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-right: solid 0px #000000; }
 
 .nav-container {
   padding-left: 0px !important;
-  margin-left: 2px; }
+  margin-left: 0px; }
 
 .divider-bar {
   margin-left: 50px;
@@ -51,14 +59,78 @@ navbar {
 #spacerthing {
   margin-left: 30px; }
 
-#home specstackular-logo {
-  padding-top: 30px;
-  width: 150px;
-  margin: 0 auto;
-  text-align: right; }
-#home h1 {
-  margin-top: 40px;
-  text-align: center; }
+body {
+  max-width: 880px; }
+
+#home {
+  color: #777777; }
+
+h1 {
+  font-size: x-large;
+  color: #000000;
+  margin-top: 40px; }
+
+.breadcrumb {
+  position: absolute;
+  left: 20px;
+  margin-top: 24px;
+  font-size: x-small;
+  background: #ffffff; }
+
+#glassesbox {
+  text-align: center;
+  padding-top: 40px; }
+
+.productimagehome {
+  width: 90%;
+  max-width: 400px; }
+
+.productcaption {
+  color: #641400;
+  font-family: 'Fanwood Text', serif;
+  margin-bottom: 0px; }
+  .productcaption em {
+    font-weight: 400italic; }
+
+.productdescription {
+  max-width: 350px; }
+
+.productnavdiscs {
+  font-style: italic;
+  font-size: large; }
+  .productnavdiscs em {
+    color: #641400; }
+
+.reviewsbox {
+  border-top: solid 1px #777777; }
+
+.reviewstitle {
+  font-size: small;
+  margin-top: 30px;
+  margin-bottom: 0px; }
+
+#writelink {
+  color: #849bae;
+  cursor: pointer; }
+  #writelink:hover {
+    color: black; }
+
+.writereview {
+  text-align: right;
+  display: inline; }
+
+.reviewslist {
+  margin-top: 10px;
+  padding: 0px;
+  list-style-type: none;
+  font-size: .8em;
+  font-family: 'Fanwood Text', 400italic; }
+
+.productbenefitsblurb {
+  font-size: 1.5 em; }
+
+#showme {
+  height: 1.5em !important; }
 
 #about {
   padding-bottom: 50px; }
@@ -120,12 +192,13 @@ tutorial-section-menu {
   margin-top: 30px; }
 
 .icon-gray {
-  color: #5e5e5e;
-  font-size: x-large; }
+  color: #5e5e5e; }
 
 .icon-gold {
-  color: #d58512;
-  font-size: x-large; }
+  color: #d58512; }
+
+.smallstar {
+  font-size: medium; }
 
 #reviewtext {
   width: 574px;
