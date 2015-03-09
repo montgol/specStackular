@@ -25,7 +25,7 @@ app
 
                 scope.val = scope.value;
 
-                console.log(scope);
+                //console.log(scope);
 
 
             }

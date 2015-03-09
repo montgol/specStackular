@@ -66,8 +66,13 @@ navbar {
 
 #menbox {
   position: absolute;
-  top: 35px;
+  top: 33px;
   left: 72px; }
+
+#womenbox {
+  position: absolute;
+  top: 33px;
+  left: 201px; }
 
 .men-menu {
   background: red; }
@@ -87,7 +92,7 @@ body {
   max-width: 880px; }
 
 .pagecontainer {
-  margin-left: 5px; }
+  margin-left: 5px !important; }
 
 #home {
   color: #777777; }
@@ -106,7 +111,8 @@ h1 {
 
 #glassesbox {
   text-align: center;
-  padding-top: 40px; }
+  padding-top: 40px;
+  padding-left: 0px; }
 
 .productimagehome {
   width: 90%;

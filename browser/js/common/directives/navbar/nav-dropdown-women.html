@@ -1,19 +1,19 @@
 <div>
     <table class="dd-table">
         <tr>
-            <td padding="5px" align="center" ng-repeat="product in menProducts1">
-                <a href="/item/{{product.name}}" ng-click="toggleMenVisible()">
+            <td padding="5px" width="33%" align="center" ng-repeat="product in womenProducts1">
+                <a href="/item/{{product.name}}" ng-click="toggleWomenVisible()">
                     &nbsp;<br>
-                    <span class="dd-name">{{ product.name }}</span>
+                    <span class="dd-name">{{ product.name }}</span><br>
                     <img width="100px" class="ddProductImg" ng-src='{{product.imgUrl}}'/>
                 </a>
             </td>
         </tr>
         <tr>
 
-            <td padding="5px" align="center" ng-repeat="product in menProducts2">
+            <td padding="5px" width="33%" align="center" ng-repeat="product in womenProducts2">
                 <!-- Note: toggleMenVisible is in js/app.js -->
-                <a href="/item/{{product.name}}" ng-click="toggleMenVisible()">
+                <a href="/item/{{product.name}}" ng-click="toggleWomenVisible()">
                     &nbsp;<br>
                     <span class="dd-name">{{ product.name }}</span><br>
                     <img width="100px" class="ddProductImg" ng-src='{{product.imgUrl}}'/>
