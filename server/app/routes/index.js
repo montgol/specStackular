@@ -32,6 +32,22 @@ router.get('/login/:email', function (req, res, next) { //requested by angular w
     })
 })
 
+router.post('/login', function(req, res, next){
+    console.log('got to the router');
+    var creds = req.body;
+    User.findOne({email: creds.email, password: password}, function(err, user){
+        if(err) return next(err);
+        else if(user){
+            res.send(user);
+        }
+        else{
+            var error = new Error('Invalid credentials');
+            err.status = 401;
+            next(err);
+        }
+    });
+});
+
 router.post('/join', function (req, res, next) {
     console.log('into the join router');
     var info = req.body;
@@ -163,7 +179,11 @@ router.post('/reviews/:name', function (req, res, next){
 router.get('/order/:userId', function (req, res, next){
     //gets an order by userId
 	var user = req.params.userId; //might need ._id
-    //console.log('user', user);
+    console.log('user', user);
+
+    if(user == undefined){
+        res.send(null);
+    }
     Order.findOne({userId: user}, function(err, data){ //assumes there is only one order, ok for now, needs to be modified later
         //console.log('in order-middleware, data: ', data);
         if (err) return next(err);
@@ -176,6 +196,7 @@ router.get('/order/:userId', function (req, res, next){
             })
         }
         else { //no order exists
+            console.log('No user order in Db');
             res.send(null);
         }
     });

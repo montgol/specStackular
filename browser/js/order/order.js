@@ -28,14 +28,13 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 
 	function firstUpdate (){
 	//check if user is authenticated, populate order from db, set order to cookie
-	//\
-		// if(AuthService.isAuthenticated()){
-		if( 5 ){ //force user is authenticated
-			//AuthService.getLoggedInUser().then(function(user){
-			//$scope.userId = user._id;
-			$scope.userId = '54fb722d95c428c04612b1a5';
-			// $scope.user = user.first_name;
-			$scope.user = 'Evan'
+		if( AuthService.isAuthenticated() ){
+		// if( 5 ){ //force user is authenticated
+			AuthService.getLoggedInUser().then(function(user){
+			$scope.userId = user._id;
+			// $scope.userId = '54fb722d95c428c04612b1a5';
+			$scope.user = user.first_name;
+			// $scope.user = 'Evan'
 			$scope.auth = true;
 				OrderFactory.getOrders($scope.userId).then(function(items, err){
 					console.log('items', items);
@@ -57,8 +56,9 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 						totalQty();
 					}
 				});
-			}
-		else{
+			});
+		}
+		else {
 			$scope.activeorders = $cookieStore.get('Order');
 			$scope.user = 'User';
 			$scope.auth = false;
@@ -130,9 +130,15 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 	}
 	$scope.showOrderFromDb = function(){
 		//console.log(AuthService.isAuthenticated());
-		OrderFactory.getOrders($scope.userId).then(function(result){
-			console.log(result);
-		})
+		if($scope.userId){
+			OrderFactory.getOrders($scope.userId).then(function(result, err){
+				console.log('results', result,'Error', err);
+			})
+		}
+		else {
+			console.log('No user exists');
+		}
+		
 	}
 
 	function sum (){
