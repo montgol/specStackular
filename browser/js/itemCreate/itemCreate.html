@@ -1,12 +1,46 @@
-<div class='item-creation col-md-offset-5 col-md-3'>
-	<form name ='itemForm' ng-submit='itemForm.$valid && submitItem()'>
-	Item Name: <input required type='text' ng-model='item.name'/></br>
-	Price: <input required type='Number' ng-model='item.price'/></br>
-	Currently Available: <input type='radio' ng-model='item.available' value='True'> True  <input type='radio' ng-model='item.available' value='False'> False </br>
-	Image Link: <input type='text' ng-model='item.imgUrl'/></br>
-	Categories: <input type= 'text' ng-model='item.categories' /> </br>
-	Features : <input type= 'text'/><!-- implement later --> </br>
-	<button type='submit'>Submit</button>
-	</form>
-</div>
+<div class='order-modify col-md-12'>
+	<div class="dropdown">
+	  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+	    Get Items
+	    <span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+	    <li role="presentation" ng-repeat="menuItem in menuItems">
+	    	<a role="menuitem" tabindex="-1" ng-click="filterItems(menuItem.label)">{{ menuItem.label }}</a>
+	    </li>
+	  </ul>
+	</div>
 
+	<div class='Orders row'>
+		<h3 class='col-md-2'>Item Name</h3>
+		<h3 class='col-md-2'>Price</h3>
+		<h3 class='col-md-2'>Categories</h3>
+		<h3 class='col-md-2'>Image Link</h3>
+		<h3 class='col-md-2'>Available?</h3>
+	</div>
+
+	<div class='input row'>
+		<form name ='itemForm' ng-submit='itemForm.$valid && submitItem()'>
+			<input class='col-md-2' required type='text' ng-model='item.name'/>
+			<input class='col-md-2'required type='Number' ng-model='item.price'/>
+			<input class='col-md-2' type='text' ng-model='item.categories'/>
+			<input class='col-md-2' type='text' ng-model='item.imgUrl'/>
+			Yes<input type='radio' ng-model='item.available' value='True'>No
+			<input type='radio' ng-model='item.available' value='False'>
+			<button class='col-md-offset-2'type='submit'>Submit</button>
+		</form>
+	</div>
+
+
+	<div class='individualOrder row' ng-repeat='item in items' ng-show='items'>
+		<span class='name col-md-2'>{{ item.name }}</span>
+		<span class='name col-md-2'>{{ item.price }}</span>
+		<!-- ng-repeat over each item -->
+		<span class='userEmail col-md-2'>{{item.categories}}</span>
+		<span class='orderPrice col-md-2 '><a href='{{item.imgUrl}}'>link</a></span>
+		<span class='orderStatus col-md-2'>{{item.availability}}</span>
+		<!-- need dropdown button to adjust status -->
+	</div>	
+
+
+</div>

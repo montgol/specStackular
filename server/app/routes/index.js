@@ -105,17 +105,6 @@ router.post('/admin/order', function (req, res, next) {
         })               
 })
 
-router.get('/admin/order/:itemIds', function (req, res, next) {
-    console.log(req.params)
-
-    // Item
-    //     .findById({req.params})
-    //     .exec(function (err, orders) {
-    //         res.send(orders);
-    //     })               
-})
-
-
 
 router.put('/admin/order', function (req, res, next){
     var info = req.body;
@@ -141,6 +130,7 @@ router.get('/logout', function (req, res) {
 
 router.get('/itemlist', function (req, res, next) {  //should be requested by angular when page loads
     Item.find({}).exec(function (err, users) {
+        console.log(users)
         if (err) return next(err);
         res.send(users);
     })
