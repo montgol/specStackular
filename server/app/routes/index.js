@@ -143,18 +143,24 @@ router.get('/item/:name', function (req, res, next) { //requested by angular whe
     })
 })
 
-router.post('/reviews', function (req, res, next){
-    var review = req.body.review;
-    var userId = req.body.userId;
-    var itemId = req.body.itemId;
+router.get('item/:category', function (req, res, next) {
+    console.log(req.params);
+})
 
-    Review.create(review, function(err, submittedReview){
-        if (err) throw next(err);
-        submittedReview.setReview(userId, itemId, function(err, resp){
-            if(err) throw next(err);
-            res.send(resp);
-        })
-    })
+router.post('/reviews/:name', function (req, res, next){
+    console.log("POST", req.body);
+
+    // var review = req.body.review;
+    // var userId = req.body.userId;
+    // var itemId = req.body.itemId;
+
+    // Review.create(review, function(err, submittedReview){
+    //     if (err) throw next(err);
+    //     submittedReview.setReview(userId, itemId, function(err, resp){
+    //         if(err) throw next(err);
+    //         res.send(resp);
+    //     })
+    // })
 
 })
 

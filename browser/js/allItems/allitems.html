@@ -1,6 +1,6 @@
 
 
-<div ng-repeat='item in items' class='item col-md-2 col-md-offset-2'>
+<div ng-repeat='item in items | filter:categoryMatch(category)' class='item col-md-2 col-md-offset-2'>
 	<div class= 'bounding box' ng-click="getItem(item.id)">
 		<h3>{{item.name}}<h3>
 		<span>{{item.price | currency }}<span>

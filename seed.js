@@ -40,10 +40,10 @@ var dataItem = [
 ];
 
 var dataUser = [
-    { first_name: 'Harry', last_name:'Potter', email:'harry.potter@yahoo.com'},
-    { first_name: 'Princess', last_name: 'Money', email:'p.money@money.com'},
-    { first_name: 'Wizard', middle_name: 'of', last_name: 'Oz', email: 'oz@emeralcity.com', admin: true}
-    ];
+    { first_name: 'Harry', last_name:'Potter', email:'harry.potter@yahoo.com', password: 'daisy123' },
+    { first_name: 'Princess', last_name: 'Money', email:'p.money@money.com' },
+    { first_name: 'Wizard', middle_name: 'of', last_name: 'Oz', email: 'oz@emeralcity.com', admin: true }
+];
 
 console.log('welcome to the Seed...');
 
