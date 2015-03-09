@@ -11,12 +11,22 @@
           <input id="login email" name="email" type="text" placeholder="" class="input-xlarge" ng-model="user.email">
         </div>
       </div>
-
+      <div class="control-group">
+        <label class="control-label" for="password">Password</label>
+        <div class="controls">
+          <input id="login email" name="email" type="text" placeholder="" class="input-xlarge" ng-model="user.password">
+        </div>
+      </div>
       <!-- Button -->
       <div class="control-group">
         <label class="control-label" for="login"></label>
         <div class="controls">
           <button id="login" name="login" ng-click="submitUser()" class="btn btn-danger">Log In</button>
+
+          <!-- this is just testing session started -->
+          <button id="authlogin" name="authlogin" ng-click="isAuth()" ng-show="isLoggedIn" class="btn btn-danger">Check Auth</button>
+         <!--  end test -->
+
         </div>
       </div>
     </fieldset>

@@ -3,8 +3,9 @@
         <div class="navbar-header">
             <specstackular-logo class="specstackular-logo" ui-sref="home"></specstackular-logo>
         </div>
-        <div class="navbar-header divider-bar" id="spacerthing">&nbsp;</div>
-        <ul class="nav navbar-nav">
+        <div class="navbar-header divider-bar" id="spacerthing" >&nbsp;</div>
+        <ul class="nav navbar-nav" ng-click="getCategoryItems()">
+            <!-- Note: The navbar items are stored in browser/js/app.js -->
             <li ng-repeat="item in items">
                 <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}<span class="divider-bar">|</span></a>
             </li>

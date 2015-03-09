@@ -21,6 +21,35 @@ app.config(function ($stateProvider) {
 
 });
 
+app.config(function ($stateProvider) {
+
+    // Register our *men* state.
+    $stateProvider.state('men', {
+        url: '/products/men',
+        controller: 'allItemsController',
+        templateUrl: 'js/allitems/allitems.html'
+    })
+
+});
+
+app.config(function ($stateProvider) {
+
+    // Register our *women* state.
+    $stateProvider.state('women', {
+        url: '/products/women',
+        // controller: 'categoryController',
+        controller: function ($scope, GetItemsFactory, $state, $stateParams) {
+			console.log("before", $scope.items, $state.current);
+			GetItemsFactory.getItems().then(function(items){	
+				$scope.items = items;
+				console.log(items);
+			});
+		},
+        templateUrl: 'js/allitems/allitems.html',
+    })
+});
+
+
 app.controller('allItemsController', function ($scope, GetItemsFactory, $state, $stateParams, $cookieStore) {
 
 	GetItemsFactory.getItems().then(function(items, err){
@@ -54,3 +83,20 @@ app.controller('allItemsController', function ($scope, GetItemsFactory, $state, 
 		//part 2, check if user has logged in, and send to order db
 	}
 });
+
+
+
+app.controller('categoryController', function ($scope, GetItemsFactory, $state, $stateParams) {
+
+	$scope.getCategory = function (category){
+		console.log("men controller", category);
+			GetItemFactory.getCategoryItems().then(function(items, err){
+					if(err) throw err;
+						else{
+							$scope.items = items;
+					};
+			});
+	};
+});
+
+

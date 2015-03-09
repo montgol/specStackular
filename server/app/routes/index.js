@@ -140,18 +140,24 @@ router.get('/item/:name', function (req, res, next) { //requested by angular whe
     })
 })
 
-router.post('/reviews', function (req, res, next){
-    var review = req.body.review;
-    var userId = req.body.userId;
-    var itemId = req.body.itemId;
+router.get('item/:category', function (req, res, next) {
+    console.log(req.params);
+})
 
-    Review.create(review, function(err, submittedReview){
-        if (err) return next(err);
-        submittedReview.setReview(userId, itemId, function(err, resp){
-            if(err) return next(err);
-            res.send(resp);
-        })
-    })
+router.post('/reviews/:name', function (req, res, next){
+    console.log("POST", req.body);
+
+    // var review = req.body.review;
+    // var userId = req.body.userId;
+    // var itemId = req.body.itemId;
+
+    // Review.create(review, function(err, submittedReview){
+    //     if (err) throw next(err);
+    //     submittedReview.setReview(userId, itemId, function(err, resp){
+    //         if(err) throw next(err);
+    //         res.send(resp);
+    //     })
+    // })
 })
 
 router.get('/order/:userId', function (req, res, next){
@@ -189,6 +195,7 @@ function createOrder (userId, lineItems, cb){
     })
 }
 
+
 router.post('/order', function (req,res,next){
     //used to create an order if none exists
     //should take in userId, and an array of items
@@ -203,6 +210,11 @@ router.post('/order', function (req,res,next){
     })
     
 });
+
+router.use(function(err, req, res, next){
+    res.status(err.status).send({ error: err.message });
+
+})
 
 
 router.post('/order/lineitem', function (req, res, next) {

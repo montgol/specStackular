@@ -12,7 +12,7 @@ navbar {
 //    width: 30px;
 //  }
 
-  border-bottom: solid 1px;
+  border-bottom: solid 0px;
 
   .specstackular-logo {
     &:hover {
@@ -51,15 +51,27 @@ navbar {
 
 }
 
+@media (min-width: 600px) {
+  .navbar {
+    border-radius: 4px;
+  }
+}
+
+@media (min-width: 600px) {
+  .specstackular-navbar {
+    border-radius: 0px;
+  }
+}
+
 .navbar-header {
-  padding-top: 4px;
-  padding-bottom: 3px;
-  border-right: solid 1px #000000;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-right: solid 0px #000000;
 }
 
 .nav-container {
   padding-left: 0px !important;
-  margin-left: 2px;
+  margin-left: 0px;
 }
 
 .divider-bar {
