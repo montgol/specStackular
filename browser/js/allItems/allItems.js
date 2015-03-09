@@ -18,4 +18,8 @@ app.controller('allItemsController', function ($scope, GetItemsFactory, $state, 
 			$scope.items = items;
 		}
 	});
+
+    $scope.logItems = function(){
+        console.log("Boo Hoo");
+    };
 });

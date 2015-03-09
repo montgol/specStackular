@@ -1,7 +1,20 @@
 .dropdown-box {
   background: rgba(255,255,255,0.8);
-  width: 100px;
-  height: 75px;
+  width: 440px;
+  height: 200px;
+  z-index: 1;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+  padding: 10px;
+  border-bottom: solid 1px #849bae;
+  border-left: solid 1px #849bae;
+  border-right: solid 1px #849bae;
+}
+
+#menbox {
+  position: absolute;
+  top: 35px;
+  left: 72px;
+
 }
 
 .men-menu {

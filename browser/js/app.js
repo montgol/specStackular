@@ -12,6 +12,23 @@ app.controller('MainController', function ($scope) {
 
     ];
 
+    // Dropdown controls
+    $scope.menVisible = false;
+    $scope.womenVisible = true;
+
+    $scope.hello = "well hello";
+
+    $scope.toggleMenVisible = function(){
+        console.log("clicked");
+        if ($scope.menVisible === false) {
+            $scope.menVisible = true;
+            console.log("Wahoo")
+        }
+
+        else $scope.menVisible = false;
+
+    }
+
 });
 
 
