@@ -86,6 +86,8 @@ router.post('/admin/userModify', function(req, res, next){
 router.get('/admin/order', function (req, res, next) {
     Order
         .find({})
+        .populate('userId')
+        .populate('lineItem.item')
         .exec(function (err, orders) {
             res.send(orders);
         })

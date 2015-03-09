@@ -1,4 +1,4 @@
-<div class='order-modify col-md-offset-5 col-md-5'>
+<div class='order-modify col-md-10'>
 	<div class="dropdown">
 	  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 	    Get Orders
@@ -6,13 +6,10 @@
 	  </button>
 	  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 	    <li role="presentation" ng-repeat="menuItem in menuItems">
-	    	<a role="menuitem" tabindex="-1" ng-click="getAllOrders()">{{ menuItem.label }}</a>
+	    	<a role="menuitem" tabindex="-1" ng-click="getAllOrders(menuItem.label)">{{ menuItem.label }}</a>
 	    </li>
 	  </ul>
 	</div>
-	<button class="btn" ng-click="getAllOrders()">Get all orders</button>
-
-	{{data}}
 
 	<!-- <div class='summary row'>
 		<h4 class='total-cost col-md-offset-1'>Total Cost: {{sum | currency }}</h4>
@@ -21,23 +18,23 @@
 				
 	</div> -->
 
-	<div class='Categories row'>
-		<h2 class='col-md-2 '>Image</h3>
-		<h2 class='col-md-2 col-md-offset-1'>Name</h3>
-		<h2 class='col-md-2'>Price Per</h3>
-		<h2 class='col-md-2'>Quantity</h3>
-		</br>
+	<div class='Orders row'>
+		<h3 class='col-md-2'>Order</h3>
+		<h3 class='col-md-2'>Items</h3>
+		<h3 class='col-md-2'>userName</h3>
+		<h3 class='col-md-2'>Total</h3>
+		<h3 class='col-md-2'>Status</h3>
 	</div>
 
-	<!-- <div class='individualOrder row' ng-repeat='line in activeorders'>
-		<img ng-src='{{line.item.imgUrl}}' class='col-md-2' />
-		<span class='name col-md-2 col-md-offset-1'>{{ line.item.name }}</span>
-		<span class='name col-md-2'>{{ line.item.price | currency }}</span>
-		<span class='quantity col-md-1'>{{line.qty}}</span>
-		<input type='text' name='newQty' class='quantity col-md-1' ng-init="tempVal = line.qty" ng-model='tempVal'/>
-		<button type='button' ng-click='newNumber(line, tempVal)'>Update</button>
-		<button type='button-danger' ng-click='removeItem(line.item)'>Remove Item</button>
-	</div> -->	
+	<div class='individualOrder row' ng-repeat='order in orders | filter:'>
+		<span class='name col-md-2'>{{ order._id }}</span>
+		<span class='name col-md-2'>{{ order.lineItem[0].item.name }}</span>
+		<!-- ng-repeat over each item -->
+		<span class='userEmail col-md-2'>{{order.userId.email}}</span>
+		<span class='orderPrice col-md-2'>{{order.lineItem[0].item.price}}</span>
+		<span class='orderStatus col-md-2'>{{order.status}}</span>
+		<!-- need dropdown button to adjust status -->
+	</div>	
 
 
 </div>

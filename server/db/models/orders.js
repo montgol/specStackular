@@ -5,8 +5,8 @@ var mongoose = require('mongoose');
 // mongoose.connection.on('error', console.error.bind(console, 'database connection error:'));
 
 var schema = new mongoose.Schema({
-	userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true},
-	lineItem: [{ item: {type: mongoose.Schema.Types.ObjectId, ref: 'item'},
+	userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+	lineItem: [{ item: {type: mongoose.Schema.Types.ObjectId, ref: 'Item'},
 		quantity: Number
 	}],
     status: {type: String, enum: ['open','placed','shipped','complete']}
