@@ -37,9 +37,26 @@ app.controller('orderModifyController',
         { label: 'complete'}
     ];
 
+    $scope.changeStatusMenuItems = [
+        { label: 'open'},
+        { label: 'placed'},
+        { label: 'shipped'},
+        { label: 'complete'}
+    ];
+
 	$scope.filterOrders = function(status) {
 		$scope.orders = orderModifyFactory.filterOrders(status, $scope.allOrders)
 
 		$scope.filtered = false;
 	}
+
+    $scope.changeStatus = function (orderId, status, index) {
+        var data = [orderId, status]
+        $scope.orders[index].status = status
+        console.log(orders)
+        orderModifyFactory.modifyOrder(data).then(function(response) {
+
+        })
+
+    }
 });

@@ -15,9 +15,6 @@ app.factory('orderModifyFactory', function ($http){
 			return filteredArray
 		},
 		modifyOrder: function(data){
-			console.log('into the factory', data);
-			// return $http.post('/api/item', data);
-
 			return $http.put('/api/admin/order', data).then(function(response){
 				return response.data;
 			})

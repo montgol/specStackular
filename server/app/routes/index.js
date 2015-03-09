@@ -118,26 +118,11 @@ router.get('/admin/order/:itemIds', function (req, res, next) {
 
 
 router.put('/admin/order', function (req, res, next){
-    console.log('into the router');
     var info = req.body;
     console.log(info);
-    Order.findOne({email: info.email}, function(err, result){
-        console.log(err, 'err', result, 'result');
-        if (result) {
-            if (info.password) {
-                result.password = info.password;
-            }
-            if (info.makeAdmin) {
-                result.admin = info.makeAdmin
-            }
-            if (result) {
-                result.save(function(err, saved) {
-                    console.log(saved)
-                    if (err) return next(err);
-                    else res.send(saved);
-                })
-            }
-        }      
+    Order.findByIdAndUpdate(req.body[0], {status: req.body[1]}, function(err, result){
+        console.log(err, 'err', result, 'result');   
+        res.send(result)
     });
 })
 

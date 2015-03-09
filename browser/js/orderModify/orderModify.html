@@ -39,8 +39,8 @@
 		  <span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-		    <li role="presentation" ng-repeat="menuItem in menuItems">
-		    	<a role="menuitem" tabindex="-1" ng-click="changeStatus(order.stauts)">{{ menuItem.label }}</a>
+		    <li role="presentation" ng-repeat="menuItem in changeStatusMenuItems">
+		    	<a role="menuitem" tabindex="-1" ng-click="changeStatus(order._id, menuItem.label, $parent.$index)">{{ menuItem.label }}</a>
 		    </li>
 		</ul>
 		
