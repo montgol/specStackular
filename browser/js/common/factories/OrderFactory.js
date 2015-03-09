@@ -3,7 +3,9 @@ app.factory('OrderFactory', function($http){
 	
 	return {
 		createOrder: function(data){// data should be in form {userId: user._id, items: [item: item._id, qty: qty]}
+			console.log('sending a request for a new order from factory');
 			return $http.post('/api/order', data).then(function(response){
+			//console.log('response from createOrder factory request', response);
 				return response.data;
 			})
 		},
@@ -14,6 +16,7 @@ app.factory('OrderFactory', function($http){
 		},
 		getOrders: function(userId){
 			return $http.get('/api/order/'+userId).then(function(response){
+				//console.log('response from getOrders factory request', response);
 				return response.data;
 			});
 		}

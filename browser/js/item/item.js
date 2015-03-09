@@ -39,7 +39,7 @@ app.controller('itemController', function ($scope, GetItemFactory, $state, $stat
 		
 		AuthService.isAuthenticated().then(function(answer){
 			var order = $cookies.get('Order');
-			var line = {item: $scope.item, qty: 1};
+			var line = {item: $scope.item, quantity: 1};
 			if(!order){
 				$cookies.put('Order', line);
 			}

@@ -34,7 +34,7 @@ app.controller('allItemsController', function ($scope, GetItemsFactory, $state, 
 		// console.log('got into the function'); //part one always add it to the cookie
 		var order = $cookieStore.get('Order');
 		var resolved = false;
-		var line = {item: specificItem, qty: 1};
+		var line = {item: specificItem, quantity: 1};
 			if(order){ //if user has an order on a cookie
 				order.forEach(function(itemLine){
 					if(itemLine.item._id === specificItem._id){

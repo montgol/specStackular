@@ -28,7 +28,7 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 
 	function firstUpdate (){
 	//check if user is authenticated, populate order from db, set order to cookie
-	//
+	//\
 		// if(AuthService.isAuthenticated()){
 		if( 5 ){ //force user is authenticated
 			//AuthService.getLoggedInUser().then(function(user){
@@ -38,28 +38,25 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 			$scope.user = 'Evan'
 			$scope.auth = true;
 				OrderFactory.getOrders($scope.userId).then(function(items, err){
+					console.log('items', items);
 					if (err) console.log('Error: ', err);
 					else if(!items) { //no items in dB, get cookies, set order
-						console.log('No current order in DB'); //not sure what else needs to be declared.
+						//console.log('No current order in DB'); //not sure what else needs to be declared.
 						$scope.activeorders = $cookieStore.get('Order');
+						//console.log('current items', $scope.activeorders);
 						OrderFactory.createOrder({userId: $scope.userId, items: $scope.activeorders}, function(response){
-							console.log(response);
-							return;
+							$scope.activeorders = response.lineitems;
+							sum();
+							totalQty();
 						});
 					}
 					else { //items in db, make sure cookies are added to db
-						$scope.activeorders = items.lineitems;
+						$scope.activeorders = items.lineitems.lineItem;
 						$scope.orderId = items.orderId;
-
-						var cookie = $cookieStore.get('Order');
-						if(cookie){
-							cookie.forEach(function(newItem){
-								$scope.activeorders.push(newItem);
-							});
-						}
+						sum();
+						totalQty();
 					}
-				}
-				);
+				});
 			}
 		else{
 			$scope.activeorders = $cookieStore.get('Order');
@@ -81,7 +78,7 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 		var totalQ = 0;
 		console.log('got to sum');
 		$scope.activeorders.forEach(function(lineItem){
-			totalQ= totalQ + lineItem.qty;
+			totalQ= totalQ + lineItem.quantity;
 		})
 		$scope.totalQty = totalQ;
 	};
@@ -141,8 +138,10 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 	function sum (){
 		var total = 0;
 		console.log('got to sum');
+		//console.log($scope.activeorders);
 		$scope.activeorders.forEach(function(lineItem){
-			total= total + lineItem.item.price * lineItem.qty;
+			total= total + lineItem.item.price * lineItem.quantity;
+			//console.log('total', lineItem.item.price, " * ", 'lineItem.qty');
 		})
 		$scope.sum = total;
 	};
