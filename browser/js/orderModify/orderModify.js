@@ -25,7 +25,9 @@ app.controller('orderModifyController',
 		categories: [] };
 	$scope.success;
 
-	$scope.orders = getOrders
+	$scope.allOrders = getOrders
+
+	$scope.orders;
 
 	$scope.menuItems = [
 		{ label: 'all orders'},
@@ -35,20 +37,9 @@ app.controller('orderModifyController',
         { label: 'complete'}
     ];
 
-	$scope.filterOrders = function() {
-		//$scope.item.categories = $scope.item.categories.split(' ');
-		console.log('process started');
-		orderModifyFactory.getAllOrders().then(function(item, err){
-			if(err) $scope.success= false;
-			else{
-				console.log(item);
-				$scope.item = item
-				$scope.success = true;
-				
-			}
-		});
-	}
-	$scope.changeStatus = function () {
+	$scope.filterOrders = function(status) {
+		$scope.orders = orderModifyFactory.filterOrders(status, $scope.allOrders)
 
+		$scope.filtered = false;
 	}
 });

@@ -1,7 +1,19 @@
 'use strict';
-app.factory('orderModifyFactory', function($http){
+app.factory('orderModifyFactory', function ($http){
 	
 	return {
+		filterOrders: function (status, allOrders) {
+			if (status === 'all orders') {
+				return allOrders
+			}
+			var filteredArray = [];
+			for (var a=0, len=allOrders.length; a<len; a++) {
+				if (allOrders[a].status === status) {
+					filteredArray.push(allOrders[a])
+				}
+			}
+			return filteredArray
+		},
 		modifyOrder: function(data){
 			console.log('into the factory', data);
 			// return $http.post('/api/item', data);
