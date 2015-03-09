@@ -53,10 +53,6 @@ app.controller('orderModifyController',
     $scope.changeStatus = function (orderId, status, index) {
         var data = [orderId, status]
         $scope.orders[index].status = status
-        console.log(orders)
-        orderModifyFactory.modifyOrder(data).then(function(response) {
-
-        })
-
+        orderModifyFactory.modifyOrder(data)
     }
 });
