@@ -87,20 +87,14 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 		//remove item from db, remove item from cookie, remove item from scope
 		//if authenticated, remove item from order
 		var myOrderCookie = $cookieStore.get('Order');
-		var location
-		myOrderCookie.forEach(function(element, index){
-			if(element.item.name === item.name){
-				location = index;
-			}
-		});
-		var removedItem = myOrderCookie.splice(location, 1);
-		$cookieStore.put('Order', myOrderCookie);
-		$scope.activeorders = myOrderCookie;
-		sum();
-		totalQty();
+		var location = getLocInCookie(myOrderCookie, item._id);
+		//var removedItem = myOrderCookie.splice(location, 1);
+		//$cookieStore.put('Order', myOrderCookie);
+		//$scope.activeorders = myOrderCookie;
+		//sum();
+		//totalQty();
 
-		// if(AuthService.isAuthenticated()){
-		if(5 > 2){ //user is authenticated
+		if(AuthService.isAuthenticated()){
 			OrderFactory.updateOrder({orderId: $scope.orderId, quantity: 0, itemId: Item._id}).then(function(err, data){
 				if(err) console.log(err);
 
@@ -109,10 +103,35 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 		}
 	}
 
-	$scope.updateOrder = function(){
-		//takes in information about the user, 
-		OrderFactory.updateOrder();
+	function getLocInCookie (cookie, id){
+		var loc;
+		cookie.forEach(function(element, index){
+			if(element.item._id === id){
+				console.log(element.item._id, " is the correct key");
+				loc = index;
+			}
+		});
+		return loc;
+	}
 
+	$scope.updateOrder = function(item, val){
+		//takes in information about the user, 
+		if(val == 0){
+			$scope.removeItem(item.item);
+		}
+		else{
+			if($scope.userId){
+				OrderFactory.updateOrder({orderId: $scope});
+			}
+			var orderCookie = $cookieStore.get('Order');
+			var index = getLocInCookie(orderCookie, item.item._id);
+			orderCookie[index].quantity = Number(val);
+			$cookieStore.put('Order', orderCookie);
+			$scope.activeorders = orderCookie;
+			sum();
+			totalQty();
+		}
+		
 	}; 
 	$scope.newNumber = function(item, val){
 		console.log('item', item, 'val', val);
@@ -144,10 +163,8 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 	function sum (){
 		var total = 0;
 		console.log('got to sum');
-		//console.log($scope.activeorders);
 		$scope.activeorders.forEach(function(lineItem){
 			total= total + lineItem.item.price * lineItem.quantity;
-			//console.log('total', lineItem.item.price, " * ", 'lineItem.qty');
 		})
 		$scope.sum = total;
 	};

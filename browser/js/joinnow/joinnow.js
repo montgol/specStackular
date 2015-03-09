@@ -36,5 +36,11 @@ app.controller('joinController', function($scope, $window, CreateUserFactory, Au
 	    	}
 	    });
 	  }
+
+      function validatePassword (email){
+        regex = /^([\w-\.]+@(?!gmail.com)(?!yahoo.com)(?!hotmail.com)([\w-]+\.)+[\w-]{2,4})?$/;
+        return regex.test(email);
+      }
+
 });
 

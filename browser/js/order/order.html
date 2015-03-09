@@ -23,10 +23,9 @@
 			<img ng-src='{{line.item.imgUrl}}' class='col-md-2' />
 			<span class='name col-md-2 col-md-offset-1'>{{ line.item.name }}</span>
 			<span class='name col-md-2'>{{ line.item.price | currency }}</span>
-			<span class='quantity col-md-1'>{{line.quantity}}</span>
-			<input type='text' name='newQty' class='quantity col-md-1' ng-init="tempVal = line.quantity" ng-model='tempVal'/>
-			<button type='button' ng-click='newNumber(line, tempVal)'>Update</button>
-			<button type='button-danger' ng-click='removeItem(line.item)'>Remove Item</button>
+				<input type='text' name='newQty' class='quantity col-md-1' ng-init="tempVal = line.quantity" ng-model='tempVal'/>
+				<button type='button' ng-click='updateOrder(line, tempVal)'>Update</button>
+			<button type='button-danger' class='col-md-offset-1' ng-click='removeItem(line.item)'>Remove Item</button>
 		</div>
 		<div class = 'reviews'>
 			<h2>Past Orders</h2>

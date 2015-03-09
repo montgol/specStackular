@@ -78,7 +78,7 @@
         };
 
         this.login = function (credentials) {
-            return $http.post('/api/login', credentials).then(onSuccessfulLogin);
+            return $http.post('/login', credentials).then(onSuccessfulLogin);
         };
 
         this.logout = function () {

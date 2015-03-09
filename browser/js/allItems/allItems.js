@@ -50,7 +50,7 @@ app.config(function ($stateProvider) {
 });
 
 
-app.controller('allItemsController', function ($scope, GetItemsFactory, $state, $stateParams, $cookieStore) {
+app.controller('allItemsController', function ($scope, AuthService, GetItemsFactory, $state, $stateParams, $cookieStore, OrderFactory) {
 
 	GetItemsFactory.getItems().then(function(items, err){
 		if(err) throw err;
@@ -60,13 +60,14 @@ app.controller('allItemsController', function ($scope, GetItemsFactory, $state, 
 	});
 
 	$scope.addToOrder = function(specificItem){
-		// console.log('got into the function'); //part one always add it to the cookie
+		console.log('got into the function'); //part one always add it to the cookie
 		var order = $cookieStore.get('Order');
 		var resolved = false;
-		var line = {item: specificItem, quantity: 1};
+		var line = {itemId: specificItem._id, quantity: 1};
+		// console.log('Request to add item to order');
 			if(order){ //if user has an order on a cookie
 				order.forEach(function(itemLine){
-					if(itemLine.item._id === specificItem._id){
+					if(itemLine.itemId === specificItem.itemId){
 						itemLine.qty++;
 						resolved = true;
 					}	
@@ -79,6 +80,11 @@ app.controller('allItemsController', function ($scope, GetItemsFactory, $state, 
 				order.push(line);
 			}
 		$cookieStore.put('Order', order);
+		var user = AuthService.getLoggedInUser();
+		if(user){
+			//OrderFactory.getOrders(user._id)//
+		}
+		
 
 		//part 2, check if user has logged in, and send to order db
 	}

@@ -32,22 +32,6 @@ router.get('/login/:email', function (req, res, next) { //requested by angular w
     })
 })
 
-router.post('/login', function(req, res, next){
-    console.log('got to the router');
-    var creds = req.body;
-    User.findOne({email: creds.email, password: password}, function(err, user){
-        if(err) return next(err);
-        else if(user){
-            res.send(user);
-        }
-        else{
-            var error = new Error('Invalid credentials');
-            err.status = 401;
-            next(err);
-        }
-    });
-});
-
 router.post('/join', function (req, res, next) {
     console.log('into the join router');
     var info = req.body;
