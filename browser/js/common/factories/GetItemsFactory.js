@@ -1,29 +1,11 @@
 'use strict';
-app.factory('GetItemFactory', function($http){
+app.factory('GetItemsFactory', function($http){
 
     return {
-        getItem: function(id){
-            //var options = {email: email};
-            console.log(id);
-            return $http.get('/api/item/'+id).then(function(response){
+        getItems: function(){
+            return $http.get('/api/itemlist').then(function(response){
                 return response.data;
             })
-        },
-
-        getCategoryItems: function () {
-            console.log("GetItemFactory: getCategoryItems", category);
-            return $http.get('/api/item/'+ category).then(function(response){
-                return response.data;
-            });
-        },
-
-        getMensItems: function () {
-
-            return this.getCategoryItems().then(function (items) {
-                var categoryItems = items.filter();// filter items
-                return categoryItems;
-            });
-
         }
 
     }

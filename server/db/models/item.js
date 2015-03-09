@@ -15,7 +15,8 @@ var item = new mongoose.Schema({
     },
     availability: {type: Boolean, default: true},
     imgUrl: String,
-    categories: [String],
+    gender: {type: String, enum: ['men', 'women']},
+    categories: String,
     reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review'}],
     features: [{type: mongoose.Schema.Types.ObjectId, ref: 'Feature'}]
 })
