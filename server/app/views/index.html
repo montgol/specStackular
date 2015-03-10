@@ -14,6 +14,13 @@
     <script src="/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/angular-cookies/angular-cookies.js"></script>
+    <script src="/angular-payments/lib/angular-payments.js"></script>
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript">
+          // This identifies your website in the createToken call below
+          Stripe.setPublishableKey('pk_test_Xs1RZ7Ov0dIzFQMVyxXm5LjP');
+    </script>
+
     <script src="/main.js"></script>
 </head>
 <body ng-app="specStackular" ng-controller="MainController">

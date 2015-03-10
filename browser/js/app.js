@@ -1,7 +1,7 @@
 'use strict';
 // var app = angular.module('FullstackGeneratedApp', ['ui.router', 'fsaPreBuilt']);
 
-var app = angular.module('specStackular', ['ui.router', 'fsaPreBuilt', 'ngCookies']);
+var app = angular.module('specStackular', ['ui.router', 'fsaPreBuilt', 'ngCookies', 'angularPayments']);
 app.controller('MainController', function ($scope, $rootScope) {
 
     // Given to the <navbar> directive to show the menu.
