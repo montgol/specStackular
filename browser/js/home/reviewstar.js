@@ -9,42 +9,35 @@ app
             restrict: 'EA',
             replace: true,
             scope: {
-                value: '=',
+                value: '='
             },
-            template: '<div id="showme" ng-mouseleave="reset()"><i id="showme" ng-repeat="number in range" ng-mouseenter="enter(number)" ng-click="assign(number)" ng-class="{\'glyphicon glyphicon-star icon-gold\': number <= val, \'glyphicon glyphicon-star icon-gray\': number > val}"></i></div>',
-            link: function(scope, element, attrs) {
+            controller: "productreviewscontroller",
+            template: '<div id="showme" ng-mouseleave="reset()"><i id="showme" ng-repeat="number in range" ' +
+                'ng-mouseenter="enter(number)" ng-click="assign(number)" ' +
+                'ng-class="{\'glyphicon glyphicon-star icon-gold\': number <= val, ' +
+                '\'glyphicon glyphicon-star icon-gray\': number > val}"></i></div>',
+            link: function(scope, element, attrs, index) {
                 var maxRange = angular.isDefined(attrs.max) ? scope.$eval(attrs.max) : ratingConfig.max;
-
                 scope.range = [];
                 for(var i = 1; i <= maxRange; i++ ) {
                     scope.range.push(i);
-                }
+                };
 
-                scope.$watch('value', function(value) {
-                    scope.val = value;
-                });
+                scope.val = scope.value;
 
-                scope.assign = function(value) {
-                    scope.value = value;
-                }
+                //console.log(scope);
 
-                scope.enter = function(value) {
-                    scope.val = value;
-                }
-
-                scope.reset = function() {
-                    scope.val = angular.copy(scope.value);
-                }
-                scope.reset();
 
             }
         };
     }]);
 
-app.controller('StarCtrl', function($scope) {
+app.controller('productstar', function($scope) {
 
     $scope.rate1 = 0;
 
     $scope.rate2 = 6;
+
+    $scope.val = $scope.rating;
 
 });
