@@ -4,12 +4,12 @@ var dbConnection = require('./server/db');
 var dataItem = [
 
 
-    {   name: 'Sullivan', price: 95, availability: true, imgUrl: 'https://i.warbyparker.com/-/f/men-sullivan-eyeglasses-saltwater-matte-front-1798-a613bd26/1000x500', gender: 'men', categories: 'Saltwater'},
-    {   name: 'Sullivan', price: 145, availability: true, imgUrl: 'https://i.warbyparker.com/-/f/men-sullivan-eyeglasses-woodgrain-tortoise-front-1805-d5bbc7a8/1000x500', gender: 'men', categories: 'Woodgrain'},
-    {   name: 'Winston', price: 120, availability: true, imgUrl: 'https://i.warbyparker.com/-/f/men-winston-eyeglasses-cognac-tortoise-citron-front-2066-a7fa3e61/1000x500', gender: 'men', categories: 'Cognac Tortoise'},
-    {   name: 'Winston', price: 120, availability: true, imgUrl: 'https://i.warbyparker.com/d/f/ed814ccac5a6fa5e1714ced174950dac916328e1/1000x500', gender: 'men', categories: 'Lunar Fade'},
-    {   name: 'Winston', price: 120, availability: true, imgUrl: 'https://i.warbyparker.com/d/f/3f7a8e6c7310ec2859710f970b38e2be8b8d8afa/1000x500', gender: 'men', categories: 'Old Fashion Fade'},
-    {   name: 'Winston', price: 120, availability: true, imgUrl: 'https://i.warbyparker.com/-/f/men-winston-eyeglasses-cognac-tortoise-citron-front-2066-a7fa3e61/1000x500', gender: 'men', categories: 'Jet Black'},
+    {   name: 'Sullivan', price: 95, availability: true, imgUrl: 'https://i.warbyparker.com/-/f/men-sullivan-eyeglasses-saltwater-matte-front-1798-a613bd26/1000x500', gender: 'men', categories: 'Saltwater', descHeading: "Sullivan combines smooth, rectangular angles with thin, tapered temples for a look that’s easy on the eyes.", descContent: "Lenses made from polycarbonate, the most impact-resistant material on the market. Offers 100% UV protection, anti-scratch and anti-reflective coating included."},
+    {   name: 'Sullivan', price: 145, availability: true, imgUrl: 'https://i.warbyparker.com/-/f/men-sullivan-eyeglasses-woodgrain-tortoise-front-1805-d5bbc7a8/1000x500', gender: 'men', categories: 'Woodgrain', descHeading: "Sullivan combines smooth, rectangular angles with thin, tapered temples for a look that’s easy on the eyes.", descContent: "Lenses made from polycarbonate, the most impact-resistant material on the market. Offers 100% UV protection, anti-scratch and anti-reflective coating included."},
+    {   name: 'Winston', price: 120, availability: true, imgUrl: 'https://i.warbyparker.com/-/f/men-winston-eyeglasses-cognac-tortoise-citron-front-2066-a7fa3e61/1000x500', gender: 'men', categories: 'Cognac Tortoise', descHeading: "The limited-edition Winston frame from our Basso Collection is crafted with a straight browline and bold proportions.", descContent: "It also features an elevated “step” design created by paring away the top acetate layer to reveal contrast acetate below."},
+    {   name: 'Winston', price: 120, availability: true, imgUrl: 'https://i.warbyparker.com/d/f/ed814ccac5a6fa5e1714ced174950dac916328e1/1000x500', gender: 'men', categories: 'Lunar Fade', descHeading: "The limited-edition Winston frame from our Basso Collection is crafted with a straight browline and bold proportions.", descContent: "It also features an elevated “step” design created by paring away the top acetate layer to reveal contrast acetate below."},
+    {   name: 'Winston', price: 120, availability: true, imgUrl: 'https://i.warbyparker.com/d/f/3f7a8e6c7310ec2859710f970b38e2be8b8d8afa/1000x500', gender: 'men', categories: 'Old Fashion Fade', descHeading: "The limited-edition Winston frame from our Basso Collection is crafted with a straight browline and bold proportions.", descContent: "It also features an elevated “step” design created by paring away the top acetate layer to reveal contrast acetate below."},
+    {   name: 'Winston', price: 120, availability: true, imgUrl: 'https://i.warbyparker.com/-/f/men-winston-eyeglasses-cognac-tortoise-citron-front-2066-a7fa3e61/1000x500', gender: 'men', categories: 'Jet Black', descHeading: "The limited-edition Winston frame from our Basso Collection is crafted with a straight browline and bold proportions.", descContent: "It also features an elevated “step” design created by paring away the top acetate layer to reveal contrast acetate below."},
     {   name: 'Arthur', price: 95, availability: true, imgUrl: 'https://i.warbyparker.com/d/f/a915daa9adb960ee992e84fa17064cc44d53de2d/1000x500', gender: 'men', categories: 'Green Spruce'},
     {   name: 'Arthur', price: 95, availability: true, imgUrl: 'https://i.warbyparker.com/-/f/men-arthur-eyeglasses-revolver-black-front-1787-bff28fcd/1000x500', gender: 'men', categories: 'Jet Black'},
     {   name: 'Arthur', price: 95, availability: true, imgUrl: 'https://i.warbyparker.com/d/f/c6b210af8f492d725525eb459e3946c9a612813e/1000x500', gender: 'men', categories: 'Sugar Maple'},
@@ -43,7 +43,7 @@ var dataItem = [
 var dataUser = [
     { first_name: 'Harry', last_name:'Potter', email:'harry.potter@yahoo.com'},
     { first_name: 'Princess', last_name: 'Money', email:'p.money@money.com'},
-    { first_name: 'Wizard', middle_name: 'of', last_name: 'Oz', email: 'oz@emeralcity.com', admin: true}
+    { first_name: 'Wizard', middle_name: 'of', last_name: 'Oz', email: 'oz@emeralcity.com', password: "wizard", admin: true}
 
 ];
 
