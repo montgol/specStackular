@@ -2,6 +2,10 @@ body {
   max-width: 880px;
 }
 
+.pagecontainer {
+  margin-left: 5px !important;
+}
+
 #home {
   color: #777777;
 //  specstackular-logo {
@@ -16,6 +20,28 @@ body {
     margin-top: 40px;
   }
 
+.home-image {
+  position: absolute;
+  left: 0px;
+}
+
+.home-blurb-box {
+  position: absolute;
+  left: 50%;
+  padding-left: 10px;
+  width: 50%;
+  z-index: 1;
+  background: rgba(0,0,0,0.3);
+  h1, p {
+    color: #ffffff;
+  }
+  h1 {
+    font-size: 4em;
+  }
+  p {
+    font-size: 2em;
+  }
+}
 
 
 .breadcrumb {
@@ -29,6 +55,7 @@ body {
 #glassesbox {
   text-align: center;
   padding-top: 40px;
+  padding-left: 0px;
 }
 
 .productimagehome {

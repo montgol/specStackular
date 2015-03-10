@@ -12,6 +12,7 @@ app.run(function ($cookies, $cookieStore) {
 
 app.config(function ($stateProvider) {
 
+
     // Register our *products* state.
     $stateProvider.state('products', {
         url: '/products',
@@ -58,6 +59,7 @@ app.controller('allItemsController', function ($scope, AuthService, GetItemsFact
 			$scope.items = items;
 		}
 	});
+
 
 	$scope.addToOrder = function(specificItem){
 		console.log('got into the addToOrder function'); //part one always add it to the cookie
