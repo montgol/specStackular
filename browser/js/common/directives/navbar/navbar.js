@@ -2,6 +2,7 @@
 app.directive('navbar', function ($document) {
     return {
         restrict: 'E',
+
         //scope: {
         //  items: '='
         //},
@@ -28,6 +29,7 @@ app.directive('navbar', function ($document) {
         //        scope.$apply();
         //    });
         //}
+
 
     };
 });
