@@ -1,0 +1,45 @@
+<div id="checkout">
+	<div class='overview'>
+		<h1>{{user}}'s Checkout</h1>
+		<button ng-click='showCookie()'>Show Cookie</button>
+		<button ng-click='deleteCookie()'>Delete Cookie</button>
+		<button ng-click='showOrderFromDb()'>Show myOrder in DB</button>
+		<h3>Pay with Credit Card</h3>
+		<form stripe-form="stripeCallback">
+		    <input ng-model="number" placeholder="Card Number" payment-format="card" payments-validate="card"/>
+		    <input ng-model="expiry" placeholder="Expiration" payment-format="expiry" payments-validate="expiry"/>
+		    <input ng-model="cvc" placeholder="CVC" payment-format="cvc" payments-validate="cvc"/>
+		    <button type="submit">Submit</button>
+		</form>
+		<h3>Order Summary</h3>
+		<div class='summary row'>
+			<h4 class='total-cost col-md-offset-1'>Total Cost: {{sum | currency }}</h4>
+			
+			<h4 class='item-qty col-md-offset-1'>Number of Items: {{totalQty}}</h4>
+			<h4 class='auth col-md-offset-1'>Order synced with Database: {{auth}}</h4>
+		</div>
+
+		<div class='Categories row'>
+			<h2 class='col-md-2 '>Image</h3>
+			<h2 class='col-md-2 col-md-offset-1'>Name</h3>
+			<h2 class='col-md-2'>Price Per</h3>
+			<h2 class='col-md-2'>Quantity</h3>
+			</br>
+		</div>
+
+		<div class='individualOrder row' ng-repeat='line in activeorders'>
+			<img ng-src='{{line.item.imgUrl}}' class='col-md-2' />
+			<span class='name col-md-2 col-md-offset-1'>{{ line.item.name }}</span>
+			<span class='name col-md-2'>{{ line.item.price | currency }}</span>
+				<input type='text' name='newQty' class='quantity col-md-1' ng-init="tempVal = line.quantity" ng-model='tempVal'/>
+				<button type='button' ng-click='updateOrder(line, tempVal)'>Update</button>
+			<button type='button-danger' class='col-md-offset-1' ng-click='removeItem(line.item)'>Remove Item</button>
+		</div>
+		<div class = 'reviews'>
+			<h2>Past Orders</h2>
+			<ul>
+				<h3>TBD</h3>
+			</ul>
+		</div>
+	</div>
+</div>

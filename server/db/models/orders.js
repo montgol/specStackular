@@ -9,7 +9,8 @@ var schema = new mongoose.Schema({
 	lineItem: [{ item: {type: mongoose.Schema.Types.ObjectId, ref: 'Item'},
 		quantity: Number
 	}],
-    status: {type: String, enum: ['open','placed','shipped','complete']}
+    status: {type: String, enum: ['open','placed','shipped','complete']},
+    stripeKey: {type: String}
 })
 
 

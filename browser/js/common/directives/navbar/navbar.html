@@ -22,8 +22,24 @@
             <li>
                 <a ui-sref-active="active" ui-sref="login">Log In<span class="divider-bar">|</span></a>
             </li>
-            <li ng-show="currentUserAdmin" ng-repeat="adminItem in adminItems">
-                <a ui-sref-active="active" ui-sref="{{ adminItem.state }}">{{ adminItem.label }}</a>
+            <li ng-show='currentUser.admin'>
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                    Admin
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation" ng-repeat="adminItem in adminItems"><a ui-sref-active="active" ui-sref="{{ adminItem.state }}">{{ adminItem.label }}</a></li>
+                  </ul>
+                </div>
+
+
+
+
+
+
+
+                 
             </li>
             <li><a><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true" ui-sref="orders" class="ng-span"></span></a></li>
         </ul>

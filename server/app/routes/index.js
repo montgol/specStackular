@@ -142,6 +142,19 @@ router.get('/item/:name', function (req, res, next) { //requested by angular whe
     })
 })
 
+router.put('/stripeKey/:key/:orderId', function (req, res, next) { //requested by angular when item is selected
+    var key = req.params.key;
+    var orderId = req.params.orderId
+    console.log('+++++++++++++++++', key);
+    console.log('%%%%%%%%%%%%%%%', orderId)
+    Order.findByIdAndUpdate(orderId, {stripeKey: key}).exec(function(err, data){
+        console.log('findById called ++++++++++', data)
+
+        if(err) return next(err);
+        res.send(data);
+    })
+})
+
 router.get('item/:category', function (req, res, next) {
     console.log(req.params);
 })

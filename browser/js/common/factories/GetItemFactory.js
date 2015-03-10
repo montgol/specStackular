@@ -2,10 +2,10 @@
 app.factory('GetItemFactory', function($http){
 	
 	return {
-		getItem: function(id){
+		getItem: function(key){
 			//var options = {email: email};
 			console.log(id);
-			return $http.get('/api/item/'+id).then(function(response){
+			return $http.get('/api/item/'+key).then(function(response){
 				return response.data;
 			})
 		},
