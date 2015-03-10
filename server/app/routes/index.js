@@ -81,33 +81,34 @@ router.post('/admin/userModify', function(req, res, next){
 //Admin orderModify Routes
 
 router.get('/admin/order', function (req, res, next) {
-    Order.find({}).exec(function (err, orders) {
-        if (err) return next(err);
-        res.send(orders);
-    })
+    Order
+        .find({})
+        .populate('userId')
+        .populate('lineItem.item')
+        .exec(function (err, orders) {
+            res.send(orders);
+        })
+                
 })
 
+router.post('/admin/order', function (req, res, next) {
+    console.log(req.body)
+    User
+        .find({
+            '_id': { $in: req.body.data }
+        })
+        .exec(function (err, users) {
+            res.send(users);
+        })               
+})
+
+
 router.put('/admin/order', function (req, res, next){
-    console.log('into the router');
     var info = req.body;
     console.log(info);
-    Order.findOne({email: info.email}, function(err, result){
-        console.log(err, 'err', result, 'result');
-        if (result) {
-            if (info.password) {
-                result.password = info.password;
-            }
-            if (info.makeAdmin) {
-                result.admin = info.makeAdmin
-            }
-            if (result) {
-                result.save(function(err, saved) {
-                    console.log(saved)
-                    if (err) return next(err);
-                    else res.send(saved);
-                })
-            }
-        }      
+    Order.findByIdAndUpdate(req.body[0], {status: req.body[1]}, function(err, result){
+        console.log(err, 'err', result, 'result');   
+        res.send(result)
     });
 })
 
@@ -125,6 +126,7 @@ router.get('/logout', function (req, res) {
 });
 
 router.get('/itemlist', function (req, res, next) {  //should be requested by angular when page loads
+
     Item.find({}).exec(function (err, items) {
         if (err) return next(err);
         res.send(items);

@@ -21,7 +21,7 @@ app.directive('navDropdownWomen', function () {
     };
 });
 
-app.controller('dropdownController', function ($scope, GetItemsFactory, $state, $stateParams) {
+app.controller('dropdownController', function ($scope, GetItemsFactory, $state, $stateParams, $window) {
 
     GetItemsFactory.getItems().then(function(items, err){
         if(err) throw err;
@@ -52,28 +52,14 @@ app.controller('dropdownController', function ($scope, GetItemsFactory, $state, 
             $scope.menVisible = false;
             $scope.womenVisible = false;
 
-            $scope.hello = "well hello";
-
             $scope.toggleMenVisible = function(){
-                console.log($scope.menVisible);
-                if ($scope.menVisible === false) {
-                    $scope.menVisible = true;
-                    //console.log("Wahoo")
-                }
-
-                else $scope.menVisible = false;
-
+                $scope.menVisible = !$scope.menVisible;
+                $scope.womenVisible = false;
             }
 
             $scope.toggleWomenVisible = function(){
-                //console.log($scope.menVisible);
-                if ($scope.womenVisible === false) {
-                    $scope.womenVisible = true;
-                    //console.log("Wahoo")
-                }
-
-                else $scope.womenVisible = false;
-
+               $scope.womenVisible = !$scope.womenVisible;
+                $scope.menVisible = false;
             }
 
 

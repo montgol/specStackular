@@ -13,6 +13,7 @@ app.run(function ($cookies, $cookieStore) {
 app.config(function ($stateProvider) {
 
 
+
     $stateProvider.state('products', {
         url: '/products',
         controller: 'allItemsController',
@@ -61,15 +62,16 @@ app.controller('allItemsController', function ($scope, AuthService, GetItemsFact
 
 
 	$scope.addToOrder = function(specificItem){
-		console.log('got into the function'); //part one always add it to the cookie
+		console.log('got into the addToOrder function'); //part one always add it to the cookie
 		var order = $cookieStore.get('Order');
 		var resolved = false;
 		var line = {itemId: specificItem._id, quantity: 1};
-		// console.log('Request to add item to order');
+		 console.log('order', order);
 			if(order){ //if user has an order on a cookie
+ 
 				order.forEach(function(itemLine){
-					if(itemLine.itemId === specificItem.itemId){
-						itemLine.qty++;
+					if(itemLine.itemId === specificItem._id){
+						itemLine.quantity++;
 						resolved = true;
 					}	
 				});
@@ -80,14 +82,14 @@ app.controller('allItemsController', function ($scope, AuthService, GetItemsFact
 			else{
 				order.push(line);
 			}
-		$cookieStore.put('Order', order);
-		var user = AuthService.getLoggedInUser();
-		if(user){
-			//OrderFactory.getOrders(user._id)//
-		}
-		
 
-		//part 2, check if user has logged in, and send to order db
+
+		$cookieStore.put('Order', order);
+
+		// var user = AuthService.getLoggedInUser();
+		// if(user){
+		// 	//OrderFactory.getOrders(user._id)//
+		// }
 	}
 });
 
@@ -107,6 +109,9 @@ app.controller('categoryController', function ($scope, GetItemsFactory, $state, 
 });
 
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> dfc2954bbaa3d20378c40f1b0f0707b8279b2906

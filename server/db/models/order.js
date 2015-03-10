@@ -5,8 +5,8 @@ var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
 	orderNumber: Number,
-	userName: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
-	items: [{type: mongoose.Schema.Types.ObjectId, ref: 'item'}],
+	userName: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	items: [{type: mongoose.Schema.Types.ObjectId, ref: 'Item'}],
     quantity: Number,
     status: {type: String, enum: ['open','placed','shipped','complete']}
 })
