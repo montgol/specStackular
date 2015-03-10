@@ -28,8 +28,13 @@ app.controller('orderController', function ($scope, GetItemsFactory, OrderFactor
 
 	function firstUpdate (){
 	//check if user is authenticated, populate order from db, set order to cookie
+	AuthService.getLoggedInUser().then(function(user){
 		if( AuthService.isAuthenticated() ){
-			AuthService.getLoggedInUser().then(function(user){
+			console.log('Authenticated from Authservice');
+			console.log('user', user);
+			if(user.user){
+					user = user.user;
+			}
 			$scope.userId = user._id;
 			$scope.user = user.first_name;
 			$scope.auth = true;
@@ -40,6 +45,7 @@ app.controller('orderController', function ($scope, GetItemsFactory, OrderFactor
 						$scope.activeorders = $cookieStore.get('Order');
 						OrderFactory.createOrder({userId: $scope.userId, items: $scope.activeorders}, function(response){
 							$scope.activeorders = response.lineitems;
+							console.log($scope.activeorders);
 							sum();
 							totalQty();
 						});
@@ -47,18 +53,19 @@ app.controller('orderController', function ($scope, GetItemsFactory, OrderFactor
 					else { //items in db, make sure cookies are added to db
 						$scope.activeorders = items.lineitems.lineItem;
 						$scope.orderId = items.orderId;
+						console.log($scope.activeorders);
 						sum();
 						totalQty();
 					}
 				});
-			});
-		}
+			}
 		else {
+			console.log('not authenticated');
 			var idAndQty = $cookieStore.get('Order');
 			var productList=[];
 			GetItemsFactory.getItems().then(function(items, err){ //approach will not scale well but is quicker now
 				if(err) console.log(err);
-				idAndQty.forEach(function(itemPair){
+				idAndQty.forEach(function(itemPair){ //get all items, see which items are in the cart, 'populate' order items
 					for(var a=0, len=items.length; a<7; a++){
 						if(itemPair.itemId === items[a]._id){
 							productList.push({item: items[a], quantity: itemPair.quantity });
@@ -73,7 +80,8 @@ app.controller('orderController', function ($scope, GetItemsFactory, OrderFactor
 				totalQty();
 			})
 		}
-	};
+	});
+	}
 
 	firstUpdate();
 
@@ -101,7 +109,7 @@ app.controller('orderController', function ($scope, GetItemsFactory, OrderFactor
 		totalQty();
 
 		if(AuthService.isAuthenticated()){
-			OrderFactory.updateOrder({orderId: $scope.orderId, quantity: 0, itemId: Item._id}).then(function(err, data){
+			OrderFactory.updateOrder({orderId: $scope.orderId, quantity: 0, itemId: item._id}).then(function(err, data){
 				if(err) console.log(err);
 
 			});
@@ -155,8 +163,7 @@ app.controller('orderController', function ($scope, GetItemsFactory, OrderFactor
 		console.log($cookieStore.get('Order'));
 	}
 	$scope.showOrderFromDb = function(){
-		//console.log(AuthService.isAuthenticated());
-		if($scope.userId){
+		if(AuthService.isAuthenticated()){
 			OrderFactory.getOrders($scope.userId).then(function(result, err){
 				console.log('results', result,'Error', err);
 			})

@@ -28,7 +28,7 @@ module.exports = function (app) {
 
         console.log('got into the login function');
             
-        var authCb = function (err, user) {
+        var authCb = function (err, user) { 
 
             if (err) { console.log("err", err); return next(err); };
 

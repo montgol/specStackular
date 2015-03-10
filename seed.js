@@ -52,7 +52,7 @@ console.log('welcome to the Seed...');
 function addToDb (){
 
     var Item =  mongoose.model('Item');
-
+    
     for(var a=0, len = dataItem.length; a<len; a++){
         console.log(dataItem[a]);
         Item.create(dataItem[a], function(err, data){
@@ -68,6 +68,9 @@ function addToDb (){
             if(err) throw err;
         });
     }
+
+    var Order = mongoose.model('Order');
+    Order.remove({}).exec(function(data, err){ });
 
     console.log('Finished adding Users');
     return;
