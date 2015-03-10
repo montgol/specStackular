@@ -28,5 +28,6 @@ app.directive('navbar', function ($document) {
         //        scope.$apply();
         //    });
         //}
+
     };
 });

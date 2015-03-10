@@ -1,12 +1,12 @@
 'use strict';
-app.factory('CreateItemFactory', function($http){
+app.factory('userModifyFactory', function($http){
 	
 	return {
-		postItem: function(data){
+		postPW: function(data){
 			console.log('into the factory', data);
 			// return $http.post('/api/item', data);
 
-			return $http.post('/api/admin/itemCreate', data).then(function(response){
+			return $http.post('/api/admin/userModify', data).then(function(response){
 				return response.data;
 			})
 		}
