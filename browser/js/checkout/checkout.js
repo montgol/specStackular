@@ -32,7 +32,9 @@ app.controller('checkoutController', function ($scope, GetItemsFactory, OrderFac
 			    window.alert('it failed! error: ' + result.error.message);
 			} else {
 			    window.alert('success! token: ' + result.id);
-			    stripeFactory.sendKey(result.id, $scope.orderId)
+			    stripeFactory.sendKey(result.id, '54fa07473fe300fd62cfef3b').then(function(data){
+			    	console.log(data)
+			    })
 			}
 	};
 
