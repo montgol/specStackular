@@ -51,7 +51,7 @@ schema.methods.setLineItem = function(item, qty, cb){
 }
 
 schema.methods.getLineItems = function(cb){
-	return this.populate('lineItem').exec(function(err, items){
+	return this.lineItem[0].populate('item').exec(function(err, items){
 		return cb(err, items);
 	})
 }

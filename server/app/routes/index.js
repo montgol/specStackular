@@ -173,13 +173,17 @@ router.get('/order/:userId', function (req, res, next){
     Order.findOne({userId: user}, function(err, data){ //assumes there is only one order, ok for now, needs to be modified later
         console.log('in order-middleware, data: ', data);
         if (err) return next(err);
-        else if( data && data.lineItem.length > 0){ //if an order already exists
+        else if( data && data.lineItem.length > 0){ //if an order already exists and has items
             console.log('lineItem', data.lineItem);
             data.populate('lineItem.item', function( err , items){
                 var obj = {lineitems: items, orderId: data._id};
                 console.log('order already exists......items', items, 'obj', obj);
                 res.send(obj);
             })
+        } 
+        else if (data){
+            var obj = {data: data, status: 'empty'};
+            res.send(obj);
         }
         else { //no order exists
             console.log('No user order in Db');
@@ -223,7 +227,9 @@ router.post('/order/lineitem', function (req, res, next) {
     var orderId = req.body.orderId;
     var itemId = req.body.itemId;
     var quantity = req.body.quantity;
+    console.log(orderId);
     Order.findById(orderId).exec(function(err, myOrder){
+        console.log('myOrder', myOrder, 'err', err);
         if(err) return next(err);
         myOrder.setLineItem(itemId, quantity, function(err, updatedInfo){
             if (err) return next(err);

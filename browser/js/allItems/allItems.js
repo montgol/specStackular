@@ -22,35 +22,6 @@ app.config(function ($stateProvider) {
 
 });
 
-// app.config(function ($stateProvider) {
-
-//     // Register our *men* state.
-//     $stateProvider.state('men', {
-//         url: '/products/men',
-//         controller: 'allItemsController',
-//         templateUrl: 'js/allitems/allitems.html'
-//     })
-
-// });
-
-// app.config(function ($stateProvider) {
-
-//     // Register our *women* state.
-//     $stateProvider.state('women', {
-//         url: '/products/women',
-//         // controller: 'categoryController',
-//         controller: function ($scope, GetItemsFactory, $state, $stateParams) {
-// 			console.log("before", $scope.items, $state.current);
-// 			GetItemsFactory.getItems().then(function(items){	
-// 				$scope.items = items;
-// 				console.log(items);
-// 			});
-// 		},
-//         templateUrl: 'js/allitems/allitems.html',
-//     })
-// });
-
-
 app.controller('allItemsController', function ($scope, AuthService, GetItemsFactory, $state, $stateParams, $cookieStore, OrderFactory) {
 
 	GetItemsFactory.getItems().then(function(items, err){
@@ -92,11 +63,10 @@ app.controller('allItemsController', function ($scope, AuthService, GetItemsFact
 					user = user.user;
 				}
 				console.log(user);
-				OrderFactory.getOrders(user._id).then(function(items,err){ //get the user's cart
-					if(err) console.log(err);
+				OrderFactory.getOrders(user._id).then(function(items){ //get the user's cart
 					var resolved = false;
-					console.log(items);
-					if(items){ // see if user has the item in the cart already
+					console.log('inside the add to order function with a return from the server: ', items);
+					if(items && !items.status){ // see if user has the item in the cart already
 						debugger;
 						items.lineitems.forEach(function(item){
 							if(itemToAdd._id === item.item._id && !resolved){ // if they do update amount
@@ -106,8 +76,14 @@ app.controller('allItemsController', function ($scope, AuthService, GetItemsFact
 							}
 						});
 						if(!resolved){ //otherwise add item
-							var newLine = {itemId: item.item._id, quantity: 1, orderId: items._id};
+							var newLine = {itemId: itemToAdd._id, quantity: 1, orderId: items._id};
 						}
+						OrderFactory.updateOrder(newLine).then(function(response){
+							console.log('completed order request');
+						});
+					}
+					else if(items && items.status){ //user has an empty cart
+						var newLine = {itemId: itemToAdd._id, quantity: 1, orderId: items.data._id};
 						OrderFactory.updateOrder(newLine).then(function(response){
 							console.log('completed order request');
 						});
