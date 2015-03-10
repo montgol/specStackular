@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="/" />
+    <base href="/"/>
     <title>SpecStackular—Reframe Your Face</title>
-    <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="/style.css" />
-    <link href='http://fonts.googleapis.com/css?family=Alegreya+SC|Fanwood+Text:400,400italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/style.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Alegreya+SC|Fanwood+Text:400,400italic' rel='stylesheet'
+          type='text/css'>
     <script src="/lodash/lodash.js"></script>
     <script src="/jquery/dist/jquery.js"></script>
     <script src="/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/angular/angular.js"></script>
     <script src="/angular-cookies/angular-cookies.js"></script>
     <script src="/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/angular-cookies/angular-cookies.js"></script>
     <script src="/angular-payments/lib/angular-payments.js"></script>
@@ -22,10 +25,15 @@
     </script>
 
     <script src="/main.js"></script>
+
 </head>
 <body ng-app="specStackular" ng-controller="MainController">
-    <navbar current-user-admin="currentUser.admin" admin-items="adminItems" items="menuItems"></navbar>
-    <div ui-view class='container'></div>
+
+
+<navbar current-user-admin="currentUser.admin" admin-items="adminItems" items="menuItems"></navbar>
+
+<div ui-view class="container pagecontainer"></div>
+
 
 </body>
 </html>
