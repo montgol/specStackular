@@ -1,7 +1,18 @@
 'use strict';
+
+app.run(function ($cookies, $cookieStore) {
+
+	var init = $cookieStore.get('Order');
+	if(!init){
+		$cookieStore.put('Order', []);
+		console.log('starting cookie: ', $cookieStore.get('Order'));
+	}
+
+});
+
 app.config(function ($stateProvider) {
 
-    // Register our *about* state.
+    // Register our *item* state.
     $stateProvider.state('item', {
         url: '/item/:name',
         controller: 'itemController',
@@ -10,7 +21,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('itemController', function ($scope, GetItemFactory, $state, $stateParams, $cookiestore) {
+app.controller('itemController', function ($scope, GetItemFactory, $state, $stateParams, $cookieStore, AuthService, OrderFactory ) {
 
 	//get input from user about item (id from url )
 	//check id vs database
@@ -25,14 +36,21 @@ app.controller('itemController', function ($scope, GetItemFactory, $state, $stat
 	});
 
 	$scope.addToOrder = function(){
-		var order = $cookiestore.get('Order');
-		var line = {item: $scope.item, qty: 1};
+		
+		AuthService.isAuthenticated().then(function(answer){
+			var order = $cookies.get('Order');
+			var line = {item: $scope.item, quantity: 1};
 			if(!order){
-				$cookiestore.put('Order', line);
+				$cookies.put('Order', line);
 			}
 			else{
 				order.push(line);
-				$cookiestore.put('Order', order);
+				$cookies.put('Order', order);
 			}
+
+			if(answer){
+				OrderFactory.addItem()
+			}
+		})
 	}
 });
