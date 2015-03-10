@@ -35,22 +35,38 @@ app.controller('itemController', function ($scope, GetItemFactory, $state, $stat
 			}
 	});
 
-	$scope.addToOrder = function(){
-		
-		AuthService.isAuthenticated().then(function(answer){
-			var order = $cookies.get('Order');
-			var line = {item: $scope.item, quantity: 1};
-			if(!order){
-				$cookies.put('Order', line);
+	$scope.addToOrder = function(itemToAdd){
+		console.log('got into the addToOrder function'); //part one always add it to the cookie
+		adjustCookie(itemToAdd);
+		AuthService.getLoggedInUser().then(function(user){ //if user is authenticated
+			if(AuthService.isAuthenticated()){
+				if(user.user){
+					user = user.user;
+				}
+				console.log(user);
+				OrderFactory.getOrders(user._id).then(function(items,err){ //get the user's cart
+					if(err) console.log(err);
+					var resolved = false;
+					console.log(items);
+					if(items){ // see if user has the item in the cart already
+						debugger;
+						items.lineitems.forEach(function(item){
+							if(itemToAdd._id === item.item._id && !resolved){ // if they do update amount
+								console.log('itemId', item.item._id, 'quantity', item.quantity+'+1 ', 'orderId', items.orderId);
+								var newLine = {itemId: item.item._id, quantity: item.quantity++, orderId: items.orderId};
+								resolved = true;
+							}
+						});
+						if(!resolved){ //otherwise add item
+							var newLine = {itemId: item.item._id, quantity: 1, orderId: items._id};
+						}
+						OrderFactory.updateOrder(newLine).then(function(response){
+							console.log('completed order request');
+						});
+					}
+					//if no order exists create one when user goes to order page
+				});
 			}
-			else{
-				order.push(line);
-				$cookies.put('Order', order);
-			}
-
-			if(answer){
-				OrderFactory.addItem()
-			}
-		})
-	}
+		});
+	};
 });

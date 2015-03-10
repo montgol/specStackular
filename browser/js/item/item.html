@@ -14,9 +14,9 @@
             </div>
             <!-- Column -->
             <div class="col-md-5 col-sm-5 col-xs-5 productdescription">
-                <h1 class="productheadline">{{ items.descHeadline }}</h1>
+                <h1 class="productheadline">{{item.descHeading}}</h1>
 
-                <p class="productbenefitsblurb">{{ items.descContent }}</p>
+                <p class="productbenefitsblurb">{{item.descContent}}</p>
 
                 <form class="form-horizontal">
                     <fieldset>
@@ -26,7 +26,7 @@
 
                             <div class="controls">
                                 <h2>{{item.price | currency }}&nbsp;&nbsp;<h2>
-                                    <button id="addtocart" name="addtocart" class="btn btn-success">Add to Cart</button>
+                                    <button id="addtocart" name="addtocart" class="btn btn-success" ng-click='addToOrder(item)'>Add to Cart</button>
                             </div>
                         </div>
 
