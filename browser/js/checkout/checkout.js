@@ -19,7 +19,7 @@ app.controller('checkoutController', function ($scope, GetItemsFactory, OrderFac
 	$scope.activeorders=[]; //expects item {itemId: itemId, price: num, imgUrl:String, }, qty: num
 	$scope.pastorders=[];
 	$scope.user;
-	$scope.sum = 1000;
+	$scope.sum = 0;
 	$scope.totalQty = 0; 
 	$scope.tempVal;
 	$scope.orderId;
@@ -28,11 +28,12 @@ app.controller('checkoutController', function ($scope, GetItemsFactory, OrderFac
 
 		// Stripe Response Handler
 	$scope.stripeCallback = function (code, result) {
-	    if (result.error) {
-	        window.alert('it failed! error: ' + result.error.message);
-	    } else {
-	        window.alert('success! token: ' + result.id);
-	    }
+			if (result.error) {
+			    window.alert('it failed! error: ' + result.error.message);
+			} else {
+			    window.alert('success! token: ' + result.id);
+			    stripeFactory.sendKey(result.id, $scope.orderId)
+			}
 	};
 
 	function firstUpdate (){
@@ -177,13 +178,13 @@ app.controller('checkoutController', function ($scope, GetItemsFactory, OrderFac
 	}
 
 	function sum (){
-		// var total = 0;
-		// console.log('got to sum');
-		// $scope.activeorders.forEach(function(lineItem){
-		// 	console.log(lineItem);
-		// 	total= total + lineItem.item.price * lineItem.quantity;
-		// })
-		// $scope.sum = total;
+		var total = 0;
+		console.log('got to sum');
+		$scope.activeorders.forEach(function(lineItem){
+			console.log(lineItem);
+			total= total + lineItem.item.price * lineItem.quantity;
+		})
+		$scope.sum = total;
 	};
 	
 });
