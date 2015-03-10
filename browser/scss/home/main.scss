@@ -2,6 +2,10 @@ body {
   max-width: 880px;
 }
 
+.pagecontainer {
+  margin-left: 5px !important;
+}
+
 #home {
   color: #777777;
 //  specstackular-logo {
@@ -29,6 +33,7 @@ body {
 #glassesbox {
   text-align: center;
   padding-top: 40px;
+  padding-left: 0px;
 }
 
 .productimagehome {

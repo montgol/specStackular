@@ -1,7 +1,6 @@
 'use strict';
 app.config(function ($stateProvider) {
 
-    // Register our *about* state.
     $stateProvider.state('products', {
         url: '/products',
         controller: 'allItemsController',
@@ -18,4 +17,6 @@ app.controller('allItemsController', function ($scope, GetItemsFactory, $state, 
 			$scope.items = items;
 		}
 	});
+
+
 });

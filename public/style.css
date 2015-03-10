@@ -1,12 +1,6 @@
 * {
   box-sizing: border-box; }
 
-fullstack-logo {
-  display: block; }
-  fullstack-logo img {
-    display: block;
-    width: 100%; }
-
 nav {
   height: 55px !important; }
 
@@ -59,8 +53,46 @@ navbar {
 #spacerthing {
   margin-left: 30px; }
 
+.dropdown-box {
+  background: rgba(255, 255, 255, 0.95);
+  width: 440px;
+  height: 200px;
+  z-index: 1;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-bottom: solid 1px #849bae;
+  border-left: solid 1px #849bae;
+  border-right: solid 1px #849bae; }
+
+#menbox {
+  position: absolute;
+  top: 33px;
+  left: 72px; }
+
+#womenbox {
+  position: absolute;
+  top: 33px;
+  left: 201px; }
+
+.men-menu {
+  background: red; }
+
+.dd-product-img {
+  width: 100px; }
+
+.dd-name {
+  font-family: 'Fanwood Text', serif;
+  font-style: italic;
+  color: #849bae; }
+
+.dd-table td:hover {
+  box-shadow: 0px 2px 2px #849bae; }
+
 body {
   max-width: 880px; }
+
+.pagecontainer {
+  margin-left: 5px !important; }
 
 #home {
   color: #777777; }
@@ -79,7 +111,8 @@ h1 {
 
 #glassesbox {
   text-align: center;
-  padding-top: 40px; }
+  padding-top: 40px;
+  padding-left: 0px; }
 
 .productimagehome {
   width: 90%;
