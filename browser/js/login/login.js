@@ -21,6 +21,7 @@ app.controller('loginController', function ($scope, $window, AuthService, $state
         console.log("user login process started with: ", info);
         AuthService.login(info).then(function(info){
             console.log("controller", info);
+            console.log('authenticated', AuthService.isAuthenticated())
                 if (info.admin) {
                     $state.go('admin')
                 } else {
