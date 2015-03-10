@@ -10,26 +10,41 @@ app.config(function ($stateProvider) {
 });
 
 
-app.controller('loginController', function ($scope, $window, GetUserFactory, $state, AuthService, Session, $rootScope) {
+app.controller('loginController', function ($scope, $window, AuthService, $state, Session, $rootScope) {
     $scope.loginoauth = function (provider) {
         var location = 'auth/' + provider;
         $window.location.href = location;
     }
     $scope.success;
     $scope.submitUser = function() {
-        var info = $scope.user.email;
+        var info = $scope.user;
         console.log("user login process started with: ", info);
-	    GetUserFactory.getUser(info).then(function(user, err){
-	    	if (err) $scope.success = false;
-	    	else{
-                $rootScope.currentUser = user[0];
-                console.log($rootScope.currentUser)
-	    		if (user[0].admin) {
+        AuthService.login(info).then(function(info){
+            console.log("controller", info);
+                if (info.admin) {
                     $state.go('admin')
                 } else {
-                    $state.go('home')
+                    $state.go('products')
                 }
-	    	}
-	    });
-	}
+        });
+    // this is just testing sessions started
+    $scope.isLoggedIn = AuthService.isAuthenticated();
+    // end test
+
+
+
+        // GetUserFactory.authUser(info).then(function(user, err){
+        //     if(err) $scope.success = false;
+        //     else {
+        //         $rootScope.success = false;
+        //         console.log($rootScope.currentUser)
+        //         if (user[0].admin) {
+        //             $state.go('admin')
+        //         } else {
+        //             $state.go('home')
+        //         }
+        //     }
+        // })      
+
+    };
 });

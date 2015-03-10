@@ -13,7 +13,7 @@ app.config(function ($stateProvider) {
 
 
 
-app.controller('joinController', function($scope, $window, CreateUserFactory) {
+app.controller('joinController', function($scope, $window, CreateUserFactory, AuthService) {
 
     $scope.loginoauth = function (provider) {
         var location = 'auth/' + provider;
@@ -29,10 +29,18 @@ app.controller('joinController', function($scope, $window, CreateUserFactory) {
 	    CreateUserFactory.postUser($scope.user).then(function(user, err){
 	    	if (err) $scope.success=false;
 	    	else{
-	    		console.log(user);
-	    		$scope.success = true;
+                AuthService.login(user).then(function(conclusion){
+                    console.log(user);
+                    $scope.success = true;
+                });
 	    	}
 	    });
 	  }
+
+      function validatePassword (email){
+        regex = /^([\w-\.]+@(?!gmail.com)(?!yahoo.com)(?!hotmail.com)([\w-]+\.)+[\w-]{2,4})?$/;
+        return regex.test(email);
+      }
+
 });
 

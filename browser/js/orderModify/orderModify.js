@@ -5,16 +5,29 @@ app.config(function ($stateProvider) {
     $stateProvider.state('admin.orderModify', {
         url: '/orderModify',
         templateUrl: 'js/orderModify/orderModify.html',
-        controller: 'orderModifyController'
-    });
-
+        controller: 'orderModifyController',
+        resolve: {
+        	getOrders:  function($http){
+        			// var orderObject = {}
+        			return $http.get('/api/admin/order')
+        				.then(function(response){
+        					return response.data
+        					})
+        			}
+        		}
+   	})
 });
 
-app.controller('orderModifyController', function ($scope, orderModifyFactory, $state, $stateParams, $rootScope) {
+app.controller('orderModifyController', 
+	function ($scope, orderModifyFactory, $state, $stateParams, $rootScope, getOrders) {
 
 	$scope.item = {
 		categories: [] };
 	$scope.success;
+
+	$scope.allOrders = getOrders
+
+	$scope.orders;
 
 	$scope.menuItems = [
 		{ label: 'all orders'},
@@ -24,20 +37,22 @@ app.controller('orderModifyController', function ($scope, orderModifyFactory, $s
         { label: 'complete'}
     ];
 
-	$scope.getAllOrders = function() {
-		//$scope.item.categories = $scope.item.categories.split(' ');
-		console.log('process started');
-		orderModifyFactory.getAllOrders().then(function(item, err){
-			if(err) $scope.success= false;
-			else{
-				console.log(item);
-				$scope.item = item
-				$scope.success = true;
-				
-			}
-		});
-	}
-	$scope.changeStatus = function () {
+    $scope.changeStatusMenuItems = [
+        { label: 'open'},
+        { label: 'placed'},
+        { label: 'shipped'},
+        { label: 'complete'}
+    ];
 
+	$scope.filterOrders = function(status) {
+		$scope.orders = orderModifyFactory.filterOrders(status, $scope.allOrders)
+
+		$scope.filtered = false;
 	}
+
+    $scope.changeStatus = function (orderId, status, index) {
+        var data = [orderId, status]
+        $scope.orders[index].status = status
+        orderModifyFactory.modifyOrder(data)
+    }
 });

@@ -2,34 +2,23 @@
 app.factory('OrderFactory', function($http){
 	
 	return {
-		addItem: function(data){
-			console.log('into the factory', data);
-			// data should be in form {item: itemId, quantity: quantity, }
-
-			return $http.post('/api/item/addToOrder', data).then(function(response){
+		createOrder: function(data){// data should be in form {userId: user._id, items: [item: item._id, qty: qty]}
+			console.log('sending a request for a new order from factory');
+			return $http.post('/api/order', data).then(function(response){
+			//console.log('response from createOrder factory request', response);
 				return response.data;
 			})
 		},
-		updateOrder: function(data){
+		updateOrder: function(data){ //expects orderId, itemId, and quantity (case sensative)
 			return $http.post('/api/order/lineitem', data).then(function(response){
 				return response.data;
 			})
 		},
-		getOrders: function(){
-			//if user is authenticated, check the server
-			//if(req.session.user)
-			if( 1 >= 6 ){
-				return $http.get('/api/order').then(function(response){
-					return response.data;
-				})
-			}
-			else{
-				return false; //get data from session
-			}
+		getOrders: function(userId){
+			return $http.get('/api/order/'+userId).then(function(response){
+				//console.log('response from getOrders factory request', response);
+				return response.data;
+			});
 		}
 
-
-
-	};
-
-})
+}});
