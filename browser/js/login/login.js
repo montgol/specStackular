@@ -1,6 +1,6 @@
 app.config(function ($stateProvider) {
 
-    // Register our *Login* state.
+    // Register our *Join Now* state.
     $stateProvider.state('login', {
         url: '/login',
         controller: 'loginController',
@@ -44,7 +44,7 @@ app.controller('loginController', function ($scope, $window, AuthService, $state
         //             $state.go('home')
         //         }
         //     }
-        // })	   
+        // })      
 
-	};
+    };
 });
