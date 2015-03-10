@@ -30,7 +30,7 @@ app.controller('joinController', function($scope, $window, CreateUserFactory, Au
 	    	if (err) $scope.success=false;
 	    	else{
                 AuthService.login(user).then(function(conclusion){
-                    console.log(user);
+                    console.log('logged in successfully?', user);
                     $scope.success = true;
                 });
 	    	}
