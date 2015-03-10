@@ -12,7 +12,7 @@ app.run(function ($cookies, $cookieStore) {
 
 app.config(function ($stateProvider) {
 
-    // Register our *products* state.
+
     $stateProvider.state('products', {
         url: '/products',
         controller: 'allItemsController',
@@ -59,6 +59,7 @@ app.controller('allItemsController', function ($scope, AuthService, GetItemsFact
 		}
 	});
 
+<<<<<<< HEAD
 	$scope.addToOrder = function(specificItem){
 		console.log('got into the function'); //part one always add it to the cookie
 		var order = $cookieStore.get('Order');
@@ -106,3 +107,7 @@ app.controller('categoryController', function ($scope, GetItemsFactory, $state, 
 });
 
 
+=======
+
+});
+>>>>>>> 30-glenn-UIchanges-dropdownmenu

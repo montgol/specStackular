@@ -1,3 +1,4 @@
+<div  ng-controller="dropdownController">
 <nav class="navbar navbar-static-top specstackular-navbar">
     <div class="container nav-container">
         <div class="navbar-header">
@@ -6,8 +7,20 @@
         <div class="navbar-header divider-bar" id="spacerthing" >&nbsp;</div>
         <ul class="nav navbar-nav" ng-click="getCategoryItems()">
             <!-- Note: The navbar items are stored in browser/js/app.js -->
-            <li ng-repeat="item in items">
-                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}<span class="divider-bar">|</span></a>
+            <!--<li ng-repeat="item in items">-->
+                <!--<a ui-sref-active="active" ui-sref="{{ item.state }}" hoverdrop({item.label})>{{ item.label }}<span class="divider-bar">|</span></a>-->
+            <!--</li>-->
+            <li>
+                <a ui-sref-active="active" ng-click="toggleMenVisible()">Men<span class="divider-bar">|</span></a>
+            </li>
+            <li>
+                <a ui-sref-active="active" ng-click="toggleWomenVisible()">Women<span class="divider-bar">|</span></a>
+            </li>
+            <li>
+                <a ui-sref-active="active" ui-sref="joinnow">Join Us<span class="divider-bar">|</span></a>
+            </li>
+            <li>
+                <a ui-sref-active="active" ui-sref="login">Log In<span class="divider-bar">|</span></a>
             </li>
             <li ng-show="currentUserAdmin" ng-repeat="adminItem in adminItems">
                 <a ui-sref-active="active" ui-sref="{{ adminItem.state }}">{{ adminItem.label }}</a>
@@ -16,3 +29,6 @@
         </ul>
     </div>
 </nav>
+<nav-dropdown class="dropdown-box" id="menbox" ng-show="menVisible"></nav-dropdown>
+<nav-dropdown-women class="dropdown-box" id="womenbox" ng-show="womenVisible"></nav-dropdown-women>
+</div>
