@@ -1,11 +1,12 @@
 'use strict';
 // var app = angular.module('FullstackGeneratedApp', ['ui.router', 'fsaPreBuilt']);
+
 var app = angular.module('specStackular', ['ui.router', 'fsaPreBuilt', 'ngCookies']);
 app.controller('MainController', function ($scope, $rootScope) {
 
     // Given to the <navbar> directive to show the menu.
     $scope.menuItems = [
-        { label: 'Men', state: 'men' },
+        { label: 'Men', state: 'products' },
         { label: 'Women', state: 'women' },
         { label: 'Join us', state: 'join' },
         { label: 'Log In', state: 'login'},

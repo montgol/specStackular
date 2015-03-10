@@ -10,13 +10,13 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('orderController', function ($scope, OrderFactory, $state, $stateParams, $cookieStore, AuthService) {
+app.controller('orderController', function ($scope, GetItemsFactory, OrderFactory, $state, $stateParams, $cookieStore, AuthService) {
 
 	//provides general functionality with an order
 	//views current user order
 		//order is shown by line item
 		//has ability to edit order, or proceed to checkout
-	$scope.activeorders=[];
+	$scope.activeorders=[]; //expects item {itemId: itemId, price: num, imgUrl:String, }, qty: num
 	$scope.pastorders=[];
 	$scope.user;
 	$scope.sum = 0;
@@ -28,54 +28,60 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 
 	function firstUpdate (){
 	//check if user is authenticated, populate order from db, set order to cookie
-	//
-		if(AuthService.isAuthenticated()){
+		if( AuthService.isAuthenticated() ){
 			AuthService.getLoggedInUser().then(function(user){
 			$scope.userId = user._id;
 			$scope.user = user.first_name;
 			$scope.auth = true;
-				OrderFactory.getOrders(user._id).then(function(items, err){
+				OrderFactory.getOrders($scope.userId).then(function(items, err){
+					console.log('items', items);
 					if (err) console.log('Error: ', err);
-					else if(!items) {
-						console.log('No current order in DB'); //not sure what else needs to be declared.
+					else if(!items) { //no items in dB, get cookies, set order
 						$scope.activeorders = $cookieStore.get('Order');
-						$scope.prof = 'User';
+						OrderFactory.createOrder({userId: $scope.userId, items: $scope.activeorders}, function(response){
+							$scope.activeorders = response.lineitems;
+							sum();
+							totalQty();
+						});
 					}
-					else {
-						$scope.activeorders = items.lineitems;
+					else { //items in db, make sure cookies are added to db
+						$scope.activeorders = items.lineitems.lineItem;
 						$scope.orderId = items.orderId;
-
-						var cookie = $cookieStore.get('Order');
-						if(cookie){
-							cookie.forEach(function(newItem){
-								$scope.activeorders.push(newItem);
-							});
-						}
+						sum();
+						totalQty();
 					}
 				});
 			});
 		}
-		else{
-			$scope.activeorders = $cookieStore.get('Order');
-			$scope.user = 'User';
-			$scope.auth = false;
-			sum();
-			totalQty();
+		else {
+			var idAndQty = $cookieStore.get('Order');
+			var productList=[];
+			GetItemsFactory.getItems().then(function(items, err){ //approach will not scale well but is quicker now
+				if(err) console.log(err);
+				idAndQty.forEach(function(itemPair){
+					for(var a=0, len=items.length; a<7; a++){
+						if(itemPair.itemId === items[a]._id){
+							productList.push({item: items[a], quantity: itemPair.quantity });
+						}
+					}
+				});
+				console.log('prodList', productList);
+				$scope.activeorders = productList;
+				$scope.user = 'User';
+				$scope.auth = false;
+				sum();
+				totalQty();
+			})
 		}
-	}
+	};
 
 	firstUpdate();
-
-
-	function serverUpdate(){
-
-	}
 
 	function totalQty (){
 		var totalQ = 0;
 		console.log('got to sum');
 		$scope.activeorders.forEach(function(lineItem){
-			totalQ= totalQ + lineItem.qty;
+			totalQ= totalQ + lineItem.quantity;
 		})
 		$scope.totalQty = totalQ;
 	};
@@ -84,15 +90,13 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 		//remove item from db, remove item from cookie, remove item from scope
 		//if authenticated, remove item from order
 		var myOrderCookie = $cookieStore.get('Order');
-		var location
-		myOrderCookie.forEach(function(element, index){
-			if(element.item.name === item.name){
-				location = index;
-			}
-		});
+		console.log(myOrderCookie, item);
+		var location = getLocInCookie(myOrderCookie, item._id);
+
 		var removedItem = myOrderCookie.splice(location, 1);
 		$cookieStore.put('Order', myOrderCookie);
-		$scope.activeorders = myOrderCookie;
+
+		$scope.activeorders.splice(location,1);
 		sum();
 		totalQty();
 
@@ -105,10 +109,36 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 		}
 	}
 
-	$scope.updateOrder = function(){
-		//takes in information about the user, 
-		OrderFactory.updateOrder();
+	function getLocInCookie (cookies, id){
+		var loc;
+		cookies.forEach(function(element, index){
+			if(element.itemId === id){
+				console.log(element.itemId, " is the correct key");
+				loc = index;
+			}
+		});
+		return loc;
+	}
 
+	$scope.updateOrder = function(item, val){
+		//takes in information about the user, 
+		if(val == 0){
+			$scope.removeItem(item.item);
+		}
+		else{
+			if($scope.userId){
+				OrderFactory.updateOrder({orderId: $scope});
+			}
+			var orderCookie = $cookieStore.get('Order');
+			var index = getLocInCookie(orderCookie, item.item._id);
+			orderCookie[index].quantity = Number(val);
+			$cookieStore.put('Order', orderCookie);
+
+			$scope.activeorders[index].quantity = Number(val);
+			sum();
+			totalQty();
+		}
+		
 	}; 
 	$scope.newNumber = function(item, val){
 		console.log('item', item, 'val', val);
@@ -124,13 +154,25 @@ app.controller('orderController', function ($scope, OrderFactory, $state, $state
 		$cookieStore.remove('Order');
 		console.log($cookieStore.get('Order'));
 	}
-	
+	$scope.showOrderFromDb = function(){
+		//console.log(AuthService.isAuthenticated());
+		if($scope.userId){
+			OrderFactory.getOrders($scope.userId).then(function(result, err){
+				console.log('results', result,'Error', err);
+			})
+		}
+		else {
+			console.log('No user exists');
+		}
+		
+	}
 
 	function sum (){
 		var total = 0;
 		console.log('got to sum');
 		$scope.activeorders.forEach(function(lineItem){
-			total= total + lineItem.item.price * lineItem.qty;
+			console.log(lineItem);
+			total= total + lineItem.item.price * lineItem.quantity;
 		})
 		$scope.sum = total;
 	};

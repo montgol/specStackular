@@ -254,3 +254,10 @@ tutorial-section-menu {
 #reviewtext {
   width: 574px;
   height: 119px; }
+
+.categoryList {
+  list-style-type: none; }
+
+.bounding .product {
+  width: 250px;
+  height: 150px; }

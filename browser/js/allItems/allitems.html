@@ -1,9 +1,11 @@
-<div ng-repeat='item in items' class='item col-md-2 col-md-offset-1'>
-    <div class='bounding box'>
-        <h2>{{item.name}} <h2>
-		<span>{{item.price | currency }}<span>
-		<img ng-src='{{item.imgUrl}}'/>
-		<h3>{{item.categories}}</h3>
+
+
+<div ng-repeat='item in items | filter:categoryMatch(category)' class='item col-md-2 col-md-offset-1'>
+	<div class= 'bounding box' ng-click="getItem(item.id)">
+		<h3>{{item.name}}</h3>
+		<span>{{item.price | currency }}</span>
+		<img class='product' ng-src='{{item.imgUrl}}'/><br>
+		<!-- <h3 ng-repeat='tag in item.categories'>{{tag}}</h3> -->
         <form class="form-horizontal">
             <fieldset>
                 <!-- Button -->
@@ -14,11 +16,10 @@
                         <button id="writereview" name="writereview" class="btn btn-info" ui-sref="review-entry({ name: item.name, url: item.imgUrl })">
                             Write a review
                         </button>
+                        <button ng-click='addToOrder(item)'> Add </button>
                     </div>
                 </div>
-
             </fieldset>
         </form>
-    </div>
-
+	</div>
 </div>

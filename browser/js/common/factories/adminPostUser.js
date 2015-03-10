@@ -1,3 +1,4 @@
+'use strict'
 app.factory('adminPostUser', function ($http) {
 
 	return {
