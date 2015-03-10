@@ -1,69 +1,78 @@
 <section id="home">
+    <div>
+        <img src="https://s3.amazonaws.com/gdcreative-general/mens-vintage-glasses.jpg" class="home-image">
 
-    <div class="breadcrumb"><a ui-sref="home">Home / </a> <a ui-sref="men">Men / </a>Radiant Orbs Mocha Isis</div>
-    <div>&nbsp;</div>
-    <!-- Row -->
-    <div class="container pagecontainer">
-        <div class="row">
-            <!-- Column -->
-            <div class="col-md-7 col-sm-7 col-xs-7" id="glassesbox"><h2 class="productcaption">Radiant Orbs —
-                <em class="productcolor">Mocha Isis</em></h2>
-                <img src="https://s3.amazonaws.com/gdcreative-general/1000x500.jpeg" class="productimagehome">
-
-                <p class="productnavdiscs"><em>&bull;</em>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&bull;</p>
-            </div>
-            <!-- Column -->
-            <div class="col-md-5 col-sm-5 col-xs-5 productdescription">
-                <h1 class="productheadline">This headline will make you drool with consumer lust.</h1>
-
-                <p class="productbenefitsblurb">As I write this, the h1 tag is centered,
-                    and the caption above the glasses is left-aligned, which is exactly
-                    the opposite of how it should be. But soon I will be wearing some
-                    fancy glasses, the page formatting will be dynamic, and everything will be great.</p>
-
-                <form class="form-horizontal">
-                    <fieldset>
-                        <!-- Button -->
-                        <div class="control-group">
-                            <label class="control-label" for="addtocart"></label>
-
-                            <div class="controls">
-                                <button id="addtocart" name="addtocart" class="btn btn-success">Add to Cart</button>
-                            </div>
-                        </div>
-
-                    </fieldset>
-                </form>
-            </div>
-            <!-- Column -->
-        </div>
-        <!-- Row -->
-        <div class="row">
-            <div>
-                <div class="col-md-3 col-sm-3 col-xs-3 reviewshead"><h4 class="reviewstitle">Customer Reviews</h4></div>
-                <div class="col-md-4 col-sm-4 col-xs-4 writereview"><h4 class="reviewstitle" id="writelink"
-                                                                        ui-sref="review-entry">Write a review</h4></div>
-            </div>
-        </div>
-        <!-- Row -->
-        <div class="row" ng-controller="productreviewscontroller" id="reviewsbox">
-            <div class="col-md-7 col-sm-7 col-xs-7" id="reviewsbox">
-                <div class="reviewbody">
-                    <ul class="reviewslist">
-                        <li ng-repeat="review in reviewslist">
-                            <!--For the number of stars a given review has,-->
-                            <!--I need an ng-repeat for the stars. -->
-                            <!--If the $index of the star is <= the review score,-->
-                            <!--it gets the stargold class. If not, it gets the stardefault.-->
-                            <reviewstar value="review.rating"></reviewstar>
-                            <p class="reviewtext">{{ review.text }}</p>
-
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
     </div>
-    <!-- Row -->
-
+    <div class="home-blurb-box">
+        <h1 class="home-blurb">If you had cool glasses, you would be cool. Just look at this guy.</h1>
+        <p class="home-blurb-sub">You want new glasses. You <em>neeeeed</em> new glasses. These are the glasses you're looking for. Just get out your wallet now.</p>
+        <p>&nbsp;</p>
+    </div>
 </section>
+
+
+<!--<div class="breadcrumb"><a ui-sref="home">Home / </a> <a ui-sref="men">Men / </a>Radiant Orbs Mocha Isis</div>-->
+<!--<div>&nbsp;</div>-->
+<!--&lt;!&ndash; Row &ndash;&gt;-->
+<!--<div class="container pagecontainer">-->
+<!--<div class="row">-->
+<!--&lt;!&ndash; Column &ndash;&gt;-->
+<!--<div class="col-md-7 col-sm-7 col-xs-7" id="glassesbox"><h2 class="productcaption">Radiant Orbs —-->
+<!--<em class="productcolor">Mocha Isis</em></h2>-->
+<!--<img src="https://s3.amazonaws.com/gdcreative-general/1000x500.jpeg" class="productimagehome">-->
+
+<!--<p class="productnavdiscs"><em>&bull;</em>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&bull;</p>-->
+<!--</div>-->
+<!--&lt;!&ndash; Column &ndash;&gt;-->
+<!--<div class="col-md-5 col-sm-5 col-xs-5 productdescription">-->
+<!--<h1 class="productheadline">This headline will make you drool with consumer lust.</h1>-->
+
+<!--<p class="productbenefitsblurb">As I write this, the h1 tag is centered,-->
+<!--and the caption above the glasses is left-aligned, which is exactly-->
+<!--the opposite of how it should be. But soon I will be wearing some-->
+<!--fancy glasses, the page formatting will be dynamic, and everything will be great.</p>-->
+
+<!--<form class="form-horizontal">-->
+<!--<fieldset>-->
+<!--&lt;!&ndash; Button &ndash;&gt;-->
+<!--<div class="control-group">-->
+<!--<label class="control-label" for="addtocart"></label>-->
+
+<!--<div class="controls">-->
+<!--<button id="addtocart" name="addtocart" class="btn btn-success">Add to Cart</button>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--</fieldset>-->
+<!--</form>-->
+<!--</div>-->
+<!--&lt;!&ndash; Column &ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; Row &ndash;&gt;-->
+<!--<div class="row">-->
+<!--<div>-->
+<!--<div class="col-md-3 col-sm-3 col-xs-3 reviewshead"><h4 class="reviewstitle">Customer Reviews</h4></div>-->
+<!--<div class="col-md-4 col-sm-4 col-xs-4 writereview"><h4 class="reviewstitle" id="writelink"-->
+<!--ui-sref="review-entry">Write a review</h4></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Row &ndash;&gt;-->
+<!--<div class="row" ng-controller="productreviewscontroller" id="reviewsbox">-->
+<!--<div class="col-md-7 col-sm-7 col-xs-7" id="reviewsbox">-->
+<!--<div class="reviewbody">-->
+<!--<ul class="reviewslist">-->
+<!--<li ng-repeat="review in reviewslist">-->
+<!--&lt;!&ndash;For the number of stars a given review has,&ndash;&gt;-->
+<!--&lt;!&ndash;I need an ng-repeat for the stars. &ndash;&gt;-->
+<!--&lt;!&ndash;If the $index of the star is <= the review score,&ndash;&gt;-->
+<!--&lt;!&ndash;it gets the stargold class. If not, it gets the stardefault.&ndash;&gt;-->
+<!--<reviewstar value="review.rating"></reviewstar>-->
+<!--<p class="reviewtext">{{ review.text }}</p>-->
+
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Row &ndash;&gt;-->

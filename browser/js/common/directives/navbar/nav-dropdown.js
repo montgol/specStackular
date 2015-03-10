@@ -52,17 +52,8 @@ app.controller('dropdownController', function ($scope, GetItemsFactory, $state, 
             $scope.menVisible = false;
             $scope.womenVisible = false;
 
-            $scope.hello = "well hello";
-
             $scope.toggleMenVisible = function(){
-                console.log($scope.menVisible);
-                if ($scope.menVisible === false) {
-                    $scope.menVisible = true;
-                    //console.log("Wahoo")
-                }
-
-                else $scope.menVisible = false;
-
+                $scope.menVisible = !$scope.menVisible;
             }
 
             $scope.toggleWomenVisible = function(){
