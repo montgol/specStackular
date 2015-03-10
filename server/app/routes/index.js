@@ -169,13 +169,13 @@ router.get('/order/:userId', function (req, res, next){
         res.send(null);
     }
     Order.findOne({userId: user}, function(err, data){ //assumes there is only one order, ok for now, needs to be modified later
-        //console.log('in order-middleware, data: ', data);
+        console.log('in order-middleware, data: ', data);
         if (err) return next(err);
         else if( data && data.lineItem.length > 0){ //if an order already exists
-            //console.log('lineItem', data.lineItem);
+            console.log('lineItem', data.lineItem);
             data.populate('lineItem.item', function( err , items){
                 var obj = {lineitems: items, orderId: data._id};
-                //console.log('order already exists......items', items, 'obj', obj);
+                console.log('order already exists......items', items, 'obj', obj);
                 res.send(obj);
             })
         }
@@ -186,40 +186,33 @@ router.get('/order/:userId', function (req, res, next){
     });
 });
 
-function createOrder (userId, lineItems, cb){
-
-    var newLineItem = [];  //lineitems currently store complete items, should probably be changed in the future
-    // console.log('lineItems', lineItems);
-    // console.log('into the loop');
-    lineItems.forEach(function(line){
-        // console.log(line);
-        newLineItem.push({quantity: line.quantity, item: line.item._id});
-    });
-    Order.create({ userId: userId, lineItem: newLineItem}, function(err, page){
-         return cb(err, page);
-    })
-}
 
 
 router.post('/order', function (req,res,next){
     //used to create an order if none exists
     //should take in userId, and an array of items
-    //console.log('Creating an Order', req.body.items);
+    console.log('Creating an Order', req.body.items);
     var userId = req.body.userId;
     var lineItems = req.body.items;
-    
-    createOrder(userId, lineItems, function(err,resp){
-        console.log('err', err, 'resp', resp);
-        if(err) return next(err);
-        res.send(resp);
+
+    var obj = { userId: userId, status: 'open', lineItem: lineItems};
+    console.log(obj);
+
+    var newLineItem=[];
+    lineItems.forEach(function(line){
+        newLineItem.push({quantity: line.quantity, item: line.itemId});
+    });
+
+    Order.create({ userId: userId, status: 'open', lineItem: newLineItem}, function(err,data){
+        console.log(err, data);
+        res.send(data);
     })
-    
 });
 
 router.use(function(err, req, res, next){
     res.status(err.status).send({ error: err.message });
 
-})
+});
 
 
 router.post('/order/lineitem', function (req, res, next) {

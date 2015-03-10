@@ -32,6 +32,9 @@ app.controller('orderController', function ($scope, GetItemsFactory, OrderFactor
 		if( AuthService.isAuthenticated() ){
 			console.log('Authenticated from Authservice');
 			console.log('user', user);
+			if(user.user){
+					user = user.user;
+			}
 			$scope.userId = user._id;
 			$scope.user = user.first_name;
 			$scope.auth = true;
@@ -106,7 +109,7 @@ app.controller('orderController', function ($scope, GetItemsFactory, OrderFactor
 		totalQty();
 
 		if(AuthService.isAuthenticated()){
-			OrderFactory.updateOrder({orderId: $scope.orderId, quantity: 0, itemId: Item._id}).then(function(err, data){
+			OrderFactory.updateOrder({orderId: $scope.orderId, quantity: 0, itemId: item._id}).then(function(err, data){
 				if(err) console.log(err);
 
 			});

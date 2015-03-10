@@ -17,27 +17,34 @@ schema.statics.getUserOrders = function(userId, cb){
 }
 
 schema.methods.setLineItem = function(item, qty, cb){
-
+	var focus = this;
 	this.doesItemExist(item, function(location){ //location in array or falsy -1
 		if(qty > 0){  //if item should be added
 			if(location === -1){ //item is new
-				this.update({'$push': {lineItem: {item: item._id, quantity: qty} }}, function(err,data){
+				Order.findOne({_id: focus._id}).update({'$push': {lineItem: {item: item._id, quantity: qty} }}, function(err,data){
 					return cb(err, data);
 				})
 			}
 			else{ //item exists in order already, needs to be updated
-				this.update({'lineItem.item': item._id}, {'$set': {'lineItem.$.quantity': qty}}, function(err, data){
+				Order.findOne({_id: focus._id}).update({'lineItem.item': item._id}, {'$set': {'lineItem.$.quantity': qty}}, function(err, data){
 					return cb(err, data);
 				})
 			}
 		}
+		// else{//qty of zero equates to a delete request
+		// 	Order.findOne({_id: focus._id}).update({ '$splice': { lineItem: location - 1 }}, function(err, thing){
+		// 		console.log(err, 'err', thing, 'thing');
+		// 		return cb(err, thing);
+		// 	});
+		// }
 		else{//qty of zero equates to a delete request
-			this.update({ '$splice': { lineItem: location - 1 }}, function(err, thing){
+			console.log(location, '-/-/-/-/-/-', focus.lineItem[0]);
+			Order.findOne({_id: focus._id}).remove( { lineItem: location - 1 } ).exec(function(err, thing){
 				console.log(err, 'err', thing, 'thing');
 				return cb(err, thing);
 			});
 		}
-	})
+	});
 	
 }
 
@@ -48,15 +55,16 @@ schema.methods.getLineItems = function(cb){
 }
 
 schema.methods.doesItemExist = function(item, cb){
-	this.populate('lineItem').exec(function(err,items){
 		var location = -1;
-		items.forEach(function(thing, increment){
-			if(thing._id === item._id){
+		//console.log('does item exist?', this);
+		this.lineItem.forEach(function(thing, increment){
+			//console.log(thing.item, '()()()()', item, increment);
+			if(thing.item === item){
+				console.log(increment);
 				location = increment;
 			}
-		})
+		});
 		return cb(location);
-	})
 }
 
 schema.methods.changeLineItemPosition = function(cb){
@@ -68,5 +76,5 @@ schema.methods.getUser = function(cb){
 			return cb(err, items);
 	})
 }
-
+var Order = mongoose.model('Order', schema);
 module.exports = mongoose.model('Order', schema);
