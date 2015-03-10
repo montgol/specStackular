@@ -108,10 +108,3 @@ app.controller('categoryController', function ($scope, GetItemsFactory, $state, 
 	};
 });
 
-
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> dfc2954bbaa3d20378c40f1b0f0707b8279b2906
