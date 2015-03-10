@@ -17,6 +17,8 @@ var item = new mongoose.Schema({
     imgUrl: String,
     gender: {type: String, enum: ['men', 'women']},
     categories: String,
+    descHeading: String,
+    descContent: String,
     reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review'}],
     features: [{type: mongoose.Schema.Types.ObjectId, ref: 'Feature'}]
 })
