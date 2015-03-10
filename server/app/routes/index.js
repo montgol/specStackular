@@ -3,9 +3,7 @@ var router = require('express').Router();
 var User = require('../../db/models/user.js');
 var Item = require('../../db/models/item.js').Item;
 var Review = require('../../db/models/item.js').Review;
-// var Cart = require('../../db/models/cart.js');
 var Order = require('../../db/models/orders.js');
-
 
 router.use('/tutorial', require('./tutorial'));
 
@@ -24,7 +22,6 @@ router.get('/user', function (req, res, next) {
         res.send(users);
     })
 })
-
 
 router.get('/login/:email', function (req, res, next) { //requested by angular when item is selected
     var info = req.params.email;
@@ -128,9 +125,9 @@ router.get('/logout', function (req, res) {
 });
 
 router.get('/itemlist', function (req, res, next) {  //should be requested by angular when page loads
-    Item.find({}).exec(function (err, users) {
+    Item.find({}).exec(function (err, items) {
         if (err) return next(err);
-        res.send(users);
+        res.send(items);
     })
 })
 
@@ -143,54 +140,81 @@ router.get('/item/:name', function (req, res, next) { //requested by angular whe
     })
 })
 
-router.post('/reviews', function (req, res, next){
-    var review = req.body.review;
-    var userId = req.body.userId;
-    var itemId = req.body.itemId;
-
-    Review.create(review, function(err, submittedReview){
-        if (err) throw next(err);
-        submittedReview.setReview(userId, itemId, function(err, resp){
-            if(err) throw next(err);
-            res.send(resp);
-        })
-    })
-
+router.get('item/:category', function (req, res, next) {
+    console.log(req.params);
 })
 
-router.get('/order', function (req, res, next){
-	var user = req.user.session; //might need ._id
-    console.log(user);
+router.post('/reviews/:name', function (req, res, next){
+    console.log("POST", req.body);
 
-    if(!isAuthenticated){ //set info on the session
+    // var review = req.body.review;
+    // var userId = req.body.userId;
+    // var itemId = req.body.itemId;
 
+    // Review.create(review, function(err, submittedReview){
+    //     if (err) throw next(err);
+    //     submittedReview.setReview(userId, itemId, function(err, resp){
+    //         if(err) throw next(err);
+    //         res.send(resp);
+    //     })
+    // })
+})
+
+router.get('/order/:userId', function (req, res, next){
+    //gets an order by userId
+	var user = req.params.userId; //might need ._id
+    console.log('user', user);
+
+    if(user == undefined){
+        res.send(null);
     }
-    else{
-        Order.find({userId: user}, function(err, data){
-            if (err) throw next(err);
-            data.getLineItems(function(err, items){
-                var obj = {info: data, lineitems: items};
+    Order.findOne({userId: user}, function(err, data){ //assumes there is only one order, ok for now, needs to be modified later
+        //console.log('in order-middleware, data: ', data);
+        if (err) return next(err);
+        else if( data && data.lineItem.length > 0){ //if an order already exists
+            //console.log('lineItem', data.lineItem);
+            data.populate('lineItem.item', function( err , items){
+                var obj = {lineitems: items, orderId: data._id};
+                //console.log('order already exists......items', items, 'obj', obj);
                 res.send(obj);
-            });
-        });
-    }
-})
-// make error handler
+            })
+        }
+        else { //no order exists
+            console.log('No user order in Db');
+            res.send(null);
+        }
+    });
+});
+
+function createOrder (userId, lineItems, cb){
+
+    var newLineItem = [];  //lineitems currently store complete items, should probably be changed in the future
+    // console.log('lineItems', lineItems);
+    // console.log('into the loop');
+    lineItems.forEach(function(line){
+        // console.log(line);
+        newLineItem.push({quantity: line.quantity, item: line.item._id});
+    });
+    Order.create({ userId: userId, lineItem: newLineItem}, function(err, page){
+         return cb(err, page);
+    })
+}
 
 
 router.post('/order', function (req,res,next){
-    var userId = req.user.session._id;
-    var item = req.body.itemId;
-    var qty = req.body.qty;
-
-    Order.create({userId: userId}, function(err, page){
-        if(err) throw next(err);
-        page.setLineItem(item, qty, function(err, update){
-            if(err) throw next(err);
-            res.send(update);
-        })
+    //used to create an order if none exists
+    //should take in userId, and an array of items
+    //console.log('Creating an Order', req.body.items);
+    var userId = req.body.userId;
+    var lineItems = req.body.items;
+    
+    createOrder(userId, lineItems, function(err,resp){
+        console.log('err', err, 'resp', resp);
+        if(err) return next(err);
+        res.send(resp);
     })
-})
+    
+});
 
 router.use(function(err, req, res, next){
     res.status(err.status).send({ error: err.message });
@@ -198,23 +222,24 @@ router.use(function(err, req, res, next){
 })
 
 
-router.post('/order/lineitem', function (req, res, err) {
-    
+router.post('/order/lineitem', function (req, res, next) {
+    //used to add/update/remove items from the order db
+    //backend can handle all cases
     var orderId = req.body.orderId;
     var itemId = req.body.itemId;
     var quantity = req.body.quantity;
     Order.findById(orderId).exec(function(err, myOrder){
-        if(err) throw next(err);
+        if(err) return next(err);
         myOrder.setLineItem(itemId, quantity, function(err, updatedInfo){
-            if (err) throw next(err);
+            if (err) return next(err);
             res.send(updatedInfo);
         });
-    
     });
 });
 
+
 router.use(function (err, req, res, next) {
-    res.status(err.status).send({ error: err.message });
+    res.status(err.status).send({ error: "Can't see what you want, you must need glasses" });
 });
 
 module.exports = router;

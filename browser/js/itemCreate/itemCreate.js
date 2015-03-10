@@ -1,7 +1,7 @@
 'use strict';
 app.config(function ($stateProvider) {
 
-    // Register our *about* state.
+    // Register our *itemCreate* state.
     $stateProvider.state('admin.itemCreate', {
         url: '/itemCreate',
         controller: 'itemCreateController',

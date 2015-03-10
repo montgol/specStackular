@@ -1,13 +1,100 @@
+body {
+  max-width: 880px;
+}
+
 #home {
-  specstackular-logo {
-    padding-top: 30px;
-    width: 150px;
-    margin: 0 auto;
-    text-align: right;
+  color: #777777;
+//  specstackular-logo {
+//    padding-top: 30px;
+//    width: 150px;
+//    margin: 0 auto;
+//    text-align: right;
   }
   h1 {
+    font-size: x-large;
+    color: #000000;
     margin-top: 40px;
-    text-align: center;
   }
+
+
+
+.breadcrumb {
+  position: absolute;
+  left: 20px;
+  margin-top: 24px;
+  font-size: x-small;
+  background: #ffffff;
+}
+
+#glassesbox {
+  text-align: center;
+  padding-top: 40px;
+}
+
+.productimagehome {
+  width: 90%;
+  max-width: 400px;
+}
+
+.productcaption {
+  color: #641400;
+  font-family: 'Fanwood Text', serif;
+  margin-bottom: 0px;
+  em {
+    font-weight: 400italic;
+  }
+}
+
+.productdescription {
+  max-width: 350px;
+}
+
+.productnavdiscs {
+  font-style: italic;
+  font-size: large;
+  em {
+    color: #641400;
+  }
+}
+
+.reviewsbox {
+  border-top: solid 1px #777777;
+}
+
+.reviewstitle {
+  font-size: small;
+  margin-top: 30px;
+  margin-bottom: 0px;
+}
+
+#writelink {
+  color: #849bae;
+  cursor: pointer;
+  &:hover {
+    color: black;
+  }
+}
+
+.writereview {
+  text-align: right;
+  display: inline;
+}
+
+.reviewslist {
+  margin-top: 10px;
+  padding: 0px;
+  list-style-type: none;
+  font-size: .8em;
+  font-family: 'Fanwood Text', 400italic;
+}
+
+
+
+.productbenefitsblurb {
+  font-size: 1.5 em;
+}
+
+#showme {
+  height: 1.5em !important;
 }
 
