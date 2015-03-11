@@ -48,7 +48,7 @@
             <div class="col-md-7 col-sm-7 col-xs-7" id="reviewsbox">
                 <div class="reviewbody">
                     <ul class="reviewslist">
-                        <h4 >{{item.reviewlist}}
+                        <h4 ng-repeat="review in item.reviewlist">{{review}}
                             <!-- ng-repeat="review in reviewslist" -->
                             <!--For the number of stars a given review has,-->
                             <!--I need an ng-repeat for the stars. -->
@@ -82,7 +82,7 @@
                     <rating value="rate1"></rating>
 
                 </div>
-                <textarea id="reviewtext" name="reviewtext" ng-model="item.reviewlist">Write your review here</textarea>
+                <textarea id="reviewtext" name="reviewtext" placeholder="Write your review here"></textarea>
             </div>
         </div>
 
