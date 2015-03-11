@@ -148,24 +148,12 @@ router.get('item/:category', function (req, res, next) {
 
 router.post('/reviews/:name', function (req, res, next){
     console.log("POST", req.body);
-
-    // var review = req.body.review;
-    // var userId = req.body.userId;
-    // var itemId = req.body.itemId;
-
-    // Review.create(review, function(err, submittedReview){
-    //     if (err) throw next(err);
-    //     submittedReview.setReview(userId, itemId, function(err, resp){
-    //         if(err) throw next(err);
-    //         res.send(resp);
-    //     })
-    // })
 })
 
 router.get('/order/:userId', function (req, res, next){
     //gets an order by userId
 	var user = req.params.userId; //might need ._id
-    console.log('user', user);
+    console.log('in getuser middleware: user', user);
 
     if(user == undefined){
         res.send(null);
@@ -173,26 +161,16 @@ router.get('/order/:userId', function (req, res, next){
     Order.findOne({userId: user}, function(err, data){ //assumes there is only one order, ok for now, needs to be modified later
         console.log('in order-middleware, data: ', data);
         if (err) return next(err);
-        else if( data && data.lineItem.length > 0){ //if an order already exists and has items
+        else if( data ) { //if an order already exists
             console.log('lineItem', data.lineItem);
-            data.populate('lineItem.item', function( err , items){
-                var obj = {lineitems: items, orderId: data._id};
-                console.log('order already exists......items', items, 'obj', obj);
-                res.send(obj);
-            })
+            res.send(data);
         } 
-        else if (data){
-            var obj = {data: data, status: 'empty'};
-            res.send(obj);
-        }
         else { //no order exists
             console.log('No user order in Db');
             res.send(null);
         }
     });
 });
-
-
 
 router.post('/order', function (req,res,next){
     //used to create an order if none exists
@@ -201,25 +179,21 @@ router.post('/order', function (req,res,next){
     var userId = req.body.userId;
     var lineItems = req.body.items;
 
-    var obj = { userId: userId, status: 'open', lineItem: lineItems};
-    console.log(obj);
-
     var newLineItem=[];
-    lineItems.forEach(function(line){
-        newLineItem.push({quantity: line.quantity, item: line.itemId});
+    lineItems.forEach(function(line){  //change format, might not be required
+        newLineItem.push({quantity: line.quantity, itemId: line.itemId, price: line.price});
     });
+    console.log(newLineItem)
 
     Order.create({ userId: userId, status: 'open', lineItem: newLineItem}, function(err,data){
         console.log(err, data);
-        res.send(data);
-    })
+        Users.findById(userId).update({'$push': {orders: data._id}}).exec(function(err, userData){
+            if (err) console.log(err);
+            res.send(data);
+        })
+        
+    });
 });
-
-router.use(function(err, req, res, next){
-    res.status(err.status).send({ error: err.message });
-
-});
-
 
 router.post('/order/lineitem', function (req, res, next) {
     //used to add/update/remove items from the order db
@@ -227,20 +201,26 @@ router.post('/order/lineitem', function (req, res, next) {
     var orderId = req.body.orderId;
     var itemId = req.body.itemId;
     var quantity = req.body.quantity;
-    console.log(orderId);
+    var price = req.body.price;
+    var obj = {itemId: itemId, quantity: quantity, price: price};
+
+    console.log('got into the adjust lineitem with', obj);
+
+
     Order.findById(orderId).exec(function(err, myOrder){
-        console.log('myOrder', myOrder, 'err', err);
+        // console.log('myOrder', myOrder, 'err', err);
         if(err) return next(err);
-        myOrder.setLineItem(itemId, quantity, function(err, updatedInfo){
+        myOrder.setLineItem(obj, function(err, updatedInfo){  //verify updatedInfo is the full obj and what we want
             if (err) return next(err);
+            console.log('post lineItem from server', updatedInfo);
             res.send(updatedInfo);
         });
     });
 });
 
+router.use(function(err, req, res, next){
+    res.status(err.status).send({ error: err.message });
 
-router.use(function (err, req, res, next) {
-    res.status(err.status).send({ error: "Can't see what you want, you must need glasses" });
 });
 
 module.exports = router;

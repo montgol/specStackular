@@ -34,7 +34,7 @@ app.controller('allItemsController', function ($scope, AuthService, GetItemsFact
 	function adjustCookie (specificItem){
 		var order = $cookieStore.get('Order');
 		var resolved = false;
-		var line = {itemId: specificItem._id, quantity: 1};
+		var line = {itemId: specificItem._id, quantity: 1, price: specificItem.price};
 			if(order){ //if user has an order on a cookie
 				order.forEach(function(itemLine){
 					if(itemLine.itemId === specificItem._id){
@@ -54,7 +54,7 @@ app.controller('allItemsController', function ($scope, AuthService, GetItemsFact
 		$cookieStore.put('Order', order);
 	}
 
-	$scope.addToOrder = function(itemToAdd){
+	$scope.addToOrder = function(itemToAdd){ // requires ._id  .quantity  .price
 		console.log('got into the addToOrder function'); //part one always add it to the cookie
 		adjustCookie(itemToAdd);
 		AuthService.getLoggedInUser().then(function(user){ //if user is authenticated
@@ -63,36 +63,36 @@ app.controller('allItemsController', function ($scope, AuthService, GetItemsFact
 					user = user.user;
 				}
 				console.log(user);
-				OrderFactory.getOrders(user._id).then(function(items){ //get the user's cart
+				OrderFactory.getOrders(user._id).then(function(order){ //get the user's cart
 					var resolved = false;
-					console.log('inside the add to order function with a return from the server: ', items);
-					if(items && !items.status){ // see if user has the item in the cart already
+					console.log('inside the add to order function with a return from the server: ', order);
+					if(order && order.lineItem){ // see if user has the item in the cart already
 						debugger;
-						items.lineitems.forEach(function(item){
-							if(itemToAdd._id === item.item._id && !resolved){ // if they do update amount
-								console.log('itemId', item.item._id, 'quantity', item.quantity+'+1 ', 'orderId', items.orderId);
-								var newLine = {itemId: item.item._id, quantity: item.quantity++, orderId: items.orderId};
+						order.lineItem.forEach(function(lineItem){
+							if(itemToAdd._id === lineItem.itemId && !resolved){ // if they do update amount
+								console.log('itemId', lineItem.itemId, 'quantity', lineItem.quantity+'+1 ');
+								var newLine = {itemId: item.itemId, quantity: item.quantity++, orderId: items.orderId, price: itemToAdd.price};
 								resolved = true;
 							}
 						});
 						if(!resolved){ //otherwise add item
-							var newLine = {itemId: itemToAdd._id, quantity: 1, orderId: items._id};
+							var newLine = {itemId: itemToAdd._id, quantity: 1, orderId: order._id, price: itemToAdd.price};
 						}
 						OrderFactory.updateOrder(newLine).then(function(response){
 							console.log('completed order request');
 						});
 					}
-					else if(items && items.status){ //user has an empty cart
-						var newLine = {itemId: itemToAdd._id, quantity: 1, orderId: items.data._id};
+					else if( order ){ //user has an empty cart
+						var newLine = {itemId: itemToAdd._id, quantity: 1, orderId: order._id, price: itemToAdd.price};
 						OrderFactory.updateOrder(newLine).then(function(response){
 							console.log('completed order request');
 						});
 					}
-					//if no order exists create one when user goes to order page
 				});
 			}
 		});
 	};
+
 
 });
 
