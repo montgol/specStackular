@@ -187,7 +187,7 @@ router.post('/order', function (req,res,next){
 
     Order.create({ userId: userId, status: 'open', lineItem: newLineItem}, function(err,data){
         console.log(err, data);
-        Users.findById(userId).update({'$push': {orders: data._id}}).exec(function(err, userData){
+        User.findById(userId).update({'$push': {orders: data._id}}).exec(function(err, userData){
             if (err) console.log(err);
             res.send(data);
         })
@@ -198,7 +198,6 @@ router.post('/order', function (req,res,next){
 router.post('/order/lineitem', function (req, res, next) {
     //used to add/update/remove items from the order db
     //backend can handle all cases
-    console.log(req.body);
     var orderId = req.body.orderId;
     var itemId = req.body.itemId;
     var quantity = req.body.quantity;

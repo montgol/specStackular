@@ -73,7 +73,7 @@ app.controller('allItemsController', function ($scope, AuthService, GetItemsFact
 							if(itemToAdd._id === lineItem.itemId && !resolved){ // if they do update amount
 								lineItem.quantity++;
 								console.log('itemId', lineItem.itemId, 'quantity', lineItem.quantity);
-								debugger;
+								// debugger;
 								newLine = {itemId: lineItem.itemId, quantity: lineItem.quantity, orderId: order._id, price: lineItem.price};
 								resolved = true;
 							}
@@ -81,7 +81,7 @@ app.controller('allItemsController', function ($scope, AuthService, GetItemsFact
 						if(!resolved){ //otherwise add item
 							newLine = {itemId: itemToAdd._id, quantity: 1, orderId: order._id, price: itemToAdd.price};
 						}
-						debugger;
+						// debugger;
 						OrderFactory.updateOrder(newLine).then(function(response){
 							console.log('completed order request');
 						});

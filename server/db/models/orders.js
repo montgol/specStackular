@@ -30,12 +30,27 @@ schema.methods.setLineItem = function(info, cb){
 					return cb(err, data);
 					})
 				})
+
 			}
 			else{ //item exists in order already, needs to be updated
 				console.log('landed correctly', 'focus', focus, 'info', info);
-				Order.findOne({_id: focus._id}).update({'lineItem.itemId': info.itemId}, {'$set': {lineItem: info}}, function(err, data){
-					return cb(err, data);
-				})
+				// Order.findOne({_id: focus._id}).update( {'$set': {lineItem.$.quantity: info.quantity}}, function(err, data){
+				// 	return cb(err, data);
+				// })
+				Order.update({ _id: focus._id, 'lineItem.itemId': info.itemId }, {$set: {'lineItem.$.quantity': info.quantity}}, function(err,data){
+					console.log('made it!!!!', err, data);
+					return cb(err,data);
+				});
+				// focus.update({'focus.lineItem.itemId': info.itemId }, {$set: {'lineItem.$.quantity': info.quantity}}, function(err,data){
+				// 	return cb(err,data);
+				// });
+					// Order.findById(focus._id, function(err,myOrder){
+					// 	myOrder.lineItem[location] = info;
+					// 	console.log(myOrder);
+					// 	myOrder.save(function(err, order){
+					// 		return cb(err,order);
+					// 	});
+					// });
 			}
 		}
 		else{//qty of zero equates to a delete request
