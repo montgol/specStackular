@@ -41,16 +41,6 @@ schema.methods.setLineItem = function(info, cb){
 					console.log('made it!!!!', err, data);
 					return cb(err,data);
 				});
-				// focus.update({'focus.lineItem.itemId': info.itemId }, {$set: {'lineItem.$.quantity': info.quantity}}, function(err,data){
-				// 	return cb(err,data);
-				// });
-					// Order.findById(focus._id, function(err,myOrder){
-					// 	myOrder.lineItem[location] = info;
-					// 	console.log(myOrder);
-					// 	myOrder.save(function(err, order){
-					// 		return cb(err,order);
-					// 	});
-					// });
 			}
 		}
 		else{//qty of zero equates to a delete request

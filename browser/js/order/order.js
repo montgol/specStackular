@@ -132,7 +132,11 @@ app.controller('orderController', function ($scope, GetItemsFactory, OrderFactor
 		}
 		else{
 			if($scope.userId){
-				OrderFactory.updateOrder({orderId: $scope}); //not finished...
+				console.log('itemid', item)
+				OrderFactory.updateOrder({orderId: $scope.orderId, quantity: val, price:item.price  ,itemId: item.item._id}).then(function(err, data){
+				if(err) console.log(err);
+				console.log('output of removeItem function', data)
+			});
 			}
 			var orderCookie = $cookieStore.get('Order');
 			var index = getLocInCookie(orderCookie, item.item._id);
