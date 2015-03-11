@@ -20,6 +20,7 @@ var item = new mongoose.Schema({
     descHeading: String,
     descContent: String,
     reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review'}],
+    reviewlist: String,
     features: [{type: mongoose.Schema.Types.ObjectId, ref: 'Feature'}]
 })
 

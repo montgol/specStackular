@@ -159,12 +159,19 @@ router.get('item/:category', function (req, res, next) {
     console.log(req.params);
 })
 
-router.post('/reviews/:name', function (req, res, next){
+router.post('/reviews', function (req, res, next){
     console.log("POST", req.body);
+    var id = req.body._id;
+    var review = req.body.reviewlist;
+    var name = req.body.name;
+    var category = req.body.category;
+    
+    Item.findByIdAndUpdate(id, {$set: {reviewlist: review}}, function (err, item){
+        if(err) return next(err);
+        res.redirect('/');
+    })
+})
 
-    // var review = req.body.review;
-    // var userId = req.body.userId;
-    // var itemId = req.body.itemId;
 
     // Review.create(review, function(err, submittedReview){
     //     if (err) throw next(err);
@@ -173,7 +180,6 @@ router.post('/reviews/:name', function (req, res, next){
     //         res.send(resp);
     //     })
     // })
-})
 
 router.get('/order/:userId', function (req, res, next){
     //gets an order by userId

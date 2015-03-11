@@ -70,3 +70,17 @@ app.controller('itemController', function ($scope, GetItemFactory, $state, $stat
 		});
 	};
 });
+
+app.controller('ReviewController', function ($scope, $stateParams, CreateReview){
+	$scope.newReview = function (item){
+		console.log("in review controller", item, $stateParams);
+		CreateReview.submitReview(item).then(function(item, err){
+			if (err) $scope.success = false;
+			else {
+				console.log("review done", item);
+			}
+		})
+		
+	}
+
+})

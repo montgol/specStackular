@@ -16,7 +16,7 @@
                     <rating value="rate1"></rating>
 
                 </div>
-                <textarea id="reviewtext" name="reviewtext">Write your review here</textarea>
+                <textarea id="reviewtext" name="reviewtext" ng-model="">Write your review here</textarea>
             </div>
         </div>
 
@@ -24,7 +24,7 @@
         <div class="control-group">
             <label class="control-label" for="submitreview"></label>
             <div class="controls">
-                <button id="submitreview" name="submitreview" class="btn btn-info" ng-click="newReview()">Submit review</button>
+                <button id="submitreview" name="submitreview" class="btn btn-info" ng-click="addReview()">Submit review</button>
             </div>
         </div>
 
