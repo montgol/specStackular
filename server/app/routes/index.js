@@ -198,6 +198,7 @@ router.post('/order', function (req,res,next){
 router.post('/order/lineitem', function (req, res, next) {
     //used to add/update/remove items from the order db
     //backend can handle all cases
+    console.log(req.body);
     var orderId = req.body.orderId;
     var itemId = req.body.itemId;
     var quantity = req.body.quantity;

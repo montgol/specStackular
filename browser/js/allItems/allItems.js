@@ -62,28 +62,32 @@ app.controller('allItemsController', function ($scope, AuthService, GetItemsFact
 				if(user.user){
 					user = user.user;
 				}
-				console.log(user);
+				// console.log(user);
 				OrderFactory.getOrders(user._id).then(function(order){ //get the user's cart
 					var resolved = false;
+					var newLine;
 					console.log('inside the add to order function with a return from the server: ', order);
 					if(order && order.lineItem){ // see if user has the item in the cart already
-						debugger;
+						// debugger;
 						order.lineItem.forEach(function(lineItem){
 							if(itemToAdd._id === lineItem.itemId && !resolved){ // if they do update amount
-								console.log('itemId', lineItem.itemId, 'quantity', lineItem.quantity+'+1 ');
-								var newLine = {itemId: item.itemId, quantity: item.quantity++, orderId: items.orderId, price: itemToAdd.price};
+								lineItem.quantity++;
+								console.log('itemId', lineItem.itemId, 'quantity', lineItem.quantity);
+								debugger;
+								newLine = {itemId: lineItem.itemId, quantity: lineItem.quantity, orderId: order._id, price: lineItem.price};
 								resolved = true;
 							}
 						});
 						if(!resolved){ //otherwise add item
-							var newLine = {itemId: itemToAdd._id, quantity: 1, orderId: order._id, price: itemToAdd.price};
+							newLine = {itemId: itemToAdd._id, quantity: 1, orderId: order._id, price: itemToAdd.price};
 						}
+						debugger;
 						OrderFactory.updateOrder(newLine).then(function(response){
 							console.log('completed order request');
 						});
 					}
 					else if( order ){ //user has an empty cart
-						var newLine = {itemId: itemToAdd._id, quantity: 1, orderId: order._id, price: itemToAdd.price};
+						newLine = {itemId: itemToAdd._id, quantity: 1, orderId: order._id, price: itemToAdd.price};
 						OrderFactory.updateOrder(newLine).then(function(response){
 							console.log('completed order request');
 						});

@@ -20,25 +20,26 @@ schema.methods.setLineItem = function(info, cb){
 	var focus = this;
 	//req.body  .orderId  .itemId  .quantity  .price
 	this.doesItemExist(info.itemId, function(location){ //location in array or falsy -1
+		console.log('into setLineItem');
 		if(info.quantity > 0){  //if item should be added
 			if(location === -1){ //item is new
-				Order.findOne({_id: focus._id}).update({'$push': {lineItem: info }}, function(err,data){
+				console.log('problem adding to the db', focus, 'focus', info, 'info');
+				Order.findOne({_id: focus._id}, function( err, data){
+					data.update({ $push: {'lineItem': info }}, function(err,data){
+					console.log('out the back end');
 					return cb(err, data);
+					})
 				})
 			}
 			else{ //item exists in order already, needs to be updated
-				Order.findOne({_id: focus._id}).update({'lineItem.item': info.itemId}, {'$set': {lineItem: info}}, function(err, data){
+				console.log('landed correctly', 'focus', focus, 'info', info);
+				Order.findOne({_id: focus._id}).update({'lineItem.itemId': info.itemId}, {'$set': {lineItem: info}}, function(err, data){
 					return cb(err, data);
 				})
 			}
 		}
 		else{//qty of zero equates to a delete request
 			console.log(location, '-/-/-/-/-/-', focus.lineItem[location]);
-			// Order.findOne({_id: focus._id}).update( {'$pull': {lineItem: {itemId: info.itemId}} } ).exec(function(err, thing){
-			// 	console.log(err, 'err', thing, 'thing');
-			// 	return cb(err, thing);
-			// });
-			
 			Order.findOne({_id: focus._id}, function(err, doc){
 				if(!err){
 					doc.lineItem[location].remove();
