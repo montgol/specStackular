@@ -163,17 +163,19 @@ router.post('/reviews', function (req, res, next){
     console.log("POST", req.body);
 
     var id = req.body._id;
-    var review = [];
+    var review = req.body.reviewlist;
     var name = req.body.name;
     var category = req.body.category;
+    // console.log(req.body.reviewlist);
     
-    review.push(req.body.reviewlist);
+    // review.push(req.body.reviewCurrent);
+    // console.log("review", review);
     // Item.findByIdAndUpdate(id, {$set: {reviewlist: review}}, function (err, item){
     //     if(err) return next(err);
     //     res.redirect('/');
     // })
 
-    Item.findById(id).update({'$push': {reviewlist: review}}).exec(function(err, reviewData){
+    Item.findByIdAndUpdate(id, {reviewlist: review}).exec(function(err, reviewData){
             if (err) console.log(err);
             res.send(reviewData);
     })
