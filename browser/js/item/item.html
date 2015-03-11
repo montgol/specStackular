@@ -48,7 +48,8 @@
             <div class="col-md-7 col-sm-7 col-xs-7" id="reviewsbox">
                 <div class="reviewbody">
                     <ul class="reviewslist">
-                        <li ng-repeat="review in reviewslist">
+                        <h4 ng-repeat="review in item.reviewlist">{{review}}
+                            <!-- ng-repeat="review in reviewslist" -->
                             <!--For the number of stars a given review has,-->
                             <!--I need an ng-repeat for the stars. -->
                             <!--If the $index of the star is <= the review score,-->
@@ -56,12 +57,46 @@
                             <reviewstar value="review.rating"></reviewstar>
                             <p class="reviewtext">{{ review.text }}</p>
 
-                        </li>
+                        </h4>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+    <div ng-controller="ReviewController">
+    <form class="form-horizontal">
+    <fieldset>
+
+        <!-- Form Name -->
+        <legend>Your reviews</legend>
+
+        <a href="#">{{ productname }}</a>
+        <div class="review-image-container"><img class="review-image" src="{{ producturl }}"></div>
+
+        <!-- Text input-->
+        <div class="control-group" >
+            <label class="control-label" for="reviewtext"></label>
+            <div class="controls">
+                <div ng-controller="StarCtrl">
+
+                    <rating value="rate1"></rating>
+
+                </div>
+                <textarea id="reviewtext" name="reviewtext" placeholder="Write your review here" ng-model="item.reviewCurrent"></textarea>
+            </div>
+        </div>
+
+        <!-- Button -->
+        <div class="control-group">
+            <label class="control-label" for="submitreview"></label>
+            <div class="controls">
+                <button id="submitreview" name="submitreview" class="btn btn-info" ng-click="newReview(item)">Submit review</button>
+            </div>
+        </div>
+
+    </fieldset>
+</form>
+</div>  
     <!-- Row -->
 
 </section>

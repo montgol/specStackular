@@ -33,42 +33,44 @@ app.controller('orderController', function ($scope, GetItemsFactory, OrderFactor
 			console.log('Authenticated from Authservice');
 			console.log('user', user);
 			if(user.user){
-					user = user.user;
+					user = user.user; //not sure why its happening
 			}
 			$scope.userId = user._id;
 			$scope.user = user.first_name;
 			$scope.auth = true;
-				OrderFactory.getOrders($scope.userId).then(function(items, err){
-					console.log('items', items);
+				OrderFactory.getOrders($scope.userId).then(function(order, err){
+					console.log('items', order);
 					if (err) console.log('Error: ', err);
-					else if(!items) { //no items in dB, get cookies, set order
-						$scope.activeorders = $cookieStore.get('Order');
-						OrderFactory.createOrder({userId: $scope.userId, items: $scope.activeorders}, function(response){
-							$scope.activeorders = response.lineitems;
-							console.log($scope.activeorders);
-							sum();
-							totalQty();
+					else if(!order) { //no order in dB, get cookies, set order
+						// $scope.activeorders = $cookieStore.get('Order');
+						OrderFactory.createOrder({userId: user._id, items: $cookieStore.get('Order')}).then(function(response){ //assumes info is passed in the correct format
+							console.log('from order creation', response);
+							populateItems(response.lineItem);
 						});
 					}
-					else { //items in db, make sure cookies are added to db
-						$scope.activeorders = items.lineitems.lineItem;
-						$scope.orderId = items.orderId;
-						console.log($scope.activeorders);
-						sum();
-						totalQty();
+					else { //items in db, only get db
+						console.log('data from the db', order.lineItem);
+						$scope.orderId = order._id;
+						populateItems(order.lineItem);
 					}
 				});
 			}
 		else {
-			console.log('not authenticated');
+			console.log('not authenticated');  //no user 
 			var idAndQty = $cookieStore.get('Order');
+			populateItems(idAndQty);
+		}
+	});
+	}
+
+	function populateItems (arrayOfOrderItems){ //assumes array.itemId from cookie
 			var productList=[];
 			GetItemsFactory.getItems().then(function(items, err){ //approach will not scale well but is quicker now
 				if(err) console.log(err);
-				idAndQty.forEach(function(itemPair){ //get all items, see which items are in the cart, 'populate' order items
+				arrayOfOrderItems.forEach(function(itemPair){ //get all items, see which items are in the cart, 'populate' order items
 					for(var a=0, len=items.length; a<7; a++){
 						if(itemPair.itemId === items[a]._id){
-							productList.push({item: items[a], quantity: itemPair.quantity });
+							productList.push({item: items[a], quantity: itemPair.quantity, price: itemPair.price });
 						}
 					}
 				});
@@ -78,9 +80,7 @@ app.controller('orderController', function ($scope, GetItemsFactory, OrderFactor
 				$scope.auth = false;
 				sum();
 				totalQty();
-			})
-		}
-	});
+			});
 	}
 
 	firstUpdate();
@@ -98,22 +98,19 @@ app.controller('orderController', function ($scope, GetItemsFactory, OrderFactor
 		//remove item from db, remove item from cookie, remove item from scope
 		//if authenticated, remove item from order
 		var myOrderCookie = $cookieStore.get('Order');
-		console.log(myOrderCookie, item);
+		console.log('removeItem item: ', item);
 		var location = getLocInCookie(myOrderCookie, item._id);
-
 		var removedItem = myOrderCookie.splice(location, 1);
 		$cookieStore.put('Order', myOrderCookie);
-
 		$scope.activeorders.splice(location,1);
 		sum();
 		totalQty();
 
 		if(AuthService.isAuthenticated()){
-			OrderFactory.updateOrder({orderId: $scope.orderId, quantity: 0, itemId: item._id}).then(function(err, data){
+			OrderFactory.updateOrder({orderId: $scope.orderId, quantity: 0, price:item.price  ,itemId: item._id}).then(function(err, data){
 				if(err) console.log(err);
-
+				console.log('output of removeItem function', data)
 			});
-			$scope.auth = true;
 		}
 	}
 
@@ -135,7 +132,11 @@ app.controller('orderController', function ($scope, GetItemsFactory, OrderFactor
 		}
 		else{
 			if($scope.userId){
-				OrderFactory.updateOrder({orderId: $scope});
+				console.log('itemid', item)
+				OrderFactory.updateOrder({orderId: $scope.orderId, quantity: val, price:item.price  ,itemId: item.item._id}).then(function(err, data){
+				if(err) console.log(err);
+				console.log('output of removeItem function', data)
+			});
 			}
 			var orderCookie = $cookieStore.get('Order');
 			var index = getLocInCookie(orderCookie, item.item._id);
